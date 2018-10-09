@@ -1,0 +1,86 @@
+enum Role {
+    MEMBER
+    TEAM_LEADER
+    GROUP_LEADER
+    ADMIN
+}
+
+type User {
+    id: ID! @unique
+    name: String!
+    address: String
+    phone: String
+    email: String! @unique
+    avatar: String
+    googleId: String
+    role: Role! @default(value: "MEMBER")
+    completed: Boolean! @default(value: "false")
+    team: Team! @relation(name: "UsersOfTeam" onDelete: CASCADE)
+    dailyReports: [DailyReport!]! @relation(name: "DailyReportsByUser" onDelete: CASCADE)
+    weeklyReports: [WeeklyReport!]! @relation(name: "WeeklyReportsByUser" onDelete: CASCADE)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Division {
+    id: ID! @unique
+    name: String!
+    description: String
+    groups: [Group!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Group {
+    id: ID! @unique
+    name: String!
+    description: String
+    division: Division!
+    teams: [Team!]! @relation(name: "TeamsOfGroup" onDelete: CASCADE)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Team {
+    id: ID! @unique
+    name: String!
+    description: String
+    group: Group! @relation(name: "TeamsOfGroup" onDelete: SET_NULL)
+    users: [User!]! @relation(name: "UsersOfTeam" onDelete: CASCADE)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Issue {
+    id: ID! @unique,
+    name: String!,
+    description: String,
+    dailyReports: [DailyReport!]! @relation(name: "DailyReportsOfIssue" onDelete: CASCADE)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type DailyReport {
+    id: ID! @unique
+    emotion: String
+    title: String!
+    issues: [Issue!]! @relation(name: "DailyReportsOfIssue" onDelete: CASCADE)
+    achievement: String
+    plan: String!
+    description: String
+    comment: String
+    author: User! @relation(name: "DailyReportsByUser" onDelete: SET_NULL)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type WeeklyReport {
+    id: ID! @unique
+    issue: String!
+    solution: String!
+    description: String
+    summary: String!
+    author: User! @relation(name: "WeeklyReportsByUser" onDelete: SET_NULL)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
