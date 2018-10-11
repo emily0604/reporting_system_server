@@ -1,1577 +1,1577 @@
 # source: http://localhost:4466
-# timestamp: Tue Oct 09 2018 08:34:02 GMT+0700 (+07)
+# timestamp: Wed Oct 10 2018 17:01:30 GMT+0700 (+07)
 
 type AggregateDailyReport {
-  count: Int!
+    count: Int!
 }
 
 type AggregateDivision {
-  count: Int!
+    count: Int!
 }
 
 type AggregateGroup {
-  count: Int!
+    count: Int!
 }
 
 type AggregateIssue {
-  count: Int!
+    count: Int!
 }
 
 type AggregateTeam {
-  count: Int!
+    count: Int!
 }
 
 type AggregateUser {
-  count: Int!
+    count: Int!
 }
 
 type AggregateWeeklyReport {
-  count: Int!
+    count: Int!
 }
 
 type BatchPayload {
-  """The number of nodes that have been affected by the Batch operation."""
-  count: Long!
+    """The number of nodes that have been affected by the Batch operation."""
+    count: Long!
 }
 
 type DailyReport implements Node {
-  id: ID!
-  emotion: String
-  title: String!
-  issues(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Issue!]
-  achievement: String
-  plan: String!
-  description: String
-  comment: String
-  author(where: UserWhereInput): User!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    emotion: String
+    title: String!
+    issues(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Issue!]
+    achievement: String
+    plan: String!
+    description: String
+    comment: String
+    author(where: UserWhereInput): User!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type DailyReportConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [DailyReportEdge]!
-  aggregate: AggregateDailyReport!
+    """A list of edges."""
+    edges: [DailyReportEdge]!
+    aggregate: AggregateDailyReport!
 }
 
 input DailyReportCreateInput {
-  emotion: String
-  title: String!
-  achievement: String
-  plan: String!
-  description: String
-  comment: String
-  issues: IssueCreateManyWithoutDailyReportsInput
-  author: UserCreateOneWithoutDailyReportsInput!
+    emotion: String
+    title: String!
+    achievement: String
+    plan: String!
+    description: String
+    comment: String
+    issues: IssueCreateManyWithoutDailyReportsInput
+    author: UserCreateOneWithoutDailyReportsInput!
 }
 
 input DailyReportCreateManyWithoutAuthorInput {
-  create: [DailyReportCreateWithoutAuthorInput!]
-  connect: [DailyReportWhereUniqueInput!]
+    create: [DailyReportCreateWithoutAuthorInput!]
+    connect: [DailyReportWhereUniqueInput!]
 }
 
 input DailyReportCreateManyWithoutIssuesInput {
-  create: [DailyReportCreateWithoutIssuesInput!]
-  connect: [DailyReportWhereUniqueInput!]
+    create: [DailyReportCreateWithoutIssuesInput!]
+    connect: [DailyReportWhereUniqueInput!]
 }
 
 input DailyReportCreateWithoutAuthorInput {
-  emotion: String
-  title: String!
-  achievement: String
-  plan: String!
-  description: String
-  comment: String
-  issues: IssueCreateManyWithoutDailyReportsInput
+    emotion: String
+    title: String!
+    achievement: String
+    plan: String!
+    description: String
+    comment: String
+    issues: IssueCreateManyWithoutDailyReportsInput
 }
 
 input DailyReportCreateWithoutIssuesInput {
-  emotion: String
-  title: String!
-  achievement: String
-  plan: String!
-  description: String
-  comment: String
-  author: UserCreateOneWithoutDailyReportsInput!
+    emotion: String
+    title: String!
+    achievement: String
+    plan: String!
+    description: String
+    comment: String
+    author: UserCreateOneWithoutDailyReportsInput!
 }
 
 """An edge in a connection."""
 type DailyReportEdge {
-  """The item at the end of the edge."""
-  node: DailyReport!
+    """The item at the end of the edge."""
+    node: DailyReport!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum DailyReportOrderByInput {
-  id_ASC
-  id_DESC
-  emotion_ASC
-  emotion_DESC
-  title_ASC
-  title_DESC
-  achievement_ASC
-  achievement_DESC
-  plan_ASC
-  plan_DESC
-  description_ASC
-  description_DESC
-  comment_ASC
-  comment_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    emotion_ASC
+    emotion_DESC
+    title_ASC
+    title_DESC
+    achievement_ASC
+    achievement_DESC
+    plan_ASC
+    plan_DESC
+    description_ASC
+    description_DESC
+    comment_ASC
+    comment_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type DailyReportPreviousValues {
-  id: ID!
-  emotion: String
-  title: String!
-  achievement: String
-  plan: String!
-  description: String
-  comment: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    emotion: String
+    title: String!
+    achievement: String
+    plan: String!
+    description: String
+    comment: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type DailyReportSubscriptionPayload {
-  mutation: MutationType!
-  node: DailyReport
-  updatedFields: [String!]
-  previousValues: DailyReportPreviousValues
+    mutation: MutationType!
+    node: DailyReport
+    updatedFields: [String!]
+    previousValues: DailyReportPreviousValues
 }
 
 input DailyReportSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [DailyReportSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [DailyReportSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [DailyReportSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [DailyReportSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [DailyReportSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [DailyReportSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: DailyReportWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: DailyReportWhereInput
 }
 
 input DailyReportUpdateInput {
-  emotion: String
-  title: String
-  achievement: String
-  plan: String
-  description: String
-  comment: String
-  issues: IssueUpdateManyWithoutDailyReportsInput
-  author: UserUpdateOneRequiredWithoutDailyReportsInput
+    emotion: String
+    title: String
+    achievement: String
+    plan: String
+    description: String
+    comment: String
+    issues: IssueUpdateManyWithoutDailyReportsInput
+    author: UserUpdateOneRequiredWithoutDailyReportsInput
 }
 
 input DailyReportUpdateManyWithoutAuthorInput {
-  create: [DailyReportCreateWithoutAuthorInput!]
-  connect: [DailyReportWhereUniqueInput!]
-  disconnect: [DailyReportWhereUniqueInput!]
-  delete: [DailyReportWhereUniqueInput!]
-  update: [DailyReportUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [DailyReportUpsertWithWhereUniqueWithoutAuthorInput!]
+    create: [DailyReportCreateWithoutAuthorInput!]
+    connect: [DailyReportWhereUniqueInput!]
+    disconnect: [DailyReportWhereUniqueInput!]
+    delete: [DailyReportWhereUniqueInput!]
+    update: [DailyReportUpdateWithWhereUniqueWithoutAuthorInput!]
+    upsert: [DailyReportUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input DailyReportUpdateManyWithoutIssuesInput {
-  create: [DailyReportCreateWithoutIssuesInput!]
-  connect: [DailyReportWhereUniqueInput!]
-  disconnect: [DailyReportWhereUniqueInput!]
-  delete: [DailyReportWhereUniqueInput!]
-  update: [DailyReportUpdateWithWhereUniqueWithoutIssuesInput!]
-  upsert: [DailyReportUpsertWithWhereUniqueWithoutIssuesInput!]
+    create: [DailyReportCreateWithoutIssuesInput!]
+    connect: [DailyReportWhereUniqueInput!]
+    disconnect: [DailyReportWhereUniqueInput!]
+    delete: [DailyReportWhereUniqueInput!]
+    update: [DailyReportUpdateWithWhereUniqueWithoutIssuesInput!]
+    upsert: [DailyReportUpsertWithWhereUniqueWithoutIssuesInput!]
 }
 
 input DailyReportUpdateWithoutAuthorDataInput {
-  emotion: String
-  title: String
-  achievement: String
-  plan: String
-  description: String
-  comment: String
-  issues: IssueUpdateManyWithoutDailyReportsInput
+    emotion: String
+    title: String
+    achievement: String
+    plan: String
+    description: String
+    comment: String
+    issues: IssueUpdateManyWithoutDailyReportsInput
 }
 
 input DailyReportUpdateWithoutIssuesDataInput {
-  emotion: String
-  title: String
-  achievement: String
-  plan: String
-  description: String
-  comment: String
-  author: UserUpdateOneRequiredWithoutDailyReportsInput
+    emotion: String
+    title: String
+    achievement: String
+    plan: String
+    description: String
+    comment: String
+    author: UserUpdateOneRequiredWithoutDailyReportsInput
 }
 
 input DailyReportUpdateWithWhereUniqueWithoutAuthorInput {
-  where: DailyReportWhereUniqueInput!
-  data: DailyReportUpdateWithoutAuthorDataInput!
+    where: DailyReportWhereUniqueInput!
+    data: DailyReportUpdateWithoutAuthorDataInput!
 }
 
 input DailyReportUpdateWithWhereUniqueWithoutIssuesInput {
-  where: DailyReportWhereUniqueInput!
-  data: DailyReportUpdateWithoutIssuesDataInput!
+    where: DailyReportWhereUniqueInput!
+    data: DailyReportUpdateWithoutIssuesDataInput!
 }
 
 input DailyReportUpsertWithWhereUniqueWithoutAuthorInput {
-  where: DailyReportWhereUniqueInput!
-  update: DailyReportUpdateWithoutAuthorDataInput!
-  create: DailyReportCreateWithoutAuthorInput!
+    where: DailyReportWhereUniqueInput!
+    update: DailyReportUpdateWithoutAuthorDataInput!
+    create: DailyReportCreateWithoutAuthorInput!
 }
 
 input DailyReportUpsertWithWhereUniqueWithoutIssuesInput {
-  where: DailyReportWhereUniqueInput!
-  update: DailyReportUpdateWithoutIssuesDataInput!
-  create: DailyReportCreateWithoutIssuesInput!
+    where: DailyReportWhereUniqueInput!
+    update: DailyReportUpdateWithoutIssuesDataInput!
+    create: DailyReportCreateWithoutIssuesInput!
 }
 
 input DailyReportWhereInput {
-  """Logical AND on all given filters."""
-  AND: [DailyReportWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [DailyReportWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [DailyReportWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [DailyReportWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [DailyReportWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [DailyReportWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  emotion: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    emotion: String
 
-  """All values that are not equal to given value."""
-  emotion_not: String
+    """All values that are not equal to given value."""
+    emotion_not: String
 
-  """All values that are contained in given list."""
-  emotion_in: [String!]
+    """All values that are contained in given list."""
+    emotion_in: [String!]
 
-  """All values that are not contained in given list."""
-  emotion_not_in: [String!]
+    """All values that are not contained in given list."""
+    emotion_not_in: [String!]
 
-  """All values less than the given value."""
-  emotion_lt: String
+    """All values less than the given value."""
+    emotion_lt: String
 
-  """All values less than or equal the given value."""
-  emotion_lte: String
+    """All values less than or equal the given value."""
+    emotion_lte: String
 
-  """All values greater than the given value."""
-  emotion_gt: String
+    """All values greater than the given value."""
+    emotion_gt: String
 
-  """All values greater than or equal the given value."""
-  emotion_gte: String
+    """All values greater than or equal the given value."""
+    emotion_gte: String
 
-  """All values containing the given string."""
-  emotion_contains: String
+    """All values containing the given string."""
+    emotion_contains: String
 
-  """All values not containing the given string."""
-  emotion_not_contains: String
+    """All values not containing the given string."""
+    emotion_not_contains: String
 
-  """All values starting with the given string."""
-  emotion_starts_with: String
+    """All values starting with the given string."""
+    emotion_starts_with: String
 
-  """All values not starting with the given string."""
-  emotion_not_starts_with: String
+    """All values not starting with the given string."""
+    emotion_not_starts_with: String
 
-  """All values ending with the given string."""
-  emotion_ends_with: String
+    """All values ending with the given string."""
+    emotion_ends_with: String
 
-  """All values not ending with the given string."""
-  emotion_not_ends_with: String
-  title: String
+    """All values not ending with the given string."""
+    emotion_not_ends_with: String
+    title: String
 
-  """All values that are not equal to given value."""
-  title_not: String
+    """All values that are not equal to given value."""
+    title_not: String
 
-  """All values that are contained in given list."""
-  title_in: [String!]
+    """All values that are contained in given list."""
+    title_in: [String!]
 
-  """All values that are not contained in given list."""
-  title_not_in: [String!]
+    """All values that are not contained in given list."""
+    title_not_in: [String!]
 
-  """All values less than the given value."""
-  title_lt: String
+    """All values less than the given value."""
+    title_lt: String
 
-  """All values less than or equal the given value."""
-  title_lte: String
+    """All values less than or equal the given value."""
+    title_lte: String
 
-  """All values greater than the given value."""
-  title_gt: String
+    """All values greater than the given value."""
+    title_gt: String
 
-  """All values greater than or equal the given value."""
-  title_gte: String
+    """All values greater than or equal the given value."""
+    title_gte: String
 
-  """All values containing the given string."""
-  title_contains: String
+    """All values containing the given string."""
+    title_contains: String
 
-  """All values not containing the given string."""
-  title_not_contains: String
+    """All values not containing the given string."""
+    title_not_contains: String
 
-  """All values starting with the given string."""
-  title_starts_with: String
+    """All values starting with the given string."""
+    title_starts_with: String
 
-  """All values not starting with the given string."""
-  title_not_starts_with: String
+    """All values not starting with the given string."""
+    title_not_starts_with: String
 
-  """All values ending with the given string."""
-  title_ends_with: String
+    """All values ending with the given string."""
+    title_ends_with: String
 
-  """All values not ending with the given string."""
-  title_not_ends_with: String
-  achievement: String
+    """All values not ending with the given string."""
+    title_not_ends_with: String
+    achievement: String
 
-  """All values that are not equal to given value."""
-  achievement_not: String
+    """All values that are not equal to given value."""
+    achievement_not: String
 
-  """All values that are contained in given list."""
-  achievement_in: [String!]
+    """All values that are contained in given list."""
+    achievement_in: [String!]
 
-  """All values that are not contained in given list."""
-  achievement_not_in: [String!]
+    """All values that are not contained in given list."""
+    achievement_not_in: [String!]
 
-  """All values less than the given value."""
-  achievement_lt: String
+    """All values less than the given value."""
+    achievement_lt: String
 
-  """All values less than or equal the given value."""
-  achievement_lte: String
+    """All values less than or equal the given value."""
+    achievement_lte: String
 
-  """All values greater than the given value."""
-  achievement_gt: String
+    """All values greater than the given value."""
+    achievement_gt: String
 
-  """All values greater than or equal the given value."""
-  achievement_gte: String
+    """All values greater than or equal the given value."""
+    achievement_gte: String
 
-  """All values containing the given string."""
-  achievement_contains: String
+    """All values containing the given string."""
+    achievement_contains: String
 
-  """All values not containing the given string."""
-  achievement_not_contains: String
+    """All values not containing the given string."""
+    achievement_not_contains: String
 
-  """All values starting with the given string."""
-  achievement_starts_with: String
+    """All values starting with the given string."""
+    achievement_starts_with: String
 
-  """All values not starting with the given string."""
-  achievement_not_starts_with: String
+    """All values not starting with the given string."""
+    achievement_not_starts_with: String
 
-  """All values ending with the given string."""
-  achievement_ends_with: String
+    """All values ending with the given string."""
+    achievement_ends_with: String
 
-  """All values not ending with the given string."""
-  achievement_not_ends_with: String
-  plan: String
+    """All values not ending with the given string."""
+    achievement_not_ends_with: String
+    plan: String
 
-  """All values that are not equal to given value."""
-  plan_not: String
+    """All values that are not equal to given value."""
+    plan_not: String
 
-  """All values that are contained in given list."""
-  plan_in: [String!]
+    """All values that are contained in given list."""
+    plan_in: [String!]
 
-  """All values that are not contained in given list."""
-  plan_not_in: [String!]
+    """All values that are not contained in given list."""
+    plan_not_in: [String!]
 
-  """All values less than the given value."""
-  plan_lt: String
+    """All values less than the given value."""
+    plan_lt: String
 
-  """All values less than or equal the given value."""
-  plan_lte: String
+    """All values less than or equal the given value."""
+    plan_lte: String
 
-  """All values greater than the given value."""
-  plan_gt: String
+    """All values greater than the given value."""
+    plan_gt: String
 
-  """All values greater than or equal the given value."""
-  plan_gte: String
+    """All values greater than or equal the given value."""
+    plan_gte: String
 
-  """All values containing the given string."""
-  plan_contains: String
+    """All values containing the given string."""
+    plan_contains: String
 
-  """All values not containing the given string."""
-  plan_not_contains: String
+    """All values not containing the given string."""
+    plan_not_contains: String
 
-  """All values starting with the given string."""
-  plan_starts_with: String
+    """All values starting with the given string."""
+    plan_starts_with: String
 
-  """All values not starting with the given string."""
-  plan_not_starts_with: String
+    """All values not starting with the given string."""
+    plan_not_starts_with: String
 
-  """All values ending with the given string."""
-  plan_ends_with: String
+    """All values ending with the given string."""
+    plan_ends_with: String
 
-  """All values not ending with the given string."""
-  plan_not_ends_with: String
-  description: String
+    """All values not ending with the given string."""
+    plan_not_ends_with: String
+    description: String
 
-  """All values that are not equal to given value."""
-  description_not: String
+    """All values that are not equal to given value."""
+    description_not: String
 
-  """All values that are contained in given list."""
-  description_in: [String!]
+    """All values that are contained in given list."""
+    description_in: [String!]
 
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
+    """All values that are not contained in given list."""
+    description_not_in: [String!]
 
-  """All values less than the given value."""
-  description_lt: String
+    """All values less than the given value."""
+    description_lt: String
 
-  """All values less than or equal the given value."""
-  description_lte: String
+    """All values less than or equal the given value."""
+    description_lte: String
 
-  """All values greater than the given value."""
-  description_gt: String
+    """All values greater than the given value."""
+    description_gt: String
 
-  """All values greater than or equal the given value."""
-  description_gte: String
+    """All values greater than or equal the given value."""
+    description_gte: String
 
-  """All values containing the given string."""
-  description_contains: String
+    """All values containing the given string."""
+    description_contains: String
 
-  """All values not containing the given string."""
-  description_not_contains: String
+    """All values not containing the given string."""
+    description_not_contains: String
 
-  """All values starting with the given string."""
-  description_starts_with: String
+    """All values starting with the given string."""
+    description_starts_with: String
 
-  """All values not starting with the given string."""
-  description_not_starts_with: String
+    """All values not starting with the given string."""
+    description_not_starts_with: String
 
-  """All values ending with the given string."""
-  description_ends_with: String
+    """All values ending with the given string."""
+    description_ends_with: String
 
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  comment: String
+    """All values not ending with the given string."""
+    description_not_ends_with: String
+    comment: String
 
-  """All values that are not equal to given value."""
-  comment_not: String
+    """All values that are not equal to given value."""
+    comment_not: String
 
-  """All values that are contained in given list."""
-  comment_in: [String!]
+    """All values that are contained in given list."""
+    comment_in: [String!]
 
-  """All values that are not contained in given list."""
-  comment_not_in: [String!]
+    """All values that are not contained in given list."""
+    comment_not_in: [String!]
 
-  """All values less than the given value."""
-  comment_lt: String
+    """All values less than the given value."""
+    comment_lt: String
 
-  """All values less than or equal the given value."""
-  comment_lte: String
+    """All values less than or equal the given value."""
+    comment_lte: String
 
-  """All values greater than the given value."""
-  comment_gt: String
+    """All values greater than the given value."""
+    comment_gt: String
 
-  """All values greater than or equal the given value."""
-  comment_gte: String
+    """All values greater than or equal the given value."""
+    comment_gte: String
 
-  """All values containing the given string."""
-  comment_contains: String
+    """All values containing the given string."""
+    comment_contains: String
 
-  """All values not containing the given string."""
-  comment_not_contains: String
+    """All values not containing the given string."""
+    comment_not_contains: String
 
-  """All values starting with the given string."""
-  comment_starts_with: String
+    """All values starting with the given string."""
+    comment_starts_with: String
 
-  """All values not starting with the given string."""
-  comment_not_starts_with: String
+    """All values not starting with the given string."""
+    comment_not_starts_with: String
 
-  """All values ending with the given string."""
-  comment_ends_with: String
+    """All values ending with the given string."""
+    comment_ends_with: String
 
-  """All values not ending with the given string."""
-  comment_not_ends_with: String
-  createdAt: DateTime
+    """All values not ending with the given string."""
+    comment_not_ends_with: String
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  issues_every: IssueWhereInput
-  issues_some: IssueWhereInput
-  issues_none: IssueWhereInput
-  author: UserWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    issues_every: IssueWhereInput
+    issues_some: IssueWhereInput
+    issues_none: IssueWhereInput
+    author: UserWhereInput
 }
 
 input DailyReportWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 scalar DateTime
 
 type Division implements Node {
-  id: ID!
-  name: String!
-  description: String
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type DivisionConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [DivisionEdge]!
-  aggregate: AggregateDivision!
+    """A list of edges."""
+    edges: [DivisionEdge]!
+    aggregate: AggregateDivision!
 }
 
 input DivisionCreateInput {
-  name: String!
-  description: String
-  groups: GroupCreateManyWithoutDivisionInput
+    name: String!
+    description: String
+    groups: GroupCreateManyWithoutDivisionInput
 }
 
 input DivisionCreateOneWithoutGroupsInput {
-  create: DivisionCreateWithoutGroupsInput
-  connect: DivisionWhereUniqueInput
+    create: DivisionCreateWithoutGroupsInput
+    connect: DivisionWhereUniqueInput
 }
 
 input DivisionCreateWithoutGroupsInput {
-  name: String!
-  description: String
+    name: String!
+    description: String
 }
 
 """An edge in a connection."""
 type DivisionEdge {
-  """The item at the end of the edge."""
-  node: Division!
+    """The item at the end of the edge."""
+    node: Division!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum DivisionOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
+    description_ASC
+    description_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type DivisionPreviousValues {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type DivisionSubscriptionPayload {
-  mutation: MutationType!
-  node: Division
-  updatedFields: [String!]
-  previousValues: DivisionPreviousValues
+    mutation: MutationType!
+    node: Division
+    updatedFields: [String!]
+    previousValues: DivisionPreviousValues
 }
 
 input DivisionSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [DivisionSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [DivisionSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [DivisionSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [DivisionSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [DivisionSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [DivisionSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: DivisionWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: DivisionWhereInput
 }
 
 input DivisionUpdateInput {
-  name: String
-  description: String
-  groups: GroupUpdateManyWithoutDivisionInput
+    name: String
+    description: String
+    groups: GroupUpdateManyWithoutDivisionInput
 }
 
 input DivisionUpdateOneRequiredWithoutGroupsInput {
-  create: DivisionCreateWithoutGroupsInput
-  connect: DivisionWhereUniqueInput
-  update: DivisionUpdateWithoutGroupsDataInput
-  upsert: DivisionUpsertWithoutGroupsInput
+    create: DivisionCreateWithoutGroupsInput
+    connect: DivisionWhereUniqueInput
+    update: DivisionUpdateWithoutGroupsDataInput
+    upsert: DivisionUpsertWithoutGroupsInput
 }
 
 input DivisionUpdateWithoutGroupsDataInput {
-  name: String
-  description: String
+    name: String
+    description: String
 }
 
 input DivisionUpsertWithoutGroupsInput {
-  update: DivisionUpdateWithoutGroupsDataInput!
-  create: DivisionCreateWithoutGroupsInput!
+    update: DivisionUpdateWithoutGroupsDataInput!
+    create: DivisionCreateWithoutGroupsInput!
 }
 
 input DivisionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [DivisionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [DivisionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [DivisionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [DivisionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [DivisionWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [DivisionWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    name: String
 
-  """All values that are not equal to given value."""
-  name_not: String
+    """All values that are not equal to given value."""
+    name_not: String
 
-  """All values that are contained in given list."""
-  name_in: [String!]
+    """All values that are contained in given list."""
+    name_in: [String!]
 
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
+    """All values that are not contained in given list."""
+    name_not_in: [String!]
 
-  """All values less than the given value."""
-  name_lt: String
+    """All values less than the given value."""
+    name_lt: String
 
-  """All values less than or equal the given value."""
-  name_lte: String
+    """All values less than or equal the given value."""
+    name_lte: String
 
-  """All values greater than the given value."""
-  name_gt: String
+    """All values greater than the given value."""
+    name_gt: String
 
-  """All values greater than or equal the given value."""
-  name_gte: String
+    """All values greater than or equal the given value."""
+    name_gte: String
 
-  """All values containing the given string."""
-  name_contains: String
+    """All values containing the given string."""
+    name_contains: String
 
-  """All values not containing the given string."""
-  name_not_contains: String
+    """All values not containing the given string."""
+    name_not_contains: String
 
-  """All values starting with the given string."""
-  name_starts_with: String
+    """All values starting with the given string."""
+    name_starts_with: String
 
-  """All values not starting with the given string."""
-  name_not_starts_with: String
+    """All values not starting with the given string."""
+    name_not_starts_with: String
 
-  """All values ending with the given string."""
-  name_ends_with: String
+    """All values ending with the given string."""
+    name_ends_with: String
 
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  description: String
+    """All values not ending with the given string."""
+    name_not_ends_with: String
+    description: String
 
-  """All values that are not equal to given value."""
-  description_not: String
+    """All values that are not equal to given value."""
+    description_not: String
 
-  """All values that are contained in given list."""
-  description_in: [String!]
+    """All values that are contained in given list."""
+    description_in: [String!]
 
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
+    """All values that are not contained in given list."""
+    description_not_in: [String!]
 
-  """All values less than the given value."""
-  description_lt: String
+    """All values less than the given value."""
+    description_lt: String
 
-  """All values less than or equal the given value."""
-  description_lte: String
+    """All values less than or equal the given value."""
+    description_lte: String
 
-  """All values greater than the given value."""
-  description_gt: String
+    """All values greater than the given value."""
+    description_gt: String
 
-  """All values greater than or equal the given value."""
-  description_gte: String
+    """All values greater than or equal the given value."""
+    description_gte: String
 
-  """All values containing the given string."""
-  description_contains: String
+    """All values containing the given string."""
+    description_contains: String
 
-  """All values not containing the given string."""
-  description_not_contains: String
+    """All values not containing the given string."""
+    description_not_contains: String
 
-  """All values starting with the given string."""
-  description_starts_with: String
+    """All values starting with the given string."""
+    description_starts_with: String
 
-  """All values not starting with the given string."""
-  description_not_starts_with: String
+    """All values not starting with the given string."""
+    description_not_starts_with: String
 
-  """All values ending with the given string."""
-  description_ends_with: String
+    """All values ending with the given string."""
+    description_ends_with: String
 
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
+    """All values not ending with the given string."""
+    description_not_ends_with: String
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  groups_every: GroupWhereInput
-  groups_some: GroupWhereInput
-  groups_none: GroupWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    groups_every: GroupWhereInput
+    groups_some: GroupWhereInput
+    groups_none: GroupWhereInput
 }
 
 input DivisionWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 type Group implements Node {
-  id: ID!
-  name: String!
-  description: String
-  division(where: DivisionWhereInput): Division!
-  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    division(where: DivisionWhereInput): Division!
+    teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type GroupConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [GroupEdge]!
-  aggregate: AggregateGroup!
+    """A list of edges."""
+    edges: [GroupEdge]!
+    aggregate: AggregateGroup!
 }
 
 input GroupCreateInput {
-  name: String!
-  description: String
-  division: DivisionCreateOneWithoutGroupsInput!
-  teams: TeamCreateManyWithoutGroupInput
+    name: String!
+    description: String
+    division: DivisionCreateOneWithoutGroupsInput!
+    teams: TeamCreateManyWithoutGroupInput
 }
 
 input GroupCreateManyWithoutDivisionInput {
-  create: [GroupCreateWithoutDivisionInput!]
-  connect: [GroupWhereUniqueInput!]
+    create: [GroupCreateWithoutDivisionInput!]
+    connect: [GroupWhereUniqueInput!]
 }
 
 input GroupCreateOneWithoutTeamsInput {
-  create: GroupCreateWithoutTeamsInput
-  connect: GroupWhereUniqueInput
+    create: GroupCreateWithoutTeamsInput
+    connect: GroupWhereUniqueInput
 }
 
 input GroupCreateWithoutDivisionInput {
-  name: String!
-  description: String
-  teams: TeamCreateManyWithoutGroupInput
+    name: String!
+    description: String
+    teams: TeamCreateManyWithoutGroupInput
 }
 
 input GroupCreateWithoutTeamsInput {
-  name: String!
-  description: String
-  division: DivisionCreateOneWithoutGroupsInput!
+    name: String!
+    description: String
+    division: DivisionCreateOneWithoutGroupsInput!
 }
 
 """An edge in a connection."""
 type GroupEdge {
-  """The item at the end of the edge."""
-  node: Group!
+    """The item at the end of the edge."""
+    node: Group!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum GroupOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
+    description_ASC
+    description_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type GroupPreviousValues {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type GroupSubscriptionPayload {
-  mutation: MutationType!
-  node: Group
-  updatedFields: [String!]
-  previousValues: GroupPreviousValues
+    mutation: MutationType!
+    node: Group
+    updatedFields: [String!]
+    previousValues: GroupPreviousValues
 }
 
 input GroupSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [GroupSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [GroupSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [GroupSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [GroupSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [GroupSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [GroupSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: GroupWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: GroupWhereInput
 }
 
 input GroupUpdateInput {
-  name: String
-  description: String
-  division: DivisionUpdateOneRequiredWithoutGroupsInput
-  teams: TeamUpdateManyWithoutGroupInput
+    name: String
+    description: String
+    division: DivisionUpdateOneRequiredWithoutGroupsInput
+    teams: TeamUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateManyWithoutDivisionInput {
-  create: [GroupCreateWithoutDivisionInput!]
-  connect: [GroupWhereUniqueInput!]
-  disconnect: [GroupWhereUniqueInput!]
-  delete: [GroupWhereUniqueInput!]
-  update: [GroupUpdateWithWhereUniqueWithoutDivisionInput!]
-  upsert: [GroupUpsertWithWhereUniqueWithoutDivisionInput!]
+    create: [GroupCreateWithoutDivisionInput!]
+    connect: [GroupWhereUniqueInput!]
+    disconnect: [GroupWhereUniqueInput!]
+    delete: [GroupWhereUniqueInput!]
+    update: [GroupUpdateWithWhereUniqueWithoutDivisionInput!]
+    upsert: [GroupUpsertWithWhereUniqueWithoutDivisionInput!]
 }
 
 input GroupUpdateOneRequiredWithoutTeamsInput {
-  create: GroupCreateWithoutTeamsInput
-  connect: GroupWhereUniqueInput
-  update: GroupUpdateWithoutTeamsDataInput
-  upsert: GroupUpsertWithoutTeamsInput
+    create: GroupCreateWithoutTeamsInput
+    connect: GroupWhereUniqueInput
+    update: GroupUpdateWithoutTeamsDataInput
+    upsert: GroupUpsertWithoutTeamsInput
 }
 
 input GroupUpdateWithoutDivisionDataInput {
-  name: String
-  description: String
-  teams: TeamUpdateManyWithoutGroupInput
+    name: String
+    description: String
+    teams: TeamUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithoutTeamsDataInput {
-  name: String
-  description: String
-  division: DivisionUpdateOneRequiredWithoutGroupsInput
+    name: String
+    description: String
+    division: DivisionUpdateOneRequiredWithoutGroupsInput
 }
 
 input GroupUpdateWithWhereUniqueWithoutDivisionInput {
-  where: GroupWhereUniqueInput!
-  data: GroupUpdateWithoutDivisionDataInput!
+    where: GroupWhereUniqueInput!
+    data: GroupUpdateWithoutDivisionDataInput!
 }
 
 input GroupUpsertWithoutTeamsInput {
-  update: GroupUpdateWithoutTeamsDataInput!
-  create: GroupCreateWithoutTeamsInput!
+    update: GroupUpdateWithoutTeamsDataInput!
+    create: GroupCreateWithoutTeamsInput!
 }
 
 input GroupUpsertWithWhereUniqueWithoutDivisionInput {
-  where: GroupWhereUniqueInput!
-  update: GroupUpdateWithoutDivisionDataInput!
-  create: GroupCreateWithoutDivisionInput!
+    where: GroupWhereUniqueInput!
+    update: GroupUpdateWithoutDivisionDataInput!
+    create: GroupCreateWithoutDivisionInput!
 }
 
 input GroupWhereInput {
-  """Logical AND on all given filters."""
-  AND: [GroupWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [GroupWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [GroupWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [GroupWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [GroupWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [GroupWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    name: String
 
-  """All values that are not equal to given value."""
-  name_not: String
+    """All values that are not equal to given value."""
+    name_not: String
 
-  """All values that are contained in given list."""
-  name_in: [String!]
+    """All values that are contained in given list."""
+    name_in: [String!]
 
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
+    """All values that are not contained in given list."""
+    name_not_in: [String!]
 
-  """All values less than the given value."""
-  name_lt: String
+    """All values less than the given value."""
+    name_lt: String
 
-  """All values less than or equal the given value."""
-  name_lte: String
+    """All values less than or equal the given value."""
+    name_lte: String
 
-  """All values greater than the given value."""
-  name_gt: String
+    """All values greater than the given value."""
+    name_gt: String
 
-  """All values greater than or equal the given value."""
-  name_gte: String
+    """All values greater than or equal the given value."""
+    name_gte: String
 
-  """All values containing the given string."""
-  name_contains: String
+    """All values containing the given string."""
+    name_contains: String
 
-  """All values not containing the given string."""
-  name_not_contains: String
+    """All values not containing the given string."""
+    name_not_contains: String
 
-  """All values starting with the given string."""
-  name_starts_with: String
+    """All values starting with the given string."""
+    name_starts_with: String
 
-  """All values not starting with the given string."""
-  name_not_starts_with: String
+    """All values not starting with the given string."""
+    name_not_starts_with: String
 
-  """All values ending with the given string."""
-  name_ends_with: String
+    """All values ending with the given string."""
+    name_ends_with: String
 
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  description: String
+    """All values not ending with the given string."""
+    name_not_ends_with: String
+    description: String
 
-  """All values that are not equal to given value."""
-  description_not: String
+    """All values that are not equal to given value."""
+    description_not: String
 
-  """All values that are contained in given list."""
-  description_in: [String!]
+    """All values that are contained in given list."""
+    description_in: [String!]
 
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
+    """All values that are not contained in given list."""
+    description_not_in: [String!]
 
-  """All values less than the given value."""
-  description_lt: String
+    """All values less than the given value."""
+    description_lt: String
 
-  """All values less than or equal the given value."""
-  description_lte: String
+    """All values less than or equal the given value."""
+    description_lte: String
 
-  """All values greater than the given value."""
-  description_gt: String
+    """All values greater than the given value."""
+    description_gt: String
 
-  """All values greater than or equal the given value."""
-  description_gte: String
+    """All values greater than or equal the given value."""
+    description_gte: String
 
-  """All values containing the given string."""
-  description_contains: String
+    """All values containing the given string."""
+    description_contains: String
 
-  """All values not containing the given string."""
-  description_not_contains: String
+    """All values not containing the given string."""
+    description_not_contains: String
 
-  """All values starting with the given string."""
-  description_starts_with: String
+    """All values starting with the given string."""
+    description_starts_with: String
 
-  """All values not starting with the given string."""
-  description_not_starts_with: String
+    """All values not starting with the given string."""
+    description_not_starts_with: String
 
-  """All values ending with the given string."""
-  description_ends_with: String
+    """All values ending with the given string."""
+    description_ends_with: String
 
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
+    """All values not ending with the given string."""
+    description_not_ends_with: String
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  division: DivisionWhereInput
-  teams_every: TeamWhereInput
-  teams_some: TeamWhereInput
-  teams_none: TeamWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    division: DivisionWhereInput
+    teams_every: TeamWhereInput
+    teams_some: TeamWhereInput
+    teams_none: TeamWhereInput
 }
 
 input GroupWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 type Issue implements Node {
-  id: ID!
-  name: String!
-  description: String
-  dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type IssueConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [IssueEdge]!
-  aggregate: AggregateIssue!
+    """A list of edges."""
+    edges: [IssueEdge]!
+    aggregate: AggregateIssue!
 }
 
 input IssueCreateInput {
-  name: String!
-  description: String
-  dailyReports: DailyReportCreateManyWithoutIssuesInput
+    name: String!
+    description: String
+    dailyReports: DailyReportCreateManyWithoutIssuesInput
 }
 
 input IssueCreateManyWithoutDailyReportsInput {
-  create: [IssueCreateWithoutDailyReportsInput!]
-  connect: [IssueWhereUniqueInput!]
+    create: [IssueCreateWithoutDailyReportsInput!]
+    connect: [IssueWhereUniqueInput!]
 }
 
 input IssueCreateWithoutDailyReportsInput {
-  name: String!
-  description: String
+    name: String!
+    description: String
 }
 
 """An edge in a connection."""
 type IssueEdge {
-  """The item at the end of the edge."""
-  node: Issue!
+    """The item at the end of the edge."""
+    node: Issue!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum IssueOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
+    description_ASC
+    description_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type IssuePreviousValues {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type IssueSubscriptionPayload {
-  mutation: MutationType!
-  node: Issue
-  updatedFields: [String!]
-  previousValues: IssuePreviousValues
+    mutation: MutationType!
+    node: Issue
+    updatedFields: [String!]
+    previousValues: IssuePreviousValues
 }
 
 input IssueSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [IssueSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [IssueSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [IssueSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [IssueSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [IssueSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [IssueSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: IssueWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: IssueWhereInput
 }
 
 input IssueUpdateInput {
-  name: String
-  description: String
-  dailyReports: DailyReportUpdateManyWithoutIssuesInput
+    name: String
+    description: String
+    dailyReports: DailyReportUpdateManyWithoutIssuesInput
 }
 
 input IssueUpdateManyWithoutDailyReportsInput {
-  create: [IssueCreateWithoutDailyReportsInput!]
-  connect: [IssueWhereUniqueInput!]
-  disconnect: [IssueWhereUniqueInput!]
-  delete: [IssueWhereUniqueInput!]
-  update: [IssueUpdateWithWhereUniqueWithoutDailyReportsInput!]
-  upsert: [IssueUpsertWithWhereUniqueWithoutDailyReportsInput!]
+    create: [IssueCreateWithoutDailyReportsInput!]
+    connect: [IssueWhereUniqueInput!]
+    disconnect: [IssueWhereUniqueInput!]
+    delete: [IssueWhereUniqueInput!]
+    update: [IssueUpdateWithWhereUniqueWithoutDailyReportsInput!]
+    upsert: [IssueUpsertWithWhereUniqueWithoutDailyReportsInput!]
 }
 
 input IssueUpdateWithoutDailyReportsDataInput {
-  name: String
-  description: String
+    name: String
+    description: String
 }
 
 input IssueUpdateWithWhereUniqueWithoutDailyReportsInput {
-  where: IssueWhereUniqueInput!
-  data: IssueUpdateWithoutDailyReportsDataInput!
+    where: IssueWhereUniqueInput!
+    data: IssueUpdateWithoutDailyReportsDataInput!
 }
 
 input IssueUpsertWithWhereUniqueWithoutDailyReportsInput {
-  where: IssueWhereUniqueInput!
-  update: IssueUpdateWithoutDailyReportsDataInput!
-  create: IssueCreateWithoutDailyReportsInput!
+    where: IssueWhereUniqueInput!
+    update: IssueUpdateWithoutDailyReportsDataInput!
+    create: IssueCreateWithoutDailyReportsInput!
 }
 
 input IssueWhereInput {
-  """Logical AND on all given filters."""
-  AND: [IssueWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [IssueWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [IssueWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [IssueWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [IssueWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [IssueWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    name: String
 
-  """All values that are not equal to given value."""
-  name_not: String
+    """All values that are not equal to given value."""
+    name_not: String
 
-  """All values that are contained in given list."""
-  name_in: [String!]
+    """All values that are contained in given list."""
+    name_in: [String!]
 
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
+    """All values that are not contained in given list."""
+    name_not_in: [String!]
 
-  """All values less than the given value."""
-  name_lt: String
+    """All values less than the given value."""
+    name_lt: String
 
-  """All values less than or equal the given value."""
-  name_lte: String
+    """All values less than or equal the given value."""
+    name_lte: String
 
-  """All values greater than the given value."""
-  name_gt: String
+    """All values greater than the given value."""
+    name_gt: String
 
-  """All values greater than or equal the given value."""
-  name_gte: String
+    """All values greater than or equal the given value."""
+    name_gte: String
 
-  """All values containing the given string."""
-  name_contains: String
+    """All values containing the given string."""
+    name_contains: String
 
-  """All values not containing the given string."""
-  name_not_contains: String
+    """All values not containing the given string."""
+    name_not_contains: String
 
-  """All values starting with the given string."""
-  name_starts_with: String
+    """All values starting with the given string."""
+    name_starts_with: String
 
-  """All values not starting with the given string."""
-  name_not_starts_with: String
+    """All values not starting with the given string."""
+    name_not_starts_with: String
 
-  """All values ending with the given string."""
-  name_ends_with: String
+    """All values ending with the given string."""
+    name_ends_with: String
 
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  description: String
+    """All values not ending with the given string."""
+    name_not_ends_with: String
+    description: String
 
-  """All values that are not equal to given value."""
-  description_not: String
+    """All values that are not equal to given value."""
+    description_not: String
 
-  """All values that are contained in given list."""
-  description_in: [String!]
+    """All values that are contained in given list."""
+    description_in: [String!]
 
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
+    """All values that are not contained in given list."""
+    description_not_in: [String!]
 
-  """All values less than the given value."""
-  description_lt: String
+    """All values less than the given value."""
+    description_lt: String
 
-  """All values less than or equal the given value."""
-  description_lte: String
+    """All values less than or equal the given value."""
+    description_lte: String
 
-  """All values greater than the given value."""
-  description_gt: String
+    """All values greater than the given value."""
+    description_gt: String
 
-  """All values greater than or equal the given value."""
-  description_gte: String
+    """All values greater than or equal the given value."""
+    description_gte: String
 
-  """All values containing the given string."""
-  description_contains: String
+    """All values containing the given string."""
+    description_contains: String
 
-  """All values not containing the given string."""
-  description_not_contains: String
+    """All values not containing the given string."""
+    description_not_contains: String
 
-  """All values starting with the given string."""
-  description_starts_with: String
+    """All values starting with the given string."""
+    description_starts_with: String
 
-  """All values not starting with the given string."""
-  description_not_starts_with: String
+    """All values not starting with the given string."""
+    description_not_starts_with: String
 
-  """All values ending with the given string."""
-  description_ends_with: String
+    """All values ending with the given string."""
+    description_ends_with: String
 
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
+    """All values not ending with the given string."""
+    description_not_ends_with: String
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  dailyReports_every: DailyReportWhereInput
-  dailyReports_some: DailyReportWhereInput
-  dailyReports_none: DailyReportWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    dailyReports_every: DailyReportWhereInput
+    dailyReports_some: DailyReportWhereInput
+    dailyReports_none: DailyReportWhereInput
 }
 
 input IssueWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 """Raw JSON value"""
@@ -1584,1528 +1584,1531 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  createDivision(data: DivisionCreateInput!): Division!
-  createGroup(data: GroupCreateInput!): Group!
-  createTeam(data: TeamCreateInput!): Team!
-  createIssue(data: IssueCreateInput!): Issue!
-  createDailyReport(data: DailyReportCreateInput!): DailyReport!
-  createWeeklyReport(data: WeeklyReportCreateInput!): WeeklyReport!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateDivision(data: DivisionUpdateInput!, where: DivisionWhereUniqueInput!): Division
-  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
-  updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
-  updateIssue(data: IssueUpdateInput!, where: IssueWhereUniqueInput!): Issue
-  updateDailyReport(data: DailyReportUpdateInput!, where: DailyReportWhereUniqueInput!): DailyReport
-  updateWeeklyReport(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereUniqueInput!): WeeklyReport
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteDivision(where: DivisionWhereUniqueInput!): Division
-  deleteGroup(where: GroupWhereUniqueInput!): Group
-  deleteTeam(where: TeamWhereUniqueInput!): Team
-  deleteIssue(where: IssueWhereUniqueInput!): Issue
-  deleteDailyReport(where: DailyReportWhereUniqueInput!): DailyReport
-  deleteWeeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertDivision(where: DivisionWhereUniqueInput!, create: DivisionCreateInput!, update: DivisionUpdateInput!): Division!
-  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
-  upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
-  upsertIssue(where: IssueWhereUniqueInput!, create: IssueCreateInput!, update: IssueUpdateInput!): Issue!
-  upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
-  upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyDivisions(data: DivisionUpdateInput!, where: DivisionWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
-  updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
-  updateManyIssues(data: IssueUpdateInput!, where: IssueWhereInput): BatchPayload!
-  updateManyDailyReports(data: DailyReportUpdateInput!, where: DailyReportWhereInput): BatchPayload!
-  updateManyWeeklyReports(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyDivisions(where: DivisionWhereInput): BatchPayload!
-  deleteManyGroups(where: GroupWhereInput): BatchPayload!
-  deleteManyTeams(where: TeamWhereInput): BatchPayload!
-  deleteManyIssues(where: IssueWhereInput): BatchPayload!
-  deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
-  deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
-  executeRaw(database: PrismaDatabase, query: String!): Json!
+    createUser(data: UserCreateInput!): User!
+    createDivision(data: DivisionCreateInput!): Division!
+    createGroup(data: GroupCreateInput!): Group!
+    createTeam(data: TeamCreateInput!): Team!
+    createIssue(data: IssueCreateInput!): Issue!
+    createDailyReport(data: DailyReportCreateInput!): DailyReport!
+    createWeeklyReport(data: WeeklyReportCreateInput!): WeeklyReport!
+    updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+    updateDivision(data: DivisionUpdateInput!, where: DivisionWhereUniqueInput!): Division
+    updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+    updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
+    updateIssue(data: IssueUpdateInput!, where: IssueWhereUniqueInput!): Issue
+    updateDailyReport(data: DailyReportUpdateInput!, where: DailyReportWhereUniqueInput!): DailyReport
+    updateWeeklyReport(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereUniqueInput!): WeeklyReport
+    deleteUser(where: UserWhereUniqueInput!): User
+    deleteDivision(where: DivisionWhereUniqueInput!): Division
+    deleteGroup(where: GroupWhereUniqueInput!): Group
+    deleteTeam(where: TeamWhereUniqueInput!): Team
+    deleteIssue(where: IssueWhereUniqueInput!): Issue
+    deleteDailyReport(where: DailyReportWhereUniqueInput!): DailyReport
+    deleteWeeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
+    upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+    upsertDivision(where: DivisionWhereUniqueInput!, create: DivisionCreateInput!, update: DivisionUpdateInput!): Division!
+    upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+    upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
+    upsertIssue(where: IssueWhereUniqueInput!, create: IssueCreateInput!, update: IssueUpdateInput!): Issue!
+    upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
+    upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
+    updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+    updateManyDivisions(data: DivisionUpdateInput!, where: DivisionWhereInput): BatchPayload!
+    updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
+    updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
+    updateManyIssues(data: IssueUpdateInput!, where: IssueWhereInput): BatchPayload!
+    updateManyDailyReports(data: DailyReportUpdateInput!, where: DailyReportWhereInput): BatchPayload!
+    updateManyWeeklyReports(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereInput): BatchPayload!
+    deleteManyUsers(where: UserWhereInput): BatchPayload!
+    deleteManyDivisions(where: DivisionWhereInput): BatchPayload!
+    deleteManyGroups(where: GroupWhereInput): BatchPayload!
+    deleteManyTeams(where: TeamWhereInput): BatchPayload!
+    deleteManyIssues(where: IssueWhereInput): BatchPayload!
+    deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
+    deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
+    executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
+    CREATED
+    UPDATED
+    DELETED
 }
 
 """An object with an ID"""
 interface Node {
-  """The id of the object."""
-  id: ID!
+    """The id of the object."""
+    id: ID!
 }
 
 """Information about pagination in a connection."""
 type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
+    """When paginating forwards, are there more items?"""
+    hasNextPage: Boolean!
 
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
+    """When paginating backwards, are there more items?"""
+    hasPreviousPage: Boolean!
 
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
+    """When paginating backwards, the cursor to continue."""
+    startCursor: String
 
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
+    """When paginating forwards, the cursor to continue."""
+    endCursor: String
 }
 
 enum PrismaDatabase {
-  default
+    default
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  divisions(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Division]!
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
-  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
-  issues(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Issue]!
-  dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport]!
-  weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport]!
-  user(where: UserWhereUniqueInput!): User
-  division(where: DivisionWhereUniqueInput!): Division
-  group(where: GroupWhereUniqueInput!): Group
-  team(where: TeamWhereUniqueInput!): Team
-  issue(where: IssueWhereUniqueInput!): Issue
-  dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
-  weeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  divisionsConnection(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DivisionConnection!
-  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
-  teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
-  issuesConnection(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IssueConnection!
-  dailyReportsConnection(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyReportConnection!
-  weeklyReportsConnection(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeeklyReportConnection!
+    users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+    divisions(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Division]!
+    groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+    teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
+    issues(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Issue]!
+    dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport]!
+    weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport]!
+    user(where: UserWhereUniqueInput!): User
+    division(where: DivisionWhereUniqueInput!): Division
+    group(where: GroupWhereUniqueInput!): Group
+    team(where: TeamWhereUniqueInput!): Team
+    issue(where: IssueWhereUniqueInput!): Issue
+    dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
+    weeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
+    usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+    divisionsConnection(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DivisionConnection!
+    groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+    teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
+    issuesConnection(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IssueConnection!
+    dailyReportsConnection(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyReportConnection!
+    weeklyReportsConnection(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeeklyReportConnection!
 
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
+    """Fetches an object given its ID"""
+    node(
+        """The ID of an object"""
+        id: ID!
+    ): Node
 }
 
 enum Role {
-  MEMBER
-  TEAM_LEADER
-  GROUP_LEADER
-  ADMIN
+    MEMBER
+    TEAM_LEADER
+    GROUP_LEADER
+    ADMIN
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  division(where: DivisionSubscriptionWhereInput): DivisionSubscriptionPayload
-  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
-  team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
-  issue(where: IssueSubscriptionWhereInput): IssueSubscriptionPayload
-  dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
-  weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
+    user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+    division(where: DivisionSubscriptionWhereInput): DivisionSubscriptionPayload
+    group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+    team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
+    issue(where: IssueSubscriptionWhereInput): IssueSubscriptionPayload
+    dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
+    weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
 }
 
 type Team implements Node {
-  id: ID!
-  name: String!
-  description: String
-  group(where: GroupWhereInput): Group!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    group(where: GroupWhereInput): Group!
+    users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type TeamConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [TeamEdge]!
-  aggregate: AggregateTeam!
+    """A list of edges."""
+    edges: [TeamEdge]!
+    aggregate: AggregateTeam!
 }
 
 input TeamCreateInput {
-  name: String!
-  description: String
-  group: GroupCreateOneWithoutTeamsInput!
-  users: UserCreateManyWithoutTeamInput
+    name: String!
+    description: String
+    group: GroupCreateOneWithoutTeamsInput!
+    users: UserCreateManyWithoutTeamInput
 }
 
 input TeamCreateManyWithoutGroupInput {
-  create: [TeamCreateWithoutGroupInput!]
-  connect: [TeamWhereUniqueInput!]
+    create: [TeamCreateWithoutGroupInput!]
+    connect: [TeamWhereUniqueInput!]
 }
 
 input TeamCreateOneWithoutUsersInput {
-  create: TeamCreateWithoutUsersInput
-  connect: TeamWhereUniqueInput
+    create: TeamCreateWithoutUsersInput
+    connect: TeamWhereUniqueInput
 }
 
 input TeamCreateWithoutGroupInput {
-  name: String!
-  description: String
-  users: UserCreateManyWithoutTeamInput
+    name: String!
+    description: String
+    users: UserCreateManyWithoutTeamInput
 }
 
 input TeamCreateWithoutUsersInput {
-  name: String!
-  description: String
-  group: GroupCreateOneWithoutTeamsInput!
+    name: String!
+    description: String
+    group: GroupCreateOneWithoutTeamsInput!
 }
 
 """An edge in a connection."""
 type TeamEdge {
-  """The item at the end of the edge."""
-  node: Team!
+    """The item at the end of the edge."""
+    node: Team!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum TeamOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
+    description_ASC
+    description_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type TeamPreviousValues {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    description: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type TeamSubscriptionPayload {
-  mutation: MutationType!
-  node: Team
-  updatedFields: [String!]
-  previousValues: TeamPreviousValues
+    mutation: MutationType!
+    node: Team
+    updatedFields: [String!]
+    previousValues: TeamPreviousValues
 }
 
 input TeamSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [TeamSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [TeamSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [TeamSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [TeamSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [TeamSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [TeamSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: TeamWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: TeamWhereInput
 }
 
 input TeamUpdateInput {
-  name: String
-  description: String
-  group: GroupUpdateOneRequiredWithoutTeamsInput
-  users: UserUpdateManyWithoutTeamInput
+    name: String
+    description: String
+    group: GroupUpdateOneRequiredWithoutTeamsInput
+    users: UserUpdateManyWithoutTeamInput
 }
 
 input TeamUpdateManyWithoutGroupInput {
-  create: [TeamCreateWithoutGroupInput!]
-  connect: [TeamWhereUniqueInput!]
-  disconnect: [TeamWhereUniqueInput!]
-  delete: [TeamWhereUniqueInput!]
-  update: [TeamUpdateWithWhereUniqueWithoutGroupInput!]
-  upsert: [TeamUpsertWithWhereUniqueWithoutGroupInput!]
+    create: [TeamCreateWithoutGroupInput!]
+    connect: [TeamWhereUniqueInput!]
+    disconnect: [TeamWhereUniqueInput!]
+    delete: [TeamWhereUniqueInput!]
+    update: [TeamUpdateWithWhereUniqueWithoutGroupInput!]
+    upsert: [TeamUpsertWithWhereUniqueWithoutGroupInput!]
 }
 
-input TeamUpdateOneRequiredWithoutUsersInput {
-  create: TeamCreateWithoutUsersInput
-  connect: TeamWhereUniqueInput
-  update: TeamUpdateWithoutUsersDataInput
-  upsert: TeamUpsertWithoutUsersInput
+input TeamUpdateOneWithoutUsersInput {
+    create: TeamCreateWithoutUsersInput
+    connect: TeamWhereUniqueInput
+    disconnect: Boolean
+    delete: Boolean
+    update: TeamUpdateWithoutUsersDataInput
+    upsert: TeamUpsertWithoutUsersInput
 }
 
 input TeamUpdateWithoutGroupDataInput {
-  name: String
-  description: String
-  users: UserUpdateManyWithoutTeamInput
+    name: String
+    description: String
+    users: UserUpdateManyWithoutTeamInput
 }
 
 input TeamUpdateWithoutUsersDataInput {
-  name: String
-  description: String
-  group: GroupUpdateOneRequiredWithoutTeamsInput
+    name: String
+    description: String
+    group: GroupUpdateOneRequiredWithoutTeamsInput
 }
 
 input TeamUpdateWithWhereUniqueWithoutGroupInput {
-  where: TeamWhereUniqueInput!
-  data: TeamUpdateWithoutGroupDataInput!
+    where: TeamWhereUniqueInput!
+    data: TeamUpdateWithoutGroupDataInput!
 }
 
 input TeamUpsertWithoutUsersInput {
-  update: TeamUpdateWithoutUsersDataInput!
-  create: TeamCreateWithoutUsersInput!
+    update: TeamUpdateWithoutUsersDataInput!
+    create: TeamCreateWithoutUsersInput!
 }
 
 input TeamUpsertWithWhereUniqueWithoutGroupInput {
-  where: TeamWhereUniqueInput!
-  update: TeamUpdateWithoutGroupDataInput!
-  create: TeamCreateWithoutGroupInput!
+    where: TeamWhereUniqueInput!
+    update: TeamUpdateWithoutGroupDataInput!
+    create: TeamCreateWithoutGroupInput!
 }
 
 input TeamWhereInput {
-  """Logical AND on all given filters."""
-  AND: [TeamWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [TeamWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [TeamWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [TeamWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [TeamWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [TeamWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    name: String
 
-  """All values that are not equal to given value."""
-  name_not: String
+    """All values that are not equal to given value."""
+    name_not: String
 
-  """All values that are contained in given list."""
-  name_in: [String!]
+    """All values that are contained in given list."""
+    name_in: [String!]
 
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
+    """All values that are not contained in given list."""
+    name_not_in: [String!]
 
-  """All values less than the given value."""
-  name_lt: String
+    """All values less than the given value."""
+    name_lt: String
 
-  """All values less than or equal the given value."""
-  name_lte: String
+    """All values less than or equal the given value."""
+    name_lte: String
 
-  """All values greater than the given value."""
-  name_gt: String
+    """All values greater than the given value."""
+    name_gt: String
 
-  """All values greater than or equal the given value."""
-  name_gte: String
+    """All values greater than or equal the given value."""
+    name_gte: String
 
-  """All values containing the given string."""
-  name_contains: String
+    """All values containing the given string."""
+    name_contains: String
 
-  """All values not containing the given string."""
-  name_not_contains: String
+    """All values not containing the given string."""
+    name_not_contains: String
 
-  """All values starting with the given string."""
-  name_starts_with: String
+    """All values starting with the given string."""
+    name_starts_with: String
 
-  """All values not starting with the given string."""
-  name_not_starts_with: String
+    """All values not starting with the given string."""
+    name_not_starts_with: String
 
-  """All values ending with the given string."""
-  name_ends_with: String
+    """All values ending with the given string."""
+    name_ends_with: String
 
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  description: String
+    """All values not ending with the given string."""
+    name_not_ends_with: String
+    description: String
 
-  """All values that are not equal to given value."""
-  description_not: String
+    """All values that are not equal to given value."""
+    description_not: String
 
-  """All values that are contained in given list."""
-  description_in: [String!]
+    """All values that are contained in given list."""
+    description_in: [String!]
 
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
+    """All values that are not contained in given list."""
+    description_not_in: [String!]
 
-  """All values less than the given value."""
-  description_lt: String
+    """All values less than the given value."""
+    description_lt: String
 
-  """All values less than or equal the given value."""
-  description_lte: String
+    """All values less than or equal the given value."""
+    description_lte: String
 
-  """All values greater than the given value."""
-  description_gt: String
+    """All values greater than the given value."""
+    description_gt: String
 
-  """All values greater than or equal the given value."""
-  description_gte: String
+    """All values greater than or equal the given value."""
+    description_gte: String
 
-  """All values containing the given string."""
-  description_contains: String
+    """All values containing the given string."""
+    description_contains: String
 
-  """All values not containing the given string."""
-  description_not_contains: String
+    """All values not containing the given string."""
+    description_not_contains: String
 
-  """All values starting with the given string."""
-  description_starts_with: String
+    """All values starting with the given string."""
+    description_starts_with: String
 
-  """All values not starting with the given string."""
-  description_not_starts_with: String
+    """All values not starting with the given string."""
+    description_not_starts_with: String
 
-  """All values ending with the given string."""
-  description_ends_with: String
+    """All values ending with the given string."""
+    description_ends_with: String
 
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
+    """All values not ending with the given string."""
+    description_not_ends_with: String
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  group: GroupWhereInput
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    group: GroupWhereInput
+    users_every: UserWhereInput
+    users_some: UserWhereInput
+    users_none: UserWhereInput
 }
 
 input TeamWhereUniqueInput {
-  id: ID
+    id: ID
 }
 
 type User implements Node {
-  id: ID!
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  role: Role!
-  completed: Boolean!
-  team(where: TeamWhereInput): Team!
-  dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
-  weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    address: String
+    phone: String
+    email: String!
+    avatar: String
+    googleId: String
+    role: Role!
+    completed: Boolean!
+    team(where: TeamWhereInput): Team
+    dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
+    weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type UserConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+    """A list of edges."""
+    edges: [UserEdge]!
+    aggregate: AggregateUser!
 }
 
 input UserCreateInput {
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  team: TeamCreateOneWithoutUsersInput!
-  dailyReports: DailyReportCreateManyWithoutAuthorInput
-  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+    name: String!
+    address: String
+    phone: String
+    email: String!
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    team: TeamCreateOneWithoutUsersInput
+    dailyReports: DailyReportCreateManyWithoutAuthorInput
+    weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
 }
 
 input UserCreateManyWithoutTeamInput {
-  create: [UserCreateWithoutTeamInput!]
-  connect: [UserWhereUniqueInput!]
+    create: [UserCreateWithoutTeamInput!]
+    connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutDailyReportsInput {
-  create: UserCreateWithoutDailyReportsInput
-  connect: UserWhereUniqueInput
+    create: UserCreateWithoutDailyReportsInput
+    connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutWeeklyReportsInput {
-  create: UserCreateWithoutWeeklyReportsInput
-  connect: UserWhereUniqueInput
+    create: UserCreateWithoutWeeklyReportsInput
+    connect: UserWhereUniqueInput
 }
 
 input UserCreateWithoutDailyReportsInput {
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  team: TeamCreateOneWithoutUsersInput!
-  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+    name: String!
+    address: String
+    phone: String
+    email: String!
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    team: TeamCreateOneWithoutUsersInput
+    weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
 }
 
 input UserCreateWithoutTeamInput {
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  dailyReports: DailyReportCreateManyWithoutAuthorInput
-  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+    name: String!
+    address: String
+    phone: String
+    email: String!
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    dailyReports: DailyReportCreateManyWithoutAuthorInput
+    weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
 }
 
 input UserCreateWithoutWeeklyReportsInput {
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  team: TeamCreateOneWithoutUsersInput!
-  dailyReports: DailyReportCreateManyWithoutAuthorInput
+    name: String!
+    address: String
+    phone: String
+    email: String!
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    team: TeamCreateOneWithoutUsersInput
+    dailyReports: DailyReportCreateManyWithoutAuthorInput
 }
 
 """An edge in a connection."""
 type UserEdge {
-  """The item at the end of the edge."""
-  node: User!
+    """The item at the end of the edge."""
+    node: User!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum UserOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  address_ASC
-  address_DESC
-  phone_ASC
-  phone_DESC
-  email_ASC
-  email_DESC
-  avatar_ASC
-  avatar_DESC
-  googleId_ASC
-  googleId_DESC
-  role_ASC
-  role_DESC
-  completed_ASC
-  completed_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    name_ASC
+    name_DESC
+    address_ASC
+    address_DESC
+    phone_ASC
+    phone_DESC
+    email_ASC
+    email_DESC
+    avatar_ASC
+    avatar_DESC
+    googleId_ASC
+    googleId_DESC
+    role_ASC
+    role_DESC
+    completed_ASC
+    completed_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type UserPreviousValues {
-  id: ID!
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  role: Role!
-  completed: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    name: String!
+    address: String
+    phone: String
+    email: String!
+    avatar: String
+    googleId: String
+    role: Role!
+    completed: Boolean!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
-  mutation: MutationType!
-  node: User
-  updatedFields: [String!]
-  previousValues: UserPreviousValues
+    mutation: MutationType!
+    node: User
+    updatedFields: [String!]
+    previousValues: UserPreviousValues
 }
 
 input UserSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [UserSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [UserSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [UserSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [UserSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: UserWhereInput
 }
 
 input UserUpdateInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  team: TeamUpdateOneRequiredWithoutUsersInput
-  dailyReports: DailyReportUpdateManyWithoutAuthorInput
-  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+    name: String
+    address: String
+    phone: String
+    email: String
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    team: TeamUpdateOneWithoutUsersInput
+    dailyReports: DailyReportUpdateManyWithoutAuthorInput
+    weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyWithoutTeamInput {
-  create: [UserCreateWithoutTeamInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutTeamInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutTeamInput!]
+    create: [UserCreateWithoutTeamInput!]
+    connect: [UserWhereUniqueInput!]
+    disconnect: [UserWhereUniqueInput!]
+    delete: [UserWhereUniqueInput!]
+    update: [UserUpdateWithWhereUniqueWithoutTeamInput!]
+    upsert: [UserUpsertWithWhereUniqueWithoutTeamInput!]
 }
 
 input UserUpdateOneRequiredWithoutDailyReportsInput {
-  create: UserCreateWithoutDailyReportsInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutDailyReportsDataInput
-  upsert: UserUpsertWithoutDailyReportsInput
+    create: UserCreateWithoutDailyReportsInput
+    connect: UserWhereUniqueInput
+    update: UserUpdateWithoutDailyReportsDataInput
+    upsert: UserUpsertWithoutDailyReportsInput
 }
 
 input UserUpdateOneRequiredWithoutWeeklyReportsInput {
-  create: UserCreateWithoutWeeklyReportsInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutWeeklyReportsDataInput
-  upsert: UserUpsertWithoutWeeklyReportsInput
+    create: UserCreateWithoutWeeklyReportsInput
+    connect: UserWhereUniqueInput
+    update: UserUpdateWithoutWeeklyReportsDataInput
+    upsert: UserUpsertWithoutWeeklyReportsInput
 }
 
 input UserUpdateWithoutDailyReportsDataInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  team: TeamUpdateOneRequiredWithoutUsersInput
-  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+    name: String
+    address: String
+    phone: String
+    email: String
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    team: TeamUpdateOneWithoutUsersInput
+    weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithoutTeamDataInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  dailyReports: DailyReportUpdateManyWithoutAuthorInput
-  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+    name: String
+    address: String
+    phone: String
+    email: String
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    dailyReports: DailyReportUpdateManyWithoutAuthorInput
+    weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithoutWeeklyReportsDataInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  role: Role
-  completed: Boolean
-  team: TeamUpdateOneRequiredWithoutUsersInput
-  dailyReports: DailyReportUpdateManyWithoutAuthorInput
+    name: String
+    address: String
+    phone: String
+    email: String
+    avatar: String
+    googleId: String
+    role: Role
+    completed: Boolean
+    team: TeamUpdateOneWithoutUsersInput
+    dailyReports: DailyReportUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithWhereUniqueWithoutTeamInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutTeamDataInput!
+    where: UserWhereUniqueInput!
+    data: UserUpdateWithoutTeamDataInput!
 }
 
 input UserUpsertWithoutDailyReportsInput {
-  update: UserUpdateWithoutDailyReportsDataInput!
-  create: UserCreateWithoutDailyReportsInput!
+    update: UserUpdateWithoutDailyReportsDataInput!
+    create: UserCreateWithoutDailyReportsInput!
 }
 
 input UserUpsertWithoutWeeklyReportsInput {
-  update: UserUpdateWithoutWeeklyReportsDataInput!
-  create: UserCreateWithoutWeeklyReportsInput!
+    update: UserUpdateWithoutWeeklyReportsDataInput!
+    create: UserCreateWithoutWeeklyReportsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutTeamInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutTeamDataInput!
-  create: UserCreateWithoutTeamInput!
+    where: UserWhereUniqueInput!
+    update: UserUpdateWithoutTeamDataInput!
+    create: UserCreateWithoutTeamInput!
 }
 
 input UserWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [UserWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [UserWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [UserWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [UserWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    name: String
 
-  """All values that are not equal to given value."""
-  name_not: String
+    """All values that are not equal to given value."""
+    name_not: String
 
-  """All values that are contained in given list."""
-  name_in: [String!]
+    """All values that are contained in given list."""
+    name_in: [String!]
 
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
+    """All values that are not contained in given list."""
+    name_not_in: [String!]
 
-  """All values less than the given value."""
-  name_lt: String
+    """All values less than the given value."""
+    name_lt: String
 
-  """All values less than or equal the given value."""
-  name_lte: String
+    """All values less than or equal the given value."""
+    name_lte: String
 
-  """All values greater than the given value."""
-  name_gt: String
+    """All values greater than the given value."""
+    name_gt: String
 
-  """All values greater than or equal the given value."""
-  name_gte: String
+    """All values greater than or equal the given value."""
+    name_gte: String
 
-  """All values containing the given string."""
-  name_contains: String
+    """All values containing the given string."""
+    name_contains: String
 
-  """All values not containing the given string."""
-  name_not_contains: String
+    """All values not containing the given string."""
+    name_not_contains: String
 
-  """All values starting with the given string."""
-  name_starts_with: String
+    """All values starting with the given string."""
+    name_starts_with: String
 
-  """All values not starting with the given string."""
-  name_not_starts_with: String
+    """All values not starting with the given string."""
+    name_not_starts_with: String
 
-  """All values ending with the given string."""
-  name_ends_with: String
+    """All values ending with the given string."""
+    name_ends_with: String
 
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  address: String
+    """All values not ending with the given string."""
+    name_not_ends_with: String
+    address: String
 
-  """All values that are not equal to given value."""
-  address_not: String
+    """All values that are not equal to given value."""
+    address_not: String
 
-  """All values that are contained in given list."""
-  address_in: [String!]
+    """All values that are contained in given list."""
+    address_in: [String!]
 
-  """All values that are not contained in given list."""
-  address_not_in: [String!]
+    """All values that are not contained in given list."""
+    address_not_in: [String!]
 
-  """All values less than the given value."""
-  address_lt: String
+    """All values less than the given value."""
+    address_lt: String
 
-  """All values less than or equal the given value."""
-  address_lte: String
+    """All values less than or equal the given value."""
+    address_lte: String
 
-  """All values greater than the given value."""
-  address_gt: String
+    """All values greater than the given value."""
+    address_gt: String
 
-  """All values greater than or equal the given value."""
-  address_gte: String
+    """All values greater than or equal the given value."""
+    address_gte: String
 
-  """All values containing the given string."""
-  address_contains: String
+    """All values containing the given string."""
+    address_contains: String
 
-  """All values not containing the given string."""
-  address_not_contains: String
+    """All values not containing the given string."""
+    address_not_contains: String
 
-  """All values starting with the given string."""
-  address_starts_with: String
+    """All values starting with the given string."""
+    address_starts_with: String
 
-  """All values not starting with the given string."""
-  address_not_starts_with: String
+    """All values not starting with the given string."""
+    address_not_starts_with: String
 
-  """All values ending with the given string."""
-  address_ends_with: String
+    """All values ending with the given string."""
+    address_ends_with: String
 
-  """All values not ending with the given string."""
-  address_not_ends_with: String
-  phone: String
+    """All values not ending with the given string."""
+    address_not_ends_with: String
+    phone: String
 
-  """All values that are not equal to given value."""
-  phone_not: String
+    """All values that are not equal to given value."""
+    phone_not: String
 
-  """All values that are contained in given list."""
-  phone_in: [String!]
+    """All values that are contained in given list."""
+    phone_in: [String!]
 
-  """All values that are not contained in given list."""
-  phone_not_in: [String!]
+    """All values that are not contained in given list."""
+    phone_not_in: [String!]
 
-  """All values less than the given value."""
-  phone_lt: String
+    """All values less than the given value."""
+    phone_lt: String
 
-  """All values less than or equal the given value."""
-  phone_lte: String
+    """All values less than or equal the given value."""
+    phone_lte: String
 
-  """All values greater than the given value."""
-  phone_gt: String
+    """All values greater than the given value."""
+    phone_gt: String
 
-  """All values greater than or equal the given value."""
-  phone_gte: String
+    """All values greater than or equal the given value."""
+    phone_gte: String
 
-  """All values containing the given string."""
-  phone_contains: String
+    """All values containing the given string."""
+    phone_contains: String
 
-  """All values not containing the given string."""
-  phone_not_contains: String
+    """All values not containing the given string."""
+    phone_not_contains: String
 
-  """All values starting with the given string."""
-  phone_starts_with: String
+    """All values starting with the given string."""
+    phone_starts_with: String
 
-  """All values not starting with the given string."""
-  phone_not_starts_with: String
+    """All values not starting with the given string."""
+    phone_not_starts_with: String
 
-  """All values ending with the given string."""
-  phone_ends_with: String
+    """All values ending with the given string."""
+    phone_ends_with: String
 
-  """All values not ending with the given string."""
-  phone_not_ends_with: String
-  email: String
+    """All values not ending with the given string."""
+    phone_not_ends_with: String
+    email: String
 
-  """All values that are not equal to given value."""
-  email_not: String
+    """All values that are not equal to given value."""
+    email_not: String
 
-  """All values that are contained in given list."""
-  email_in: [String!]
+    """All values that are contained in given list."""
+    email_in: [String!]
 
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
+    """All values that are not contained in given list."""
+    email_not_in: [String!]
 
-  """All values less than the given value."""
-  email_lt: String
+    """All values less than the given value."""
+    email_lt: String
 
-  """All values less than or equal the given value."""
-  email_lte: String
+    """All values less than or equal the given value."""
+    email_lte: String
 
-  """All values greater than the given value."""
-  email_gt: String
+    """All values greater than the given value."""
+    email_gt: String
 
-  """All values greater than or equal the given value."""
-  email_gte: String
+    """All values greater than or equal the given value."""
+    email_gte: String
 
-  """All values containing the given string."""
-  email_contains: String
+    """All values containing the given string."""
+    email_contains: String
 
-  """All values not containing the given string."""
-  email_not_contains: String
+    """All values not containing the given string."""
+    email_not_contains: String
 
-  """All values starting with the given string."""
-  email_starts_with: String
+    """All values starting with the given string."""
+    email_starts_with: String
 
-  """All values not starting with the given string."""
-  email_not_starts_with: String
+    """All values not starting with the given string."""
+    email_not_starts_with: String
 
-  """All values ending with the given string."""
-  email_ends_with: String
+    """All values ending with the given string."""
+    email_ends_with: String
 
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  avatar: String
+    """All values not ending with the given string."""
+    email_not_ends_with: String
+    avatar: String
 
-  """All values that are not equal to given value."""
-  avatar_not: String
+    """All values that are not equal to given value."""
+    avatar_not: String
 
-  """All values that are contained in given list."""
-  avatar_in: [String!]
+    """All values that are contained in given list."""
+    avatar_in: [String!]
 
-  """All values that are not contained in given list."""
-  avatar_not_in: [String!]
+    """All values that are not contained in given list."""
+    avatar_not_in: [String!]
 
-  """All values less than the given value."""
-  avatar_lt: String
+    """All values less than the given value."""
+    avatar_lt: String
 
-  """All values less than or equal the given value."""
-  avatar_lte: String
+    """All values less than or equal the given value."""
+    avatar_lte: String
 
-  """All values greater than the given value."""
-  avatar_gt: String
+    """All values greater than the given value."""
+    avatar_gt: String
 
-  """All values greater than or equal the given value."""
-  avatar_gte: String
+    """All values greater than or equal the given value."""
+    avatar_gte: String
 
-  """All values containing the given string."""
-  avatar_contains: String
+    """All values containing the given string."""
+    avatar_contains: String
 
-  """All values not containing the given string."""
-  avatar_not_contains: String
+    """All values not containing the given string."""
+    avatar_not_contains: String
 
-  """All values starting with the given string."""
-  avatar_starts_with: String
+    """All values starting with the given string."""
+    avatar_starts_with: String
 
-  """All values not starting with the given string."""
-  avatar_not_starts_with: String
+    """All values not starting with the given string."""
+    avatar_not_starts_with: String
 
-  """All values ending with the given string."""
-  avatar_ends_with: String
+    """All values ending with the given string."""
+    avatar_ends_with: String
 
-  """All values not ending with the given string."""
-  avatar_not_ends_with: String
-  googleId: String
+    """All values not ending with the given string."""
+    avatar_not_ends_with: String
+    googleId: String
 
-  """All values that are not equal to given value."""
-  googleId_not: String
+    """All values that are not equal to given value."""
+    googleId_not: String
 
-  """All values that are contained in given list."""
-  googleId_in: [String!]
+    """All values that are contained in given list."""
+    googleId_in: [String!]
 
-  """All values that are not contained in given list."""
-  googleId_not_in: [String!]
+    """All values that are not contained in given list."""
+    googleId_not_in: [String!]
 
-  """All values less than the given value."""
-  googleId_lt: String
+    """All values less than the given value."""
+    googleId_lt: String
 
-  """All values less than or equal the given value."""
-  googleId_lte: String
+    """All values less than or equal the given value."""
+    googleId_lte: String
 
-  """All values greater than the given value."""
-  googleId_gt: String
+    """All values greater than the given value."""
+    googleId_gt: String
 
-  """All values greater than or equal the given value."""
-  googleId_gte: String
+    """All values greater than or equal the given value."""
+    googleId_gte: String
 
-  """All values containing the given string."""
-  googleId_contains: String
+    """All values containing the given string."""
+    googleId_contains: String
 
-  """All values not containing the given string."""
-  googleId_not_contains: String
+    """All values not containing the given string."""
+    googleId_not_contains: String
 
-  """All values starting with the given string."""
-  googleId_starts_with: String
+    """All values starting with the given string."""
+    googleId_starts_with: String
 
-  """All values not starting with the given string."""
-  googleId_not_starts_with: String
+    """All values not starting with the given string."""
+    googleId_not_starts_with: String
 
-  """All values ending with the given string."""
-  googleId_ends_with: String
+    """All values ending with the given string."""
+    googleId_ends_with: String
 
-  """All values not ending with the given string."""
-  googleId_not_ends_with: String
-  role: Role
+    """All values not ending with the given string."""
+    googleId_not_ends_with: String
+    role: Role
 
-  """All values that are not equal to given value."""
-  role_not: Role
+    """All values that are not equal to given value."""
+    role_not: Role
 
-  """All values that are contained in given list."""
-  role_in: [Role!]
+    """All values that are contained in given list."""
+    role_in: [Role!]
 
-  """All values that are not contained in given list."""
-  role_not_in: [Role!]
-  completed: Boolean
+    """All values that are not contained in given list."""
+    role_not_in: [Role!]
+    completed: Boolean
 
-  """All values that are not equal to given value."""
-  completed_not: Boolean
-  createdAt: DateTime
+    """All values that are not equal to given value."""
+    completed_not: Boolean
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  team: TeamWhereInput
-  dailyReports_every: DailyReportWhereInput
-  dailyReports_some: DailyReportWhereInput
-  dailyReports_none: DailyReportWhereInput
-  weeklyReports_every: WeeklyReportWhereInput
-  weeklyReports_some: WeeklyReportWhereInput
-  weeklyReports_none: WeeklyReportWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    team: TeamWhereInput
+    dailyReports_every: DailyReportWhereInput
+    dailyReports_some: DailyReportWhereInput
+    dailyReports_none: DailyReportWhereInput
+    weeklyReports_every: WeeklyReportWhereInput
+    weeklyReports_some: WeeklyReportWhereInput
+    weeklyReports_none: WeeklyReportWhereInput
 }
 
 input UserWhereUniqueInput {
-  id: ID
-  email: String
+    id: ID
+    email: String
+    googleId: String
 }
 
 type WeeklyReport implements Node {
-  id: ID!
-  issue: String!
-  solution: String!
-  description: String
-  summary: String!
-  author(where: UserWhereInput): User!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    issue: String!
+    solution: String!
+    description: String
+    summary: String!
+    author(where: UserWhereInput): User!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
 type WeeklyReportConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
+    """Information to aid in pagination."""
+    pageInfo: PageInfo!
 
-  """A list of edges."""
-  edges: [WeeklyReportEdge]!
-  aggregate: AggregateWeeklyReport!
+    """A list of edges."""
+    edges: [WeeklyReportEdge]!
+    aggregate: AggregateWeeklyReport!
 }
 
 input WeeklyReportCreateInput {
-  issue: String!
-  solution: String!
-  description: String
-  summary: String!
-  author: UserCreateOneWithoutWeeklyReportsInput!
+    issue: String!
+    solution: String!
+    description: String
+    summary: String!
+    author: UserCreateOneWithoutWeeklyReportsInput!
 }
 
 input WeeklyReportCreateManyWithoutAuthorInput {
-  create: [WeeklyReportCreateWithoutAuthorInput!]
-  connect: [WeeklyReportWhereUniqueInput!]
+    create: [WeeklyReportCreateWithoutAuthorInput!]
+    connect: [WeeklyReportWhereUniqueInput!]
 }
 
 input WeeklyReportCreateWithoutAuthorInput {
-  issue: String!
-  solution: String!
-  description: String
-  summary: String!
+    issue: String!
+    solution: String!
+    description: String
+    summary: String!
 }
 
 """An edge in a connection."""
 type WeeklyReportEdge {
-  """The item at the end of the edge."""
-  node: WeeklyReport!
+    """The item at the end of the edge."""
+    node: WeeklyReport!
 
-  """A cursor for use in pagination."""
-  cursor: String!
+    """A cursor for use in pagination."""
+    cursor: String!
 }
 
 enum WeeklyReportOrderByInput {
-  id_ASC
-  id_DESC
-  issue_ASC
-  issue_DESC
-  solution_ASC
-  solution_DESC
-  description_ASC
-  description_DESC
-  summary_ASC
-  summary_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+    id_ASC
+    id_DESC
+    issue_ASC
+    issue_DESC
+    solution_ASC
+    solution_DESC
+    description_ASC
+    description_DESC
+    summary_ASC
+    summary_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
 }
 
 type WeeklyReportPreviousValues {
-  id: ID!
-  issue: String!
-  solution: String!
-  description: String
-  summary: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+    id: ID!
+    issue: String!
+    solution: String!
+    description: String
+    summary: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type WeeklyReportSubscriptionPayload {
-  mutation: MutationType!
-  node: WeeklyReport
-  updatedFields: [String!]
-  previousValues: WeeklyReportPreviousValues
+    mutation: MutationType!
+    node: WeeklyReport
+    updatedFields: [String!]
+    previousValues: WeeklyReportPreviousValues
 }
 
 input WeeklyReportSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [WeeklyReportSubscriptionWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [WeeklyReportSubscriptionWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [WeeklyReportSubscriptionWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [WeeklyReportSubscriptionWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [WeeklyReportSubscriptionWhereInput!]
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [WeeklyReportSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
+    """
+    The subscription event gets dispatched when it's listed in mutation_in
+    """
+    mutation_in: [MutationType!]
 
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
+    """
+    The subscription event gets only dispatched when one of the updated fields names is included in this list
+    """
+    updatedFields_contains: String
 
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
+    """
+    The subscription event gets only dispatched when all of the field names included in this list have been updated
+    """
+    updatedFields_contains_every: [String!]
 
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: WeeklyReportWhereInput
+    """
+    The subscription event gets only dispatched when some of the field names included in this list have been updated
+    """
+    updatedFields_contains_some: [String!]
+    node: WeeklyReportWhereInput
 }
 
 input WeeklyReportUpdateInput {
-  issue: String
-  solution: String
-  description: String
-  summary: String
-  author: UserUpdateOneRequiredWithoutWeeklyReportsInput
+    issue: String
+    solution: String
+    description: String
+    summary: String
+    author: UserUpdateOneRequiredWithoutWeeklyReportsInput
 }
 
 input WeeklyReportUpdateManyWithoutAuthorInput {
-  create: [WeeklyReportCreateWithoutAuthorInput!]
-  connect: [WeeklyReportWhereUniqueInput!]
-  disconnect: [WeeklyReportWhereUniqueInput!]
-  delete: [WeeklyReportWhereUniqueInput!]
-  update: [WeeklyReportUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [WeeklyReportUpsertWithWhereUniqueWithoutAuthorInput!]
+    create: [WeeklyReportCreateWithoutAuthorInput!]
+    connect: [WeeklyReportWhereUniqueInput!]
+    disconnect: [WeeklyReportWhereUniqueInput!]
+    delete: [WeeklyReportWhereUniqueInput!]
+    update: [WeeklyReportUpdateWithWhereUniqueWithoutAuthorInput!]
+    upsert: [WeeklyReportUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input WeeklyReportUpdateWithoutAuthorDataInput {
-  issue: String
-  solution: String
-  description: String
-  summary: String
+    issue: String
+    solution: String
+    description: String
+    summary: String
 }
 
 input WeeklyReportUpdateWithWhereUniqueWithoutAuthorInput {
-  where: WeeklyReportWhereUniqueInput!
-  data: WeeklyReportUpdateWithoutAuthorDataInput!
+    where: WeeklyReportWhereUniqueInput!
+    data: WeeklyReportUpdateWithoutAuthorDataInput!
 }
 
 input WeeklyReportUpsertWithWhereUniqueWithoutAuthorInput {
-  where: WeeklyReportWhereUniqueInput!
-  update: WeeklyReportUpdateWithoutAuthorDataInput!
-  create: WeeklyReportCreateWithoutAuthorInput!
+    where: WeeklyReportWhereUniqueInput!
+    update: WeeklyReportUpdateWithoutAuthorDataInput!
+    create: WeeklyReportCreateWithoutAuthorInput!
 }
 
 input WeeklyReportWhereInput {
-  """Logical AND on all given filters."""
-  AND: [WeeklyReportWhereInput!]
+    """Logical AND on all given filters."""
+    AND: [WeeklyReportWhereInput!]
 
-  """Logical OR on all given filters."""
-  OR: [WeeklyReportWhereInput!]
+    """Logical OR on all given filters."""
+    OR: [WeeklyReportWhereInput!]
 
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [WeeklyReportWhereInput!]
-  id: ID
+    """Logical NOT on all given filters combined by AND."""
+    NOT: [WeeklyReportWhereInput!]
+    id: ID
 
-  """All values that are not equal to given value."""
-  id_not: ID
+    """All values that are not equal to given value."""
+    id_not: ID
 
-  """All values that are contained in given list."""
-  id_in: [ID!]
+    """All values that are contained in given list."""
+    id_in: [ID!]
 
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
+    """All values that are not contained in given list."""
+    id_not_in: [ID!]
 
-  """All values less than the given value."""
-  id_lt: ID
+    """All values less than the given value."""
+    id_lt: ID
 
-  """All values less than or equal the given value."""
-  id_lte: ID
+    """All values less than or equal the given value."""
+    id_lte: ID
 
-  """All values greater than the given value."""
-  id_gt: ID
+    """All values greater than the given value."""
+    id_gt: ID
 
-  """All values greater than or equal the given value."""
-  id_gte: ID
+    """All values greater than or equal the given value."""
+    id_gte: ID
 
-  """All values containing the given string."""
-  id_contains: ID
+    """All values containing the given string."""
+    id_contains: ID
 
-  """All values not containing the given string."""
-  id_not_contains: ID
+    """All values not containing the given string."""
+    id_not_contains: ID
 
-  """All values starting with the given string."""
-  id_starts_with: ID
+    """All values starting with the given string."""
+    id_starts_with: ID
 
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
+    """All values not starting with the given string."""
+    id_not_starts_with: ID
 
-  """All values ending with the given string."""
-  id_ends_with: ID
+    """All values ending with the given string."""
+    id_ends_with: ID
 
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  issue: String
+    """All values not ending with the given string."""
+    id_not_ends_with: ID
+    issue: String
 
-  """All values that are not equal to given value."""
-  issue_not: String
+    """All values that are not equal to given value."""
+    issue_not: String
 
-  """All values that are contained in given list."""
-  issue_in: [String!]
+    """All values that are contained in given list."""
+    issue_in: [String!]
 
-  """All values that are not contained in given list."""
-  issue_not_in: [String!]
+    """All values that are not contained in given list."""
+    issue_not_in: [String!]
 
-  """All values less than the given value."""
-  issue_lt: String
+    """All values less than the given value."""
+    issue_lt: String
 
-  """All values less than or equal the given value."""
-  issue_lte: String
+    """All values less than or equal the given value."""
+    issue_lte: String
 
-  """All values greater than the given value."""
-  issue_gt: String
+    """All values greater than the given value."""
+    issue_gt: String
 
-  """All values greater than or equal the given value."""
-  issue_gte: String
+    """All values greater than or equal the given value."""
+    issue_gte: String
 
-  """All values containing the given string."""
-  issue_contains: String
+    """All values containing the given string."""
+    issue_contains: String
 
-  """All values not containing the given string."""
-  issue_not_contains: String
+    """All values not containing the given string."""
+    issue_not_contains: String
 
-  """All values starting with the given string."""
-  issue_starts_with: String
+    """All values starting with the given string."""
+    issue_starts_with: String
 
-  """All values not starting with the given string."""
-  issue_not_starts_with: String
+    """All values not starting with the given string."""
+    issue_not_starts_with: String
 
-  """All values ending with the given string."""
-  issue_ends_with: String
+    """All values ending with the given string."""
+    issue_ends_with: String
 
-  """All values not ending with the given string."""
-  issue_not_ends_with: String
-  solution: String
+    """All values not ending with the given string."""
+    issue_not_ends_with: String
+    solution: String
 
-  """All values that are not equal to given value."""
-  solution_not: String
+    """All values that are not equal to given value."""
+    solution_not: String
 
-  """All values that are contained in given list."""
-  solution_in: [String!]
+    """All values that are contained in given list."""
+    solution_in: [String!]
 
-  """All values that are not contained in given list."""
-  solution_not_in: [String!]
+    """All values that are not contained in given list."""
+    solution_not_in: [String!]
 
-  """All values less than the given value."""
-  solution_lt: String
+    """All values less than the given value."""
+    solution_lt: String
 
-  """All values less than or equal the given value."""
-  solution_lte: String
+    """All values less than or equal the given value."""
+    solution_lte: String
 
-  """All values greater than the given value."""
-  solution_gt: String
+    """All values greater than the given value."""
+    solution_gt: String
 
-  """All values greater than or equal the given value."""
-  solution_gte: String
+    """All values greater than or equal the given value."""
+    solution_gte: String
 
-  """All values containing the given string."""
-  solution_contains: String
+    """All values containing the given string."""
+    solution_contains: String
 
-  """All values not containing the given string."""
-  solution_not_contains: String
+    """All values not containing the given string."""
+    solution_not_contains: String
 
-  """All values starting with the given string."""
-  solution_starts_with: String
+    """All values starting with the given string."""
+    solution_starts_with: String
 
-  """All values not starting with the given string."""
-  solution_not_starts_with: String
+    """All values not starting with the given string."""
+    solution_not_starts_with: String
 
-  """All values ending with the given string."""
-  solution_ends_with: String
+    """All values ending with the given string."""
+    solution_ends_with: String
 
-  """All values not ending with the given string."""
-  solution_not_ends_with: String
-  description: String
+    """All values not ending with the given string."""
+    solution_not_ends_with: String
+    description: String
 
-  """All values that are not equal to given value."""
-  description_not: String
+    """All values that are not equal to given value."""
+    description_not: String
 
-  """All values that are contained in given list."""
-  description_in: [String!]
+    """All values that are contained in given list."""
+    description_in: [String!]
 
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
+    """All values that are not contained in given list."""
+    description_not_in: [String!]
 
-  """All values less than the given value."""
-  description_lt: String
+    """All values less than the given value."""
+    description_lt: String
 
-  """All values less than or equal the given value."""
-  description_lte: String
+    """All values less than or equal the given value."""
+    description_lte: String
 
-  """All values greater than the given value."""
-  description_gt: String
+    """All values greater than the given value."""
+    description_gt: String
 
-  """All values greater than or equal the given value."""
-  description_gte: String
+    """All values greater than or equal the given value."""
+    description_gte: String
 
-  """All values containing the given string."""
-  description_contains: String
+    """All values containing the given string."""
+    description_contains: String
 
-  """All values not containing the given string."""
-  description_not_contains: String
+    """All values not containing the given string."""
+    description_not_contains: String
 
-  """All values starting with the given string."""
-  description_starts_with: String
+    """All values starting with the given string."""
+    description_starts_with: String
 
-  """All values not starting with the given string."""
-  description_not_starts_with: String
+    """All values not starting with the given string."""
+    description_not_starts_with: String
 
-  """All values ending with the given string."""
-  description_ends_with: String
+    """All values ending with the given string."""
+    description_ends_with: String
 
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  summary: String
+    """All values not ending with the given string."""
+    description_not_ends_with: String
+    summary: String
 
-  """All values that are not equal to given value."""
-  summary_not: String
+    """All values that are not equal to given value."""
+    summary_not: String
 
-  """All values that are contained in given list."""
-  summary_in: [String!]
+    """All values that are contained in given list."""
+    summary_in: [String!]
 
-  """All values that are not contained in given list."""
-  summary_not_in: [String!]
+    """All values that are not contained in given list."""
+    summary_not_in: [String!]
 
-  """All values less than the given value."""
-  summary_lt: String
+    """All values less than the given value."""
+    summary_lt: String
 
-  """All values less than or equal the given value."""
-  summary_lte: String
+    """All values less than or equal the given value."""
+    summary_lte: String
 
-  """All values greater than the given value."""
-  summary_gt: String
+    """All values greater than the given value."""
+    summary_gt: String
 
-  """All values greater than or equal the given value."""
-  summary_gte: String
+    """All values greater than or equal the given value."""
+    summary_gte: String
 
-  """All values containing the given string."""
-  summary_contains: String
+    """All values containing the given string."""
+    summary_contains: String
 
-  """All values not containing the given string."""
-  summary_not_contains: String
+    """All values not containing the given string."""
+    summary_not_contains: String
 
-  """All values starting with the given string."""
-  summary_starts_with: String
+    """All values starting with the given string."""
+    summary_starts_with: String
 
-  """All values not starting with the given string."""
-  summary_not_starts_with: String
+    """All values not starting with the given string."""
+    summary_not_starts_with: String
 
-  """All values ending with the given string."""
-  summary_ends_with: String
+    """All values ending with the given string."""
+    summary_ends_with: String
 
-  """All values not ending with the given string."""
-  summary_not_ends_with: String
-  createdAt: DateTime
+    """All values not ending with the given string."""
+    summary_not_ends_with: String
+    createdAt: DateTime
 
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
+    """All values that are not equal to given value."""
+    createdAt_not: DateTime
 
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    createdAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    createdAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  createdAt_lt: DateTime
+    """All values less than the given value."""
+    createdAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
+    """All values less than or equal the given value."""
+    createdAt_lte: DateTime
 
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
+    """All values greater than the given value."""
+    createdAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
+    """All values greater than or equal the given value."""
+    createdAt_gte: DateTime
+    updatedAt: DateTime
 
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
+    """All values that are not equal to given value."""
+    updatedAt_not: DateTime
 
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
+    """All values that are contained in given list."""
+    updatedAt_in: [DateTime!]
 
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
+    """All values that are not contained in given list."""
+    updatedAt_not_in: [DateTime!]
 
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
+    """All values less than the given value."""
+    updatedAt_lt: DateTime
 
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
+    """All values less than or equal the given value."""
+    updatedAt_lte: DateTime
 
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
+    """All values greater than the given value."""
+    updatedAt_gt: DateTime
 
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  author: UserWhereInput
+    """All values greater than or equal the given value."""
+    updatedAt_gte: DateTime
+    author: UserWhereInput
 }
 
 input WeeklyReportWhereUniqueInput {
-  id: ID
+    id: ID
 }

@@ -12,10 +12,10 @@ type User {
     phone: String
     email: String! @unique
     avatar: String
-    googleId: String
+    googleId: String @unique
     role: Role! @default(value: "MEMBER")
     completed: Boolean! @default(value: "false")
-    team: Team! @relation(name: "UsersOfTeam" onDelete: CASCADE)
+    team: Team @relation(name: "UsersOfTeam" onDelete: CASCADE)
     dailyReports: [DailyReport!]! @relation(name: "DailyReportsByUser" onDelete: CASCADE)
     weeklyReports: [WeeklyReport!]! @relation(name: "WeeklyReportsByUser" onDelete: CASCADE)
     createdAt: DateTime!

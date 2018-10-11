@@ -1,4 +1,19 @@
-# import Division from "./generated/prisma.graphql"
+# import User, Division from "./generated/prisma.graphql"
+
+input createDivisionInput{
+    name: String!
+    description: String
+}
+
+input updateDivisionInput {
+    id: ID!
+    name: String
+    description: String
+}
+
+input deleteDivisionInput {
+    id: ID!
+}
 
 input createDivisionInput{
     name: String!
@@ -25,7 +40,11 @@ type Mutation {
     createDivision(data: createDivisionInput!): Division!
     updateDivision(data: updateDivisionInput!): Division
     deleteDivision(data: deleteDivisionInput!): Division
+    authenticate(googleCode: String!): AuthenticateUserPayload
 }
 
-
+type AuthenticateUserPayload {
+    user: User!
+    token: String!
+}
 
