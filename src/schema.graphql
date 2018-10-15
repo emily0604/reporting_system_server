@@ -34,17 +34,17 @@ type Query {
     info: String!,
     divisions: [Division!]!
     division(id: ID!): Division
+    me: User
 }
 
 type Mutation {
     createDivision(data: createDivisionInput!): Division!
     updateDivision(data: updateDivisionInput!): Division
     deleteDivision(data: deleteDivisionInput!): Division
-    authenticate(googleCode: String!): AuthenticateUserPayload
+    authenticate(googleCode: String!): AuthPayload
 }
 
-type AuthenticateUserPayload {
+type AuthPayload {
     user: User!
-    token: String!
 }
 

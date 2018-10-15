@@ -1,21 +1,27 @@
-const { GraphQLServer } = require('graphql-yoga');
-const { Prisma } = require('prisma-binding');
-const resolvers = require('./resolvers');
+const createServer = require('./createServer');
+const session = require('express-session');
 
-const db = new Prisma({
-  typeDefs: 'src/generated/prisma.graphql',
-  endpoint: process.env.PRISMA_ENDPOINT,
-  debug: true,
-  secret: process.env.PRISMA_SECRET,
-});
+const server = createServer();
 
-const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
-  resolvers,
-  resolverValidationOptions: {
-    requireResolversForResolveType: false
-  },
-  context: req => ({...req, db })
-});
+server.express.use(
+  session({
+    name: 'qid',
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+  })
+);
 
-server.start(() => console.log(`Server is running on ${process.env.PRISMA_ENDPOINT}`));
+const cors = {
+  credentials: true,
+  origin: process.env.FRONT_END_URL
+};
+
+server.start({ cors }, () =>
+  console.log(`Server is running on ${process.env.GRAPHQL_SERVER_ENDPOINT}`)
+);

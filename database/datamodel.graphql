@@ -15,9 +15,9 @@ type User {
     googleId: String @unique
     role: Role! @default(value: "MEMBER")
     completed: Boolean! @default(value: "false")
-    team: Team @relation(name: "UsersOfTeam" onDelete: CASCADE)
     dailyReports: [DailyReport!]! @relation(name: "DailyReportsByUser" onDelete: CASCADE)
     weeklyReports: [WeeklyReport!]! @relation(name: "WeeklyReportsByUser" onDelete: CASCADE)
+    team: Team @relation(name: "UsersOfTeam" onDelete: SET_NULL)
     createdAt: DateTime!
     updatedAt: DateTime!
 }
@@ -45,8 +45,8 @@ type Team {
     id: ID! @unique
     name: String!
     description: String
-    group: Group! @relation(name: "TeamsOfGroup" onDelete: SET_NULL)
     users: [User!]! @relation(name: "UsersOfTeam" onDelete: CASCADE)
+    group: Group! @relation(name: "TeamsOfGroup" onDelete: SET_NULL)
     createdAt: DateTime!
     updatedAt: DateTime!
 }
