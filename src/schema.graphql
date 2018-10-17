@@ -1,50 +1,25 @@
-# import User, Division from "./generated/prisma.graphql"
+# import * from "./generated/prisma.graphql"
 
-input createDivisionInput{
-    name: String!
-    description: String
-}
-
-input updateDivisionInput {
-    id: ID!
-    name: String
-    description: String
-}
-
-input deleteDivisionInput {
-    id: ID!
-}
-
-input createDivisionInput{
-    name: String!
-    description: String
-}
-
-input updateDivisionInput {
-    id: ID!
-    name: String
-    description: String
-}
-
-input deleteDivisionInput {
-    id: ID!
+type SuccessMessage {
+  message: String
 }
 
 type Query {
-    info: String!,
-    divisions: [Division!]!
-    division(id: ID!): Division
-    me: User
+  info: String!,
+  divisions: [Division!]!
+  division(id: ID!): Division
+  me: User!
 }
 
 type Mutation {
-    createDivision(data: createDivisionInput!): Division!
-    updateDivision(data: updateDivisionInput!): Division
-    deleteDivision(data: deleteDivisionInput!): Division
-    authenticate(googleCode: String!): AuthPayload
+  createDivision(name: String!, description: String): Division!
+  updateDivision(id: ID! name: String, description: String): Division
+  deleteDivision(id: ID!): Division
+  authenticate(googleCode: String!): AuthPayload
+  signout: SuccessMessage
 }
 
 type AuthPayload {
-    user: User!
+  user: User!
 }
 

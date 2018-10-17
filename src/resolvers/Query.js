@@ -9,6 +9,8 @@ const Query = {
 
   me: (parent, args, ctx, info) => {
     const id = getUserId(ctx);
+    // Check if there is a current user ID:
+    if (!id) return null;
     return ctx.db.query.user({ where: { id } }, info)
   },
 

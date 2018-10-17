@@ -1,5 +1,5 @@
-# source: http://localhost:4466
-# timestamp: Mon Oct 15 2018 13:37:46 GMT+0700 (+07)
+# source: https://us1.prisma.sh/phuong-thuan-b82a1c/reporting_system_db/dev
+# timestamp: Wed Oct 17 2018 08:15:02 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -43,7 +43,7 @@ type DailyReport implements Node {
   plan: String!
   description: String
   comment: String
-  author(where: UserWhereInput): User!
+  author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -909,7 +909,7 @@ type Group implements Node {
   id: ID!
   name: String!
   description: String
-  division(where: DivisionWhereInput): Division!
+  division: Division!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1574,9 +1574,6 @@ input IssueWhereUniqueInput {
   id: ID
 }
 
-"""Raw JSON value"""
-scalar Json
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -1626,7 +1623,6 @@ type Mutation {
   deleteManyIssues(where: IssueWhereInput): BatchPayload!
   deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
   deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
-  executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
@@ -1654,10 +1650,6 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: String
-}
-
-enum PrismaDatabase {
-  default
 }
 
 type Query {
@@ -1712,7 +1704,7 @@ type Team implements Node {
   name: String!
   description: String
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  group(where: GroupWhereInput): Group!
+  group: Group!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2069,11 +2061,11 @@ type User implements Node {
   email: String!
   avatar: String
   googleId: String
-  role: Role!
+  roles: [Role!]!
   completed: Boolean!
   dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
   weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
-  team(where: TeamWhereInput): Team
+  team: Team
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2095,8 +2087,8 @@ input UserCreateInput {
   email: String!
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserCreaterolesInput
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   team: TeamCreateOneWithoutUsersInput
@@ -2117,6 +2109,10 @@ input UserCreateOneWithoutWeeklyReportsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreaterolesInput {
+  set: [Role!]
+}
+
 input UserCreateWithoutDailyReportsInput {
   name: String!
   address: String
@@ -2124,8 +2120,8 @@ input UserCreateWithoutDailyReportsInput {
   email: String!
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserCreaterolesInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   team: TeamCreateOneWithoutUsersInput
 }
@@ -2137,8 +2133,8 @@ input UserCreateWithoutTeamInput {
   email: String!
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserCreaterolesInput
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
 }
@@ -2150,8 +2146,8 @@ input UserCreateWithoutWeeklyReportsInput {
   email: String!
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserCreaterolesInput
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   team: TeamCreateOneWithoutUsersInput
 }
@@ -2180,8 +2176,6 @@ enum UserOrderByInput {
   avatar_DESC
   googleId_ASC
   googleId_DESC
-  role_ASC
-  role_DESC
   completed_ASC
   completed_DESC
   createdAt_ASC
@@ -2198,7 +2192,7 @@ type UserPreviousValues {
   email: String!
   avatar: String
   googleId: String
-  role: Role!
+  roles: [Role!]!
   completed: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2250,8 +2244,8 @@ input UserUpdateInput {
   email: String
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserUpdaterolesInput
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   team: TeamUpdateOneWithoutUsersInput
@@ -2280,6 +2274,10 @@ input UserUpdateOneRequiredWithoutWeeklyReportsInput {
   upsert: UserUpsertWithoutWeeklyReportsInput
 }
 
+input UserUpdaterolesInput {
+  set: [Role!]
+}
+
 input UserUpdateWithoutDailyReportsDataInput {
   name: String
   address: String
@@ -2287,8 +2285,8 @@ input UserUpdateWithoutDailyReportsDataInput {
   email: String
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserUpdaterolesInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   team: TeamUpdateOneWithoutUsersInput
 }
@@ -2300,8 +2298,8 @@ input UserUpdateWithoutTeamDataInput {
   email: String
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserUpdaterolesInput
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
 }
@@ -2313,8 +2311,8 @@ input UserUpdateWithoutWeeklyReportsDataInput {
   email: String
   avatar: String
   googleId: String
-  role: Role
   completed: Boolean
+  roles: UserUpdaterolesInput
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   team: TeamUpdateOneWithoutUsersInput
 }
@@ -2629,16 +2627,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   googleId_not_ends_with: String
-  role: Role
-
-  """All values that are not equal to given value."""
-  role_not: Role
-
-  """All values that are contained in given list."""
-  role_in: [Role!]
-
-  """All values that are not contained in given list."""
-  role_not_in: [Role!]
   completed: Boolean
 
   """All values that are not equal to given value."""
@@ -2708,7 +2696,7 @@ type WeeklyReport implements Node {
   solution: String!
   description: String
   summary: String!
-  author(where: UserWhereInput): User!
+  author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
 }

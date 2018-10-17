@@ -1,6 +1,6 @@
 function getUserId(ctx) {
-  if (ctx.request.session.userId) {
-    return ctx.request.session.userId;
+  if (ctx.request.userId) {
+    return ctx.request.userId;
   }
 
   throw new AuthError();
