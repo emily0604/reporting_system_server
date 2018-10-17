@@ -55,7 +55,7 @@ type Issue {
   id: ID! @unique,
   name: String!,
   description: String,
-  dailyReports: [DailyReport!]! @relation(name: "DailyReportsOfIssue" onDelete: CASCADE)
+  dailyReports: [DailyReport!]! @relation(name: "DailyReportsOfIssue" onDelete: SET_NULL)
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -64,7 +64,7 @@ type DailyReport {
   id: ID! @unique
   emotion: String
   title: String!
-  issues: [Issue!]! @relation(name: "DailyReportsOfIssue" onDelete: CASCADE)
+  issues: [Issue!]! @relation(name: "DailyReportsOfIssue" onDelete: SET_NULL)
   achievement: String
   plan: String!
   description: String

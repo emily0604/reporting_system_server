@@ -4,5 +4,6 @@ node_modules
 .env
 .idea
 _draft
+
 graphql.config.json
 graphql.schema.json
