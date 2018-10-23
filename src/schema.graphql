@@ -9,7 +9,7 @@ input IssueInput {
 }
 
 type Query {
-  info: String!,
+  info: String!
   divisions: [Division!]!
   division(where: DivisionWhereUniqueInput!): Division
   dailyReports: [DailyReport!]!
@@ -17,16 +17,16 @@ type Query {
   issues: [Issue!]!
   issue(where: IssueWhereUniqueInput!): Issue
   me: User!
+  userReports: [DailyReport!]!
 }
 
 type Mutation {
-
-#  Division CRUD
+  #  Division CRUD
   createDivision(where: DivisionCreateInput!): Division!
   updateDivision(id: ID!, name: String, description: String): Division!
   deleteDivision(id: ID!): Division
 
-#  DailyReport CRUD
+  #  DailyReport CRUD
   createDailyReport(
     emotion: String
     title: String!
@@ -50,13 +50,12 @@ type Mutation {
 
   deleteDailyReport(id: ID!): DailyReport
 
-
-#  Issue CRUD
+  #  Issue CRUD
   createIssue(name: String!, description: String): Issue!
   updateIssue(id: ID!, name: String, description: String): Issue!
   deleteIssue(id: ID!): Issue
 
-#  Google Authentication
+  #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
   signout: SuccessMessage
 }
@@ -64,4 +63,3 @@ type Mutation {
 type AuthPayload {
   user: User!
 }
-

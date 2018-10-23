@@ -1,7 +1,6 @@
 const { getUserId } = require('../utils');
 const { forwardTo } = require('prisma-binding');
 
-
 const Query = {
   info: () => `This is the API of a Reporting System`,
 
@@ -15,10 +14,19 @@ const Query = {
     const id = getUserId(ctx);
     // Check if there is a current user ID:
     if (!id) return null;
-    return ctx.db.query.user({ where: { id } }, info)
+    return ctx.db.query.user({ where: { id } }, info);
   },
 
+  userReports: (parent, args, ctx, info) => {
+    const id = getUserId(ctx);
+    if (!id) return null;
+    return ctx.db.query.dailyReports(
+      {
+        where: { author: { id } }
+      },
+      info
+    );
+  }
 };
 
 module.exports = { Query };
-
