@@ -4,6 +4,7 @@ const dailyReport = {
 
   createDailyReport: async (parent, args, ctx, info) => {
     const userId = getUserId(ctx);
+
     return ctx.db.mutation.createDailyReport(
       {
         data: {
@@ -12,7 +13,7 @@ const dailyReport = {
             connect: { id: userId }
           },
           issues: {
-            connect: [...args.issues]
+            connect: args.issues
           },
         },
       },
@@ -32,10 +33,15 @@ const dailyReport = {
       throw new Error(`Daily Report not found or you're not the author`)
     }
 
+    const dailyReport = await ctx.db.query.dailyReport({
+      where: { id: args.id }
+    }, `{ id issues { id } }`);
+
     const updates = {
       ...args,
       issues: {
-        connect: [...args.issues]
+        disconnect: dailyReport.issues,
+        connect: args.issues
       },
     };
 
