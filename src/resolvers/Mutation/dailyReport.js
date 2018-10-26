@@ -37,20 +37,36 @@ const dailyReport = {
       where: { id: args.id }
     }, `{ id issues { id } }`);
 
-    const updates = {
+    const updates1 = {
       ...args,
       issues: {
-        disconnect: dailyReport.issues,
-        connect: args.issues
-      },
+        disconnect: dailyReport.issues
+      }
     };
 
-    delete updates.id;
+    const updates2 = {
+      ...args,
+      issues: {
+        connect: args.issues
+      }
+    };
+
+    delete updates1.id;
+
+    await ctx.db.mutation.updateDailyReport(
+      {
+        where: { id: args.id },
+        data: updates1
+      },
+      info
+    );
+
+    delete updates2.id;
 
     return ctx.db.mutation.updateDailyReport(
       {
         where: { id: args.id },
-        data: updates
+        data: updates2
       },
       info
     )
