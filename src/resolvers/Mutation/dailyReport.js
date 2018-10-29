@@ -11,10 +11,7 @@ const dailyReport = {
           ...args,
           author: {
             connect: { id: userId }
-          },
-          issues: {
-            connect: args.issues
-          },
+          }
         },
       },
       info
@@ -30,46 +27,20 @@ const dailyReport = {
     });
 
     if (!reportExists) {
-      throw new Error(`Daily Report not found or you're not the author`)
+      throw new Error('Daily Report not found or you are not the author');
     }
 
-    const dailyReport = await ctx.db.query.dailyReport({
-      where: { id: args.id }
-    }, `{ id issues { id } }`);
+    const updates = { ...args };
 
-    const updates1 = {
-      ...args,
-      issues: {
-        disconnect: dailyReport.issues
-      }
-    };
-
-    const updates2 = {
-      ...args,
-      issues: {
-        connect: args.issues
-      }
-    };
-
-    delete updates1.id;
-
-    await ctx.db.mutation.updateDailyReport(
-      {
-        where: { id: args.id },
-        data: updates1
-      },
-      info
-    );
-
-    delete updates2.id;
+    delete updates.id;
 
     return ctx.db.mutation.updateDailyReport(
       {
         where: { id: args.id },
-        data: updates2
+        data: updates
       },
       info
-    )
+    );
   },
 
   deleteDailyReport: async (parent, { id }, ctx, info) => {
@@ -80,7 +51,7 @@ const dailyReport = {
     });
 
     if (!reportExists) {
-      throw new Error(`Daily Report not found or you're not the author`)
+      throw new Error('Daily Report not found or you are not the author');
     }
 
     return ctx.db.mutation.deleteDailyReport(
@@ -88,7 +59,7 @@ const dailyReport = {
         where: { id },
       },
       info
-    )
+    );
   },
 
 };

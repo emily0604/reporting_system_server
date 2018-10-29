@@ -5,8 +5,6 @@ const Query = {
   info: () => `This is the API of a Reporting System`,
 
   divisions: forwardTo('db'),
-  issues: forwardTo('db'),
-  issue: forwardTo('db'),
   dailyReports: forwardTo('db'),
   dailyReport: forwardTo('db'),
 

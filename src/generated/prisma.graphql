@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/phuong-thuan-b82a1c/reporting_system_db/dev
-# timestamp: Wed Oct 17 2018 08:15:02 GMT+0700 (+07)
+# timestamp: Mon Oct 29 2018 08:23:12 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -10,10 +10,6 @@ type AggregateDivision {
 }
 
 type AggregateGroup {
-  count: Int!
-}
-
-type AggregateIssue {
   count: Int!
 }
 
@@ -38,10 +34,8 @@ type DailyReport implements Node {
   id: ID!
   emotion: String
   title: String!
-  issues(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Issue!]
   achievement: String
   plan: String!
-  description: String
   comment: String
   author: User!
   createdAt: DateTime!
@@ -63,9 +57,7 @@ input DailyReportCreateInput {
   title: String!
   achievement: String
   plan: String!
-  description: String
   comment: String
-  issues: IssueCreateManyWithoutDailyReportsInput
   author: UserCreateOneWithoutDailyReportsInput!
 }
 
@@ -74,29 +66,12 @@ input DailyReportCreateManyWithoutAuthorInput {
   connect: [DailyReportWhereUniqueInput!]
 }
 
-input DailyReportCreateManyWithoutIssuesInput {
-  create: [DailyReportCreateWithoutIssuesInput!]
-  connect: [DailyReportWhereUniqueInput!]
-}
-
 input DailyReportCreateWithoutAuthorInput {
   emotion: String
   title: String!
   achievement: String
   plan: String!
-  description: String
   comment: String
-  issues: IssueCreateManyWithoutDailyReportsInput
-}
-
-input DailyReportCreateWithoutIssuesInput {
-  emotion: String
-  title: String!
-  achievement: String
-  plan: String!
-  description: String
-  comment: String
-  author: UserCreateOneWithoutDailyReportsInput!
 }
 
 """An edge in a connection."""
@@ -119,8 +94,6 @@ enum DailyReportOrderByInput {
   achievement_DESC
   plan_ASC
   plan_DESC
-  description_ASC
-  description_DESC
   comment_ASC
   comment_DESC
   createdAt_ASC
@@ -135,7 +108,6 @@ type DailyReportPreviousValues {
   title: String!
   achievement: String
   plan: String!
-  description: String
   comment: String
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -185,10 +157,16 @@ input DailyReportUpdateInput {
   title: String
   achievement: String
   plan: String
-  description: String
   comment: String
-  issues: IssueUpdateManyWithoutDailyReportsInput
   author: UserUpdateOneRequiredWithoutDailyReportsInput
+}
+
+input DailyReportUpdateManyInput {
+  emotion: String
+  title: String
+  achievement: String
+  plan: String
+  comment: String
 }
 
 input DailyReportUpdateManyWithoutAuthorInput {
@@ -200,33 +178,12 @@ input DailyReportUpdateManyWithoutAuthorInput {
   upsert: [DailyReportUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
-input DailyReportUpdateManyWithoutIssuesInput {
-  create: [DailyReportCreateWithoutIssuesInput!]
-  connect: [DailyReportWhereUniqueInput!]
-  disconnect: [DailyReportWhereUniqueInput!]
-  delete: [DailyReportWhereUniqueInput!]
-  update: [DailyReportUpdateWithWhereUniqueWithoutIssuesInput!]
-  upsert: [DailyReportUpsertWithWhereUniqueWithoutIssuesInput!]
-}
-
 input DailyReportUpdateWithoutAuthorDataInput {
   emotion: String
   title: String
   achievement: String
   plan: String
-  description: String
   comment: String
-  issues: IssueUpdateManyWithoutDailyReportsInput
-}
-
-input DailyReportUpdateWithoutIssuesDataInput {
-  emotion: String
-  title: String
-  achievement: String
-  plan: String
-  description: String
-  comment: String
-  author: UserUpdateOneRequiredWithoutDailyReportsInput
 }
 
 input DailyReportUpdateWithWhereUniqueWithoutAuthorInput {
@@ -234,21 +191,10 @@ input DailyReportUpdateWithWhereUniqueWithoutAuthorInput {
   data: DailyReportUpdateWithoutAuthorDataInput!
 }
 
-input DailyReportUpdateWithWhereUniqueWithoutIssuesInput {
-  where: DailyReportWhereUniqueInput!
-  data: DailyReportUpdateWithoutIssuesDataInput!
-}
-
 input DailyReportUpsertWithWhereUniqueWithoutAuthorInput {
   where: DailyReportWhereUniqueInput!
   update: DailyReportUpdateWithoutAuthorDataInput!
   create: DailyReportCreateWithoutAuthorInput!
-}
-
-input DailyReportUpsertWithWhereUniqueWithoutIssuesInput {
-  where: DailyReportWhereUniqueInput!
-  update: DailyReportUpdateWithoutIssuesDataInput!
-  create: DailyReportCreateWithoutIssuesInput!
 }
 
 input DailyReportWhereInput {
@@ -460,46 +406,6 @@ input DailyReportWhereInput {
 
   """All values not ending with the given string."""
   plan_not_ends_with: String
-  description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
   comment: String
 
   """All values that are not equal to given value."""
@@ -584,9 +490,6 @@ input DailyReportWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  issues_every: IssueWhereInput
-  issues_some: IssueWhereInput
-  issues_none: IssueWhereInput
   author: UserWhereInput
 }
 
@@ -704,6 +607,11 @@ input DivisionUpdateInput {
   name: String
   description: String
   groups: GroupUpdateManyWithoutDivisionInput
+}
+
+input DivisionUpdateManyInput {
+  name: String
+  description: String
 }
 
 input DivisionUpdateOneRequiredWithoutGroupsInput {
@@ -1030,6 +938,11 @@ input GroupUpdateInput {
   teams: TeamUpdateManyWithoutGroupInput
 }
 
+input GroupUpdateManyInput {
+  name: String
+  description: String
+}
+
 input GroupUpdateManyWithoutDivisionInput {
   create: [GroupCreateWithoutDivisionInput!]
   connect: [GroupWhereUniqueInput!]
@@ -1257,323 +1170,6 @@ input GroupWhereUniqueInput {
   id: ID
 }
 
-type Issue implements Node {
-  id: ID!
-  name: String!
-  description: String
-  dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-"""A connection to a list of items."""
-type IssueConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [IssueEdge]!
-  aggregate: AggregateIssue!
-}
-
-input IssueCreateInput {
-  name: String!
-  description: String
-  dailyReports: DailyReportCreateManyWithoutIssuesInput
-}
-
-input IssueCreateManyWithoutDailyReportsInput {
-  create: [IssueCreateWithoutDailyReportsInput!]
-  connect: [IssueWhereUniqueInput!]
-}
-
-input IssueCreateWithoutDailyReportsInput {
-  name: String!
-  description: String
-}
-
-"""An edge in a connection."""
-type IssueEdge {
-  """The item at the end of the edge."""
-  node: Issue!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum IssueOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type IssuePreviousValues {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type IssueSubscriptionPayload {
-  mutation: MutationType!
-  node: Issue
-  updatedFields: [String!]
-  previousValues: IssuePreviousValues
-}
-
-input IssueSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [IssueSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [IssueSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [IssueSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: IssueWhereInput
-}
-
-input IssueUpdateInput {
-  name: String
-  description: String
-  dailyReports: DailyReportUpdateManyWithoutIssuesInput
-}
-
-input IssueUpdateManyWithoutDailyReportsInput {
-  create: [IssueCreateWithoutDailyReportsInput!]
-  connect: [IssueWhereUniqueInput!]
-  disconnect: [IssueWhereUniqueInput!]
-  delete: [IssueWhereUniqueInput!]
-  update: [IssueUpdateWithWhereUniqueWithoutDailyReportsInput!]
-  upsert: [IssueUpsertWithWhereUniqueWithoutDailyReportsInput!]
-}
-
-input IssueUpdateWithoutDailyReportsDataInput {
-  name: String
-  description: String
-}
-
-input IssueUpdateWithWhereUniqueWithoutDailyReportsInput {
-  where: IssueWhereUniqueInput!
-  data: IssueUpdateWithoutDailyReportsDataInput!
-}
-
-input IssueUpsertWithWhereUniqueWithoutDailyReportsInput {
-  where: IssueWhereUniqueInput!
-  update: IssueUpdateWithoutDailyReportsDataInput!
-  create: IssueCreateWithoutDailyReportsInput!
-}
-
-input IssueWhereInput {
-  """Logical AND on all given filters."""
-  AND: [IssueWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [IssueWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [IssueWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  dailyReports_every: DailyReportWhereInput
-  dailyReports_some: DailyReportWhereInput
-  dailyReports_none: DailyReportWhereInput
-}
-
-input IssueWhereUniqueInput {
-  id: ID
-}
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -1585,42 +1181,36 @@ type Mutation {
   createDivision(data: DivisionCreateInput!): Division!
   createGroup(data: GroupCreateInput!): Group!
   createTeam(data: TeamCreateInput!): Team!
-  createIssue(data: IssueCreateInput!): Issue!
   createDailyReport(data: DailyReportCreateInput!): DailyReport!
   createWeeklyReport(data: WeeklyReportCreateInput!): WeeklyReport!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateDivision(data: DivisionUpdateInput!, where: DivisionWhereUniqueInput!): Division
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
-  updateIssue(data: IssueUpdateInput!, where: IssueWhereUniqueInput!): Issue
   updateDailyReport(data: DailyReportUpdateInput!, where: DailyReportWhereUniqueInput!): DailyReport
   updateWeeklyReport(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereUniqueInput!): WeeklyReport
   deleteUser(where: UserWhereUniqueInput!): User
   deleteDivision(where: DivisionWhereUniqueInput!): Division
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteTeam(where: TeamWhereUniqueInput!): Team
-  deleteIssue(where: IssueWhereUniqueInput!): Issue
   deleteDailyReport(where: DailyReportWhereUniqueInput!): DailyReport
   deleteWeeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertDivision(where: DivisionWhereUniqueInput!, create: DivisionCreateInput!, update: DivisionUpdateInput!): Division!
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
-  upsertIssue(where: IssueWhereUniqueInput!, create: IssueCreateInput!, update: IssueUpdateInput!): Issue!
   upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
   upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyDivisions(data: DivisionUpdateInput!, where: DivisionWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
-  updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
-  updateManyIssues(data: IssueUpdateInput!, where: IssueWhereInput): BatchPayload!
-  updateManyDailyReports(data: DailyReportUpdateInput!, where: DailyReportWhereInput): BatchPayload!
-  updateManyWeeklyReports(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
+  updateManyDivisions(data: DivisionUpdateManyInput!, where: DivisionWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateManyInput!, where: GroupWhereInput): BatchPayload!
+  updateManyTeams(data: TeamUpdateManyInput!, where: TeamWhereInput): BatchPayload!
+  updateManyDailyReports(data: DailyReportUpdateManyInput!, where: DailyReportWhereInput): BatchPayload!
+  updateManyWeeklyReports(data: WeeklyReportUpdateManyInput!, where: WeeklyReportWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyDivisions(where: DivisionWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
-  deleteManyIssues(where: IssueWhereInput): BatchPayload!
   deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
   deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
 }
@@ -1657,21 +1247,18 @@ type Query {
   divisions(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Division]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
-  issues(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Issue]!
   dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport]!
   weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport]!
   user(where: UserWhereUniqueInput!): User
   division(where: DivisionWhereUniqueInput!): Division
   group(where: GroupWhereUniqueInput!): Group
   team(where: TeamWhereUniqueInput!): Team
-  issue(where: IssueWhereUniqueInput!): Issue
   dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
   weeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   divisionsConnection(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DivisionConnection!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
-  issuesConnection(where: IssueWhereInput, orderBy: IssueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IssueConnection!
   dailyReportsConnection(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyReportConnection!
   weeklyReportsConnection(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeeklyReportConnection!
 
@@ -1694,7 +1281,6 @@ type Subscription {
   division(where: DivisionSubscriptionWhereInput): DivisionSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
-  issue(where: IssueSubscriptionWhereInput): IssueSubscriptionPayload
   dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
   weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
 }
@@ -1822,6 +1408,11 @@ input TeamUpdateInput {
   description: String
   users: UserUpdateManyWithoutTeamInput
   group: GroupUpdateOneRequiredWithoutTeamsInput
+}
+
+input TeamUpdateManyInput {
+  name: String
+  description: String
 }
 
 input TeamUpdateManyWithoutGroupInput {
@@ -2249,6 +1840,17 @@ input UserUpdateInput {
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   team: TeamUpdateOneWithoutUsersInput
+}
+
+input UserUpdateManyInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserUpdaterolesInput
 }
 
 input UserUpdateManyWithoutTeamInput {
@@ -2812,6 +2414,13 @@ input WeeklyReportUpdateInput {
   description: String
   summary: String
   author: UserUpdateOneRequiredWithoutWeeklyReportsInput
+}
+
+input WeeklyReportUpdateManyInput {
+  issue: String
+  solution: String
+  description: String
+  summary: String
 }
 
 input WeeklyReportUpdateManyWithoutAuthorInput {

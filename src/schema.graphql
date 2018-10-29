@@ -4,18 +4,12 @@ type SuccessMessage {
   message: String
 }
 
-input IssueInput {
-  id: String!
-}
-
 type Query {
   info: String!
   divisions: [Division!]!
   division(where: DivisionWhereUniqueInput!): Division
   dailyReports: [DailyReport!]!
   dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
-  issues: [Issue!]!
-  issue(where: IssueWhereUniqueInput!): Issue
   me: User!
   userReports: [DailyReport!]!
 }
@@ -32,9 +26,7 @@ type Mutation {
     title: String!
     achievement: String
     plan: String!
-    description: String
     comment: String
-    issues: [IssueInput!]
   ): DailyReport!
 
   updateDailyReport(
@@ -43,17 +35,10 @@ type Mutation {
     title: String
     achievement: String
     plan: String
-    description: String
     comment: String
-    issues: [IssueInput!]
   ): DailyReport!
 
   deleteDailyReport(id: ID!): DailyReport
-
-  #  Issue CRUD
-  createIssue(name: String!, description: String): Issue!
-  updateIssue(id: ID!, name: String, description: String): Issue!
-  deleteIssue(id: ID!): Issue
 
   #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
