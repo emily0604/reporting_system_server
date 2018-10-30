@@ -1,8 +1,11 @@
 const { Query } = require('./Query');
+const { Subscription } = require('./Subscription');
+
 const { division } = require('./Mutation/division');
-const {auth} = require('./Mutation/auth');
-const {dailyReport} = require('./Mutation/dailyReport');
+const { auth } = require('./Mutation/auth');
+const { dailyReport } = require('./Mutation/dailyReport');
 const { AuthPayload } = require('./AuthPayload');
+const { UserReportList } = require('./UserReportList');
 
 module.exports = {
   Query,
@@ -11,5 +14,7 @@ module.exports = {
     ...division,
     ...dailyReport,
   },
+  Subscription,
   AuthPayload,
+  UserReportList
 };
