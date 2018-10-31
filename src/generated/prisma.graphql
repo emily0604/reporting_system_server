@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/phuong-thuan-b82a1c/reporting_system_db/dev
-# timestamp: Mon Oct 29 2018 08:23:12 GMT+0700 (+07)
+# timestamp: Tue Oct 30 2018 13:16:43 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -32,9 +32,9 @@ type BatchPayload {
 
 type DailyReport implements Node {
   id: ID!
-  emotion: String
+  emotion: String!
   title: String!
-  achievement: String
+  achievement: String!
   plan: String!
   comment: String
   author: User!
@@ -53,9 +53,9 @@ type DailyReportConnection {
 }
 
 input DailyReportCreateInput {
-  emotion: String
+  emotion: String!
   title: String!
-  achievement: String
+  achievement: String!
   plan: String!
   comment: String
   author: UserCreateOneWithoutDailyReportsInput!
@@ -67,9 +67,9 @@ input DailyReportCreateManyWithoutAuthorInput {
 }
 
 input DailyReportCreateWithoutAuthorInput {
-  emotion: String
+  emotion: String!
   title: String!
-  achievement: String
+  achievement: String!
   plan: String!
   comment: String
 }
@@ -104,9 +104,9 @@ enum DailyReportOrderByInput {
 
 type DailyReportPreviousValues {
   id: ID!
-  emotion: String
+  emotion: String!
   title: String!
-  achievement: String
+  achievement: String!
   plan: String!
   comment: String
   createdAt: DateTime!
@@ -161,7 +161,7 @@ input DailyReportUpdateInput {
   author: UserUpdateOneRequiredWithoutDailyReportsInput
 }
 
-input DailyReportUpdateManyInput {
+input DailyReportUpdateManyMutationInput {
   emotion: String
   title: String
   achievement: String
@@ -609,7 +609,7 @@ input DivisionUpdateInput {
   groups: GroupUpdateManyWithoutDivisionInput
 }
 
-input DivisionUpdateManyInput {
+input DivisionUpdateManyMutationInput {
   name: String
   description: String
 }
@@ -938,7 +938,7 @@ input GroupUpdateInput {
   teams: TeamUpdateManyWithoutGroupInput
 }
 
-input GroupUpdateManyInput {
+input GroupUpdateManyMutationInput {
   name: String
   description: String
 }
@@ -1201,12 +1201,12 @@ type Mutation {
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
   upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
   upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
-  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
-  updateManyDivisions(data: DivisionUpdateManyInput!, where: DivisionWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateManyInput!, where: GroupWhereInput): BatchPayload!
-  updateManyTeams(data: TeamUpdateManyInput!, where: TeamWhereInput): BatchPayload!
-  updateManyDailyReports(data: DailyReportUpdateManyInput!, where: DailyReportWhereInput): BatchPayload!
-  updateManyWeeklyReports(data: WeeklyReportUpdateManyInput!, where: WeeklyReportWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyDivisions(data: DivisionUpdateManyMutationInput!, where: DivisionWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
+  updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
+  updateManyDailyReports(data: DailyReportUpdateManyMutationInput!, where: DailyReportWhereInput): BatchPayload!
+  updateManyWeeklyReports(data: WeeklyReportUpdateManyMutationInput!, where: WeeklyReportWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyDivisions(where: DivisionWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
@@ -1410,7 +1410,7 @@ input TeamUpdateInput {
   group: GroupUpdateOneRequiredWithoutTeamsInput
 }
 
-input TeamUpdateManyInput {
+input TeamUpdateManyMutationInput {
   name: String
   description: String
 }
@@ -1842,7 +1842,7 @@ input UserUpdateInput {
   team: TeamUpdateOneWithoutUsersInput
 }
 
-input UserUpdateManyInput {
+input UserUpdateManyMutationInput {
   name: String
   address: String
   phone: String
@@ -2416,7 +2416,7 @@ input WeeklyReportUpdateInput {
   author: UserUpdateOneRequiredWithoutWeeklyReportsInput
 }
 
-input WeeklyReportUpdateManyInput {
+input WeeklyReportUpdateManyMutationInput {
   issue: String
   solution: String
   description: String

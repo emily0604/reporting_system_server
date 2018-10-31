@@ -53,9 +53,9 @@ type Team {
 
 type DailyReport {
   id: ID! @unique
-  emotion: String
+  emotion: String!
   title: String!
-  achievement: String
+  achievement: String!
   plan: String!
   comment: String
   author: User! @relation(name: "DailyReportsByUser" onDelete: SET_NULL)

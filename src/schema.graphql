@@ -34,9 +34,9 @@ type Mutation {
 
   #  DailyReport CRUD
   createDailyReport(
-    emotion: String
+    emotion: String!
     title: String!
-    achievement: String
+    achievement: String!
     plan: String!
     comment: String
   ): DailyReport!
