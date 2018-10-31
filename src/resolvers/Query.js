@@ -15,25 +15,15 @@ const Query = {
     return ctx.db.query.user({ where: { id } }, info);
   },
 
-  userReports: async (parent, args, ctx, info) => {
+  userReports: (parent, args, ctx, info) => {
     const id = getUserId(ctx);
     if (!id) return null;
-
-    const { skip, first } = args;
-    const dailyReports = await ctx.db.query.dailyReports({
-      where: { author: { id } },
-      skip,
-      first
-    });
-    const dailyReportsConnection = await ctx.db.query.dailyReportsConnection(
-      { where: { author: { id } } },
-      `{ aggregate { count } }`
+    return ctx.db.query.dailyReports(
+      {
+        where: { author: { id } }
+      },
+      info
     );
-
-    return {
-      count: dailyReportsConnection.aggregate.count,
-      dailyReportIds: dailyReports.map(dailyReport => dailyReport.id)
-    };
   }
 };
 

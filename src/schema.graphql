@@ -4,26 +4,14 @@ type SuccessMessage {
   message: String
 }
 
-type UserReportList {
-  count: Int
-  dailyReports: [DailyReport]
-}
-
 type Query {
   info: String!
   divisions: [Division!]!
   division(where: DivisionWhereUniqueInput!): Division
   dailyReports: [DailyReport!]!
   dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
-  userReports(
-    orderBy: DailyReportOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): UserReportList
   me: User!
+  userReports: [DailyReport!]!
 }
 
 type Mutation {
@@ -55,11 +43,6 @@ type Mutation {
   #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
   signout: SuccessMessage
-}
-
-type Subscription {
-  dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
-  weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
 }
 
 type AuthPayload {
