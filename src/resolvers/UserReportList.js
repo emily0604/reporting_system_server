@@ -1,7 +1,7 @@
 const UserReportList = {
-  dailyReports({ dailyReportIds }, args, ctx, info) {
+  dailyReports({ dailyReportIds, orderBy }, args, ctx, info) {
     const dailyReportIdsFilter = { id_in: dailyReportIds };
-    return ctx.db.query.dailyReports({ where: dailyReportIdsFilter }, info);
+    return ctx.db.query.dailyReports({ where: dailyReportIdsFilter, orderBy }, info);
   }
 };
 
