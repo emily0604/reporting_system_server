@@ -55,6 +55,15 @@ type Mutation {
   #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
   signout: SuccessMessage
+
+  # Edit Profile
+  editProfile(
+    id: ID!
+    address: String
+    phone: String
+    email: String
+    avatar: String
+  ): User
 }
 
 type Subscription {
