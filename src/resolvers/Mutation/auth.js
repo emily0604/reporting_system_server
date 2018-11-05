@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { google } = require('../../services/google');
+const { getUserId } = require('../../utils');
 
 const getPrismaUser = async (ctx, googleId) => {
   return await ctx.db.query.user({ where: { googleId } });
@@ -45,7 +46,27 @@ const auth = {
   signout: (parent, args, ctx, info) => {
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!'};
-  }
+  },
+
+  editProfile: (parent, args, ctx, info) => {
+    const userId = getUserId(ctx);
+
+    if (!userId) throw new Error('You are not logged in');
+
+    const updates = {...args};
+
+    delete updates.id;
+
+    return ctx.db.mutation.updateUser(
+      {
+        where: { id: args.id },
+        data: updates
+      },
+      info
+    );
+
+  },
+
 };
 
 module.exports = { auth };
