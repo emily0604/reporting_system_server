@@ -52,6 +52,14 @@ type Mutation {
 
   deleteDailyReport(id: ID!): DailyReport
 
+  #  WeeklyReport CRUD
+  createWeeklyReport(
+    issue: String!
+    solution: String!
+    description: String
+    summary: String!
+  ): WeeklyReport!
+
   #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
   signout: SuccessMessage
