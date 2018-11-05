@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const createServer = require('./createServer');
 
 const server = createServer();
+const db = require('./db');
 
 server.express.use(cookieParser());
 
@@ -14,6 +15,17 @@ server.express.use((req, res, next) => {
     // put the userId onto the req for future requests to access
     req.userId = userId;
   }
+  next();
+});
+
+// Populates the user cookie on each request
+server.express.use(async (req, res, next) => {
+  if (!req.userId) return next();
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    `{ id, roles, email, name }`
+  );
+  req.user = user;
   next();
 });
 
