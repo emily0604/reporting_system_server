@@ -19,11 +19,13 @@ const Query = {
     const id = getUserId(ctx);
     if (!id) return null;
 
-    const { skip, first } = args;
+    const { skip, first, orderBy } = args;
+
     const dailyReports = await ctx.db.query.dailyReports({
       where: { author: { id } },
       skip,
-      first
+      first,
+      orderBy
     });
     const dailyReportsConnection = await ctx.db.query.dailyReportsConnection(
       { where: { author: { id } } },
@@ -32,7 +34,8 @@ const Query = {
 
     return {
       count: dailyReportsConnection.aggregate.count,
-      dailyReportIds: dailyReports.map(dailyReport => dailyReport.id)
+      dailyReportIds: dailyReports.map(dailyReport => dailyReport.id),
+      orderBy
     };
   }
 };
