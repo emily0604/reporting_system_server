@@ -6,7 +6,7 @@ const { auth } = require('./Mutation/auth');
 const { dailyReport } = require('./Mutation/dailyReport');
 const { weeklyReport } = require('./Mutation/weeklyReport');
 const { AuthPayload } = require('./AuthPayload');
-const { UserReportList } = require('./UserReportList');
+const { DailyReportList } = require('./DailyReportList');
 
 module.exports = {
   Query,
@@ -14,9 +14,9 @@ module.exports = {
     ...auth,
     ...division,
     ...dailyReport,
-    ...weeklyReport,
+    ...weeklyReport
   },
   Subscription,
   AuthPayload,
-  UserReportList
+  DailyReportList
 };
