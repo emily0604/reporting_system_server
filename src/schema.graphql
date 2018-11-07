@@ -4,7 +4,7 @@ type SuccessMessage {
   message: String
 }
 
-type UserReportList {
+type DailyReportList {
   count: Int
   dailyReports: [DailyReport]
 }
@@ -13,7 +13,15 @@ type Query {
   info: String!
   divisions: [Division!]!
   division(where: DivisionWhereUniqueInput!): Division
-  dailyReports: [DailyReport!]!
+  dailyReports(
+    where: DailyReportWhereInput
+    orderBy: DailyReportOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): DailyReportList
   dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
   userReports(
     orderBy: DailyReportOrderByInput
@@ -22,7 +30,7 @@ type Query {
     before: String
     first: Int
     last: Int
-  ): UserReportList
+  ): DailyReportList
   me: User!
 }
 
