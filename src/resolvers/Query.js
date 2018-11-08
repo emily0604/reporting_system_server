@@ -6,6 +6,7 @@ const Query = {
 
   divisions: forwardTo('db'),
   dailyReport: forwardTo('db'),
+  users: forwardTo('db'),
 
   me: (parent, args, ctx, info) => {
     const id = getUserId(ctx);
