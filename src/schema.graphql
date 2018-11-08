@@ -32,6 +32,7 @@ type Query {
     last: Int
   ): DailyReportList
   me: User!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]!
 }
 
 type Mutation {
