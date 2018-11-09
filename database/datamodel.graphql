@@ -15,38 +15,37 @@ type User {
   googleId: String @unique
   roles: [Role!]!
   completed: Boolean! @default(value: "false")
-  dailyReports: [DailyReport!]! @relation(name: "DailyReportsByUser" onDelete: CASCADE)
-  weeklyReports: [WeeklyReport!]! @relation(name: "WeeklyReportsByUser" onDelete: CASCADE)
-  team: Team @relation(name: "UsersOfTeam" onDelete: SET_NULL)
+  dailyReports: [DailyReport!]! @relation(name: "DailyReportsByUser" onDelete: CASCADE) # A user can has many daily reports.
+  weeklyReports: [WeeklyReport!]! @relation(name: "WeeklyReportsByUser" onDelete: CASCADE) # A user can has many weekly reports.
+  projects: [Project!]! @relation(name: "MembersProjects" onDelete: SET_NULL) # A user can belong to many different projects.
+  tasks: [Task!]! @relation(name: "MembersTasks" onDelete: SET_NULL) # A user can do many tasks in many projects.
+  membersActivities: [WeeklyReport!]! @relation(name: "MembersActivities" onDelete: CASCADE) # Reference to membersActivities in Weekly Report.
+  team: Team @relation(name: "UsersOfTeam" onDelete: SET_NULL) # A user belong to a team.
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type Division {
+type Task {
   id: ID! @unique
-  name: String!
+  title: String
+  url: String!
+  logtime: Int!
   description: String
-  groups: [Group!]!
+  members: [User!]! @relation(name: "MembersTasks" onDelete: SET_NULL) # A task can has many members.
+  attaches: [DailyReport!]! @relation(name: "TasksDailyReports" onDelete: SET_NULL) # A Task can be attached in many Daily Report.
+  project: Project @relation(name: "TasksProject" onDelete: SET_NULL) # A task belong a project.
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type Group {
+type Project {
   id: ID! @unique
-  name: String!
+  title: String!
   description: String
-  division: Division!
-  teams: [Team!]! @relation(name: "TeamsOfGroup" onDelete: CASCADE)
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type Team {
-  id: ID! @unique
-  name: String!
-  description: String
-  users: [User!]! @relation(name: "UsersOfTeam" onDelete: CASCADE)
-  group: Group! @relation(name: "TeamsOfGroup" onDelete: SET_NULL)
+  members: [User!]! @relation(name: "MembersProjects" onDelete: CASCADE) # A project can has many members.
+  tasks: [Task!]! @relation(name: "TasksProject" onDelete: CASCADE) # A project can has many tasks.
+  attaches: [DailyReport!]! @relation(name: "ProjectsDailyReports" onDelete: SET_NULL) # A Project can be attached in many Daily Report.
+  teamLeader: User @relation(name: "TeamLeaderProject" onDelete: SET_NULL) # A project only has one team leader.
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -55,10 +54,11 @@ type DailyReport {
   id: ID! @unique
   emotion: String!
   title: String!
-  achievement: String!
   plan: String!
   comment: String
-  author: User! @relation(name: "DailyReportsByUser" onDelete: SET_NULL)
+  projects: [Project!]! @relation(name: "ProjectsDailyReports" onDelete: SET_NULL) # All projects that member working on. (Ex: A member can work in many project)
+  tasks: [Task!]! @relation(name: "TasksDailyReports" onDelete: SET_NULL) # A tasks that member working on. (Ex: A member can work in many task on any project)
+  author: User! @relation(name: "DailyReportsByUser" onDelete: SET_NULL) # A daily report was created by the author (Member)
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -69,7 +69,39 @@ type WeeklyReport {
   solution: String!
   description: String
   summary: String!
-  author: User! @relation(name: "WeeklyReportsByUser" onDelete: SET_NULL)
+  membersActivities: [User!]! @relation(name: "MembersActivities" onDelete: CASCADE) # Each member has their own activities.
+  author: User! @relation(name: "WeeklyReportsByUser" onDelete: SET_NULL) # A weekly report was created by the author (Team Leader)
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+type Division {
+  id: ID! @unique
+  name: String!
+  description: String
+  groups: [Group!]! @relation(name: "DivisionGroup", onDelete: CASCADE)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Group {
+  id: ID! @unique
+  name: String!
+  description: String
+  teams: [Team!]! @relation(name: "TeamsOfGroup" onDelete: CASCADE) # A group can has many teams.
+  division: Division @relation(name: "DivisionGroup", onDelete: SET_NULL)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Team {
+  id: ID! @unique
+  name: String!
+  description: String
+  users: [User!]! @relation(name: "UsersOfTeam" onDelete: SET_NULL) # A team can has many users.
+  group: Group @relation(name: "TeamsOfGroup" onDelete: SET_NULL) # A team belong to a group.
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+

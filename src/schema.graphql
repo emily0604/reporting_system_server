@@ -9,10 +9,25 @@ type DailyReportList {
   dailyReports: [DailyReport]
 }
 
+input TaskInput {
+  projectId: String!
+  title: String
+  url: String
+  logtime: String
+}
+
 type Query {
   info: String!
+
+  # Division Query
   divisions: [Division!]!
   division(where: DivisionWhereUniqueInput!): Division
+
+  # Team Query
+  teams: [Team!]!
+  team(where: TeamWhereUniqueInput!): Team
+
+  # Daily Report Query
   dailyReports(
     where: DailyReportWhereInput
     orderBy: DailyReportOrderByInput
@@ -23,6 +38,8 @@ type Query {
     last: Int
   ): DailyReportList
   dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
+
+  # User Query
   userReports(
     orderBy: DailyReportOrderByInput
     skip: Int
@@ -37,15 +54,20 @@ type Query {
 
 type Mutation {
   #  Division CRUD
-  createDivision(where: DivisionCreateInput!): Division!
+  createDivision(name: String!, description: String): Division!
   updateDivision(id: ID!, name: String, description: String): Division!
   deleteDivision(id: ID!): Division
+
+  # Team CRUD
+  createTeam(name: String!, description: String): Team!
+  updateTeam(id: ID!, name: String, description: String): Team!
+  deleteTeam(id: ID!): Team
 
   #  DailyReport CRUD
   createDailyReport(
     emotion: String!
     title: String!
-    achievement: String!
+    tasks: [TaskInput!]
     plan: String!
     comment: String
   ): DailyReport!
@@ -54,7 +76,7 @@ type Mutation {
     id: ID!
     emotion: String
     title: String
-    achievement: String
+    tasks: [TaskInput!]
     plan: String
     comment: String
   ): DailyReport!
