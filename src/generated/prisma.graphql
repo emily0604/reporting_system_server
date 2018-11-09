@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/phuong-thuan-b82a1c/reporting_system_db/dev
-# timestamp: Tue Oct 30 2018 13:16:43 GMT+0700 (+07)
+# source: https://rs-prod-e483940128.herokuapp.com/rs-prod/prod
+# timestamp: Fri Nov 09 2018 14:49:24 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -614,9 +614,11 @@ input DivisionUpdateManyMutationInput {
   description: String
 }
 
-input DivisionUpdateOneRequiredWithoutGroupsInput {
+input DivisionUpdateOneWithoutGroupsInput {
   create: DivisionCreateWithoutGroupsInput
   connect: DivisionWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: DivisionUpdateWithoutGroupsDataInput
   upsert: DivisionUpsertWithoutGroupsInput
 }
@@ -817,7 +819,7 @@ type Group implements Node {
   id: ID!
   name: String!
   description: String
-  division: Division!
+  division: Division
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -836,7 +838,7 @@ type GroupConnection {
 input GroupCreateInput {
   name: String!
   description: String
-  division: DivisionCreateOneWithoutGroupsInput!
+  division: DivisionCreateOneWithoutGroupsInput
   teams: TeamCreateManyWithoutGroupInput
 }
 
@@ -859,7 +861,7 @@ input GroupCreateWithoutDivisionInput {
 input GroupCreateWithoutTeamsInput {
   name: String!
   description: String
-  division: DivisionCreateOneWithoutGroupsInput!
+  division: DivisionCreateOneWithoutGroupsInput
 }
 
 """An edge in a connection."""
@@ -934,7 +936,7 @@ input GroupSubscriptionWhereInput {
 input GroupUpdateInput {
   name: String
   description: String
-  division: DivisionUpdateOneRequiredWithoutGroupsInput
+  division: DivisionUpdateOneWithoutGroupsInput
   teams: TeamUpdateManyWithoutGroupInput
 }
 
@@ -952,9 +954,11 @@ input GroupUpdateManyWithoutDivisionInput {
   upsert: [GroupUpsertWithWhereUniqueWithoutDivisionInput!]
 }
 
-input GroupUpdateOneRequiredWithoutTeamsInput {
+input GroupUpdateOneWithoutTeamsInput {
   create: GroupCreateWithoutTeamsInput
   connect: GroupWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: GroupUpdateWithoutTeamsDataInput
   upsert: GroupUpsertWithoutTeamsInput
 }
@@ -968,7 +972,7 @@ input GroupUpdateWithoutDivisionDataInput {
 input GroupUpdateWithoutTeamsDataInput {
   name: String
   description: String
-  division: DivisionUpdateOneRequiredWithoutGroupsInput
+  division: DivisionUpdateOneWithoutGroupsInput
 }
 
 input GroupUpdateWithWhereUniqueWithoutDivisionInput {
@@ -1290,7 +1294,7 @@ type Team implements Node {
   name: String!
   description: String
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  group: Group!
+  group: Group
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1309,7 +1313,7 @@ input TeamCreateInput {
   name: String!
   description: String
   users: UserCreateManyWithoutTeamInput
-  group: GroupCreateOneWithoutTeamsInput!
+  group: GroupCreateOneWithoutTeamsInput
 }
 
 input TeamCreateManyWithoutGroupInput {
@@ -1331,7 +1335,7 @@ input TeamCreateWithoutGroupInput {
 input TeamCreateWithoutUsersInput {
   name: String!
   description: String
-  group: GroupCreateOneWithoutTeamsInput!
+  group: GroupCreateOneWithoutTeamsInput
 }
 
 """An edge in a connection."""
@@ -1407,7 +1411,7 @@ input TeamUpdateInput {
   name: String
   description: String
   users: UserUpdateManyWithoutTeamInput
-  group: GroupUpdateOneRequiredWithoutTeamsInput
+  group: GroupUpdateOneWithoutTeamsInput
 }
 
 input TeamUpdateManyMutationInput {
@@ -1442,7 +1446,7 @@ input TeamUpdateWithoutGroupDataInput {
 input TeamUpdateWithoutUsersDataInput {
   name: String
   description: String
-  group: GroupUpdateOneRequiredWithoutTeamsInput
+  group: GroupUpdateOneWithoutTeamsInput
 }
 
 input TeamUpdateWithWhereUniqueWithoutGroupInput {

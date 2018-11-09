@@ -35,7 +35,7 @@ type Group {
   id: ID! @unique
   name: String!
   description: String
-  division: Division!
+  division: Division
   teams: [Team!]! @relation(name: "TeamsOfGroup" onDelete: CASCADE)
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -46,7 +46,7 @@ type Team {
   name: String!
   description: String
   users: [User!]! @relation(name: "UsersOfTeam" onDelete: CASCADE)
-  group: Group! @relation(name: "TeamsOfGroup" onDelete: SET_NULL)
+  group: Group @relation(name: "TeamsOfGroup" onDelete: SET_NULL)
   createdAt: DateTime!
   updatedAt: DateTime!
 }
