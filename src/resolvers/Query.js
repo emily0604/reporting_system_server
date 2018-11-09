@@ -2,16 +2,16 @@ const { getUserId } = require('../utils');
 const { forwardTo } = require('prisma-binding');
 
 const Query = {
-  info: () => `This is the API of a Reporting System`,
+  info: () => `GraphQL API of Reporting System`,
 
   divisions: forwardTo('db'),
   dailyReport: forwardTo('db'),
   users: forwardTo('db'),
+  teams: forwardTo('db'),
+  team: forwardTo('db'),
 
   me: (parent, args, ctx, info) => {
     const id = getUserId(ctx);
-    // Check if there is a current user ID:
-    if (!id) return null;
     return ctx.db.query.user({ where: { id } }, info);
   },
 
@@ -21,6 +21,7 @@ const Query = {
     const dailyReports = await ctx.db.query.dailyReports({
       ...args
     });
+
     const dailyReportsConnection = await ctx.db.query.dailyReportsConnection(
       { where },
       `{ aggregate { count } }`
@@ -35,7 +36,6 @@ const Query = {
 
   userReports: async (parent, args, ctx, info) => {
     const id = getUserId(ctx);
-    if (!id) return null;
 
     const { skip, first, orderBy } = args;
 
@@ -45,6 +45,7 @@ const Query = {
       first,
       orderBy
     });
+
     const dailyReportsConnection = await ctx.db.query.dailyReportsConnection(
       { where: { author: { id } } },
       `{ aggregate { count } }`
@@ -55,7 +56,8 @@ const Query = {
       dailyReportIds: dailyReports.map(dailyReport => dailyReport.id),
       orderBy
     };
-  }
+  },
+
 };
 
 module.exports = { Query };
