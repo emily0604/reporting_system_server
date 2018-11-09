@@ -1,14 +1,14 @@
 const { getUserId } = require('../../utils');
 
-const division = {
+const team = {
 
-  createDivision: async (parent, args, ctx, info) => {
+  createTeam: async (parent, args, ctx, info) => {
     // Check if user logged in
     const userId = getUserId(ctx);
 
     // Check if user has permission to do this
     const hasPermissions = ctx.request.user.roles.some(role =>
-      ['ADMIN'].includes(role)
+      ['GROUP_LEADER', 'ADMIN'].includes(role)
     );
 
     if (!hasPermissions) {
@@ -17,7 +17,7 @@ const division = {
 
     const { name, description } = args;
 
-    return ctx.db.mutation.createDivision(
+    return ctx.db.mutation.createTeam(
       {
         data: { name, description },
       },
@@ -25,30 +25,30 @@ const division = {
     )
   },
 
-  updateDivision: async (parent, args, ctx, info) => {
+  updateTeam: async (parent, args, ctx, info) => {
     // Check if user logged in
     const userId = getUserId(ctx);
 
     // Check if user has permission to do this
     const hasPermissions = ctx.request.user.roles.some(role =>
-      ['ADMIN'].includes(role)
+      ['GROUP_LEADER', 'ADMIN'].includes(role)
     );
 
     if (!hasPermissions) {
       throw new Error("You don't have permission to do that!")
     }
 
-    // Check if division exists
-    const divisionExists = await ctx.db.exists.Division({
+    // Check if team exists
+    const teamExists = await ctx.db.exists.Team({
       id: args.id
     });
 
-    if (!divisionExists) throw new Error('Division not found');
+    if (!teamExists) throw new Error('Team not found');
 
     const updates = { ...args };
     delete updates.id;
 
-    return ctx.db.mutation.updateDivision(
+    return ctx.db.mutation.updateTeam(
       {
         where: { id: args.id },
         data: updates
@@ -57,27 +57,27 @@ const division = {
     )
   },
 
-  deleteDivision: async (parent, { id }, ctx, info) => {
+  deleteTeam: async (parent, { id }, ctx, info) => {
     // Check if user logged in
     const userId = getUserId(ctx);
 
     // Check if user has permission to do this
     const hasPermissions = ctx.request.user.roles.some(role =>
-      ['ADMIN'].includes(role)
+      ['GROUP_LEADER', 'ADMIN'].includes(role)
     );
 
     if (!hasPermissions) {
       throw new Error("You don't have permission to do that!")
     }
 
-    // Check if division exists
-    const divisionExists = await ctx.db.exists.Division({
+    // Check if team exists
+    const teamExists = await ctx.db.exists.Team({
       id
     });
 
-    if (!divisionExists) throw new Error('Division not found');
+    if (!teamExists) throw new Error('Team not found');
 
-    return ctx.db.mutation.deleteDivision(
+    return ctx.db.mutation.deleteTeam(
       {
         where: { id },
       },
@@ -87,5 +87,5 @@ const division = {
 
 };
 
-module.exports = { division };
+module.exports = { team };
 
