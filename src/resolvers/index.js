@@ -2,6 +2,7 @@ const { Query } = require('./Query');
 const { Subscription } = require('./Subscription');
 
 const { division } = require('./Mutation/division');
+const { team } = require('./Mutation/team');
 const { auth } = require('./Mutation/auth');
 const { dailyReport } = require('./Mutation/dailyReport');
 const { weeklyReport } = require('./Mutation/weeklyReport');
@@ -13,6 +14,7 @@ module.exports = {
   Mutation: {
     ...auth,
     ...division,
+    ...team,
     ...dailyReport,
     ...weeklyReport
   },
