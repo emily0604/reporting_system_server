@@ -9,6 +9,12 @@ type DailyReportList {
   dailyReports: [DailyReport]
 }
 
+input TaskInput {
+  id: String!
+  url: String
+  logtime: String
+}
+
 type Query {
   info: String!
 
@@ -60,7 +66,7 @@ type Mutation {
   createDailyReport(
     emotion: String!
     title: String!
-    achievement: String!
+    tasks: [TaskInput!]
     plan: String!
     comment: String
   ): DailyReport!
@@ -69,7 +75,7 @@ type Mutation {
     id: ID!
     emotion: String
     title: String
-    achievement: String
+    tasks: [TaskInput!]
     plan: String
     comment: String
   ): DailyReport!
