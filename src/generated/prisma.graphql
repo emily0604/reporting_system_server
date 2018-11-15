@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/phuong-thuan-b82a1c/reporting_system_db/dev
-# timestamp: Fri Nov 09 2018 10:53:03 GMT+0700 (+07)
+# source: https://rs-prod-e483940128.herokuapp.com/rs-prod/prod
+# timestamp: Thu Nov 15 2018 08:47:44 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -10,6 +10,14 @@ type AggregateDivision {
 }
 
 type AggregateGroup {
+  count: Int!
+}
+
+type AggregateProject {
+  count: Int!
+}
+
+type AggregateTask {
   count: Int!
 }
 
@@ -34,9 +42,10 @@ type DailyReport implements Node {
   id: ID!
   emotion: String!
   title: String!
-  achievement: String!
   plan: String!
   comment: String
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -55,9 +64,10 @@ type DailyReportConnection {
 input DailyReportCreateInput {
   emotion: String!
   title: String!
-  achievement: String!
   plan: String!
   comment: String
+  projects: ProjectCreateManyWithoutAttachesInput
+  tasks: TaskCreateManyWithoutAttachesInput
   author: UserCreateOneWithoutDailyReportsInput!
 }
 
@@ -66,12 +76,41 @@ input DailyReportCreateManyWithoutAuthorInput {
   connect: [DailyReportWhereUniqueInput!]
 }
 
+input DailyReportCreateManyWithoutProjectsInput {
+  create: [DailyReportCreateWithoutProjectsInput!]
+  connect: [DailyReportWhereUniqueInput!]
+}
+
+input DailyReportCreateManyWithoutTasksInput {
+  create: [DailyReportCreateWithoutTasksInput!]
+  connect: [DailyReportWhereUniqueInput!]
+}
+
 input DailyReportCreateWithoutAuthorInput {
   emotion: String!
   title: String!
-  achievement: String!
   plan: String!
   comment: String
+  projects: ProjectCreateManyWithoutAttachesInput
+  tasks: TaskCreateManyWithoutAttachesInput
+}
+
+input DailyReportCreateWithoutProjectsInput {
+  emotion: String!
+  title: String!
+  plan: String!
+  comment: String
+  tasks: TaskCreateManyWithoutAttachesInput
+  author: UserCreateOneWithoutDailyReportsInput!
+}
+
+input DailyReportCreateWithoutTasksInput {
+  emotion: String!
+  title: String!
+  plan: String!
+  comment: String
+  projects: ProjectCreateManyWithoutAttachesInput
+  author: UserCreateOneWithoutDailyReportsInput!
 }
 
 """An edge in a connection."""
@@ -90,8 +129,6 @@ enum DailyReportOrderByInput {
   emotion_DESC
   title_ASC
   title_DESC
-  achievement_ASC
-  achievement_DESC
   plan_ASC
   plan_DESC
   comment_ASC
@@ -106,306 +143,10 @@ type DailyReportPreviousValues {
   id: ID!
   emotion: String!
   title: String!
-  achievement: String!
   plan: String!
   comment: String
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-input DailyReportScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [DailyReportScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [DailyReportScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [DailyReportScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  emotion: String
-
-  """All values that are not equal to given value."""
-  emotion_not: String
-
-  """All values that are contained in given list."""
-  emotion_in: [String!]
-
-  """All values that are not contained in given list."""
-  emotion_not_in: [String!]
-
-  """All values less than the given value."""
-  emotion_lt: String
-
-  """All values less than or equal the given value."""
-  emotion_lte: String
-
-  """All values greater than the given value."""
-  emotion_gt: String
-
-  """All values greater than or equal the given value."""
-  emotion_gte: String
-
-  """All values containing the given string."""
-  emotion_contains: String
-
-  """All values not containing the given string."""
-  emotion_not_contains: String
-
-  """All values starting with the given string."""
-  emotion_starts_with: String
-
-  """All values not starting with the given string."""
-  emotion_not_starts_with: String
-
-  """All values ending with the given string."""
-  emotion_ends_with: String
-
-  """All values not ending with the given string."""
-  emotion_not_ends_with: String
-  title: String
-
-  """All values that are not equal to given value."""
-  title_not: String
-
-  """All values that are contained in given list."""
-  title_in: [String!]
-
-  """All values that are not contained in given list."""
-  title_not_in: [String!]
-
-  """All values less than the given value."""
-  title_lt: String
-
-  """All values less than or equal the given value."""
-  title_lte: String
-
-  """All values greater than the given value."""
-  title_gt: String
-
-  """All values greater than or equal the given value."""
-  title_gte: String
-
-  """All values containing the given string."""
-  title_contains: String
-
-  """All values not containing the given string."""
-  title_not_contains: String
-
-  """All values starting with the given string."""
-  title_starts_with: String
-
-  """All values not starting with the given string."""
-  title_not_starts_with: String
-
-  """All values ending with the given string."""
-  title_ends_with: String
-
-  """All values not ending with the given string."""
-  title_not_ends_with: String
-  achievement: String
-
-  """All values that are not equal to given value."""
-  achievement_not: String
-
-  """All values that are contained in given list."""
-  achievement_in: [String!]
-
-  """All values that are not contained in given list."""
-  achievement_not_in: [String!]
-
-  """All values less than the given value."""
-  achievement_lt: String
-
-  """All values less than or equal the given value."""
-  achievement_lte: String
-
-  """All values greater than the given value."""
-  achievement_gt: String
-
-  """All values greater than or equal the given value."""
-  achievement_gte: String
-
-  """All values containing the given string."""
-  achievement_contains: String
-
-  """All values not containing the given string."""
-  achievement_not_contains: String
-
-  """All values starting with the given string."""
-  achievement_starts_with: String
-
-  """All values not starting with the given string."""
-  achievement_not_starts_with: String
-
-  """All values ending with the given string."""
-  achievement_ends_with: String
-
-  """All values not ending with the given string."""
-  achievement_not_ends_with: String
-  plan: String
-
-  """All values that are not equal to given value."""
-  plan_not: String
-
-  """All values that are contained in given list."""
-  plan_in: [String!]
-
-  """All values that are not contained in given list."""
-  plan_not_in: [String!]
-
-  """All values less than the given value."""
-  plan_lt: String
-
-  """All values less than or equal the given value."""
-  plan_lte: String
-
-  """All values greater than the given value."""
-  plan_gt: String
-
-  """All values greater than or equal the given value."""
-  plan_gte: String
-
-  """All values containing the given string."""
-  plan_contains: String
-
-  """All values not containing the given string."""
-  plan_not_contains: String
-
-  """All values starting with the given string."""
-  plan_starts_with: String
-
-  """All values not starting with the given string."""
-  plan_not_starts_with: String
-
-  """All values ending with the given string."""
-  plan_ends_with: String
-
-  """All values not ending with the given string."""
-  plan_not_ends_with: String
-  comment: String
-
-  """All values that are not equal to given value."""
-  comment_not: String
-
-  """All values that are contained in given list."""
-  comment_in: [String!]
-
-  """All values that are not contained in given list."""
-  comment_not_in: [String!]
-
-  """All values less than the given value."""
-  comment_lt: String
-
-  """All values less than or equal the given value."""
-  comment_lte: String
-
-  """All values greater than the given value."""
-  comment_gt: String
-
-  """All values greater than or equal the given value."""
-  comment_gte: String
-
-  """All values containing the given string."""
-  comment_contains: String
-
-  """All values not containing the given string."""
-  comment_not_contains: String
-
-  """All values starting with the given string."""
-  comment_starts_with: String
-
-  """All values not starting with the given string."""
-  comment_not_starts_with: String
-
-  """All values ending with the given string."""
-  comment_ends_with: String
-
-  """All values not ending with the given string."""
-  comment_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
 }
 
 type DailyReportSubscriptionPayload {
@@ -450,24 +191,16 @@ input DailyReportSubscriptionWhereInput {
 input DailyReportUpdateInput {
   emotion: String
   title: String
-  achievement: String
   plan: String
   comment: String
+  projects: ProjectUpdateManyWithoutAttachesInput
+  tasks: TaskUpdateManyWithoutAttachesInput
   author: UserUpdateOneRequiredWithoutDailyReportsInput
-}
-
-input DailyReportUpdateManyDataInput {
-  emotion: String
-  title: String
-  achievement: String
-  plan: String
-  comment: String
 }
 
 input DailyReportUpdateManyMutationInput {
   emotion: String
   title: String
-  achievement: String
   plan: String
   comment: String
 }
@@ -478,22 +211,52 @@ input DailyReportUpdateManyWithoutAuthorInput {
   disconnect: [DailyReportWhereUniqueInput!]
   delete: [DailyReportWhereUniqueInput!]
   update: [DailyReportUpdateWithWhereUniqueWithoutAuthorInput!]
-  updateMany: [DailyReportUpdateManyWithWhereNestedInput!]
-  deleteMany: [DailyReportScalarWhereInput!]
   upsert: [DailyReportUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
-input DailyReportUpdateManyWithWhereNestedInput {
-  where: DailyReportScalarWhereInput!
-  data: DailyReportUpdateManyDataInput!
+input DailyReportUpdateManyWithoutProjectsInput {
+  create: [DailyReportCreateWithoutProjectsInput!]
+  connect: [DailyReportWhereUniqueInput!]
+  disconnect: [DailyReportWhereUniqueInput!]
+  delete: [DailyReportWhereUniqueInput!]
+  update: [DailyReportUpdateWithWhereUniqueWithoutProjectsInput!]
+  upsert: [DailyReportUpsertWithWhereUniqueWithoutProjectsInput!]
+}
+
+input DailyReportUpdateManyWithoutTasksInput {
+  create: [DailyReportCreateWithoutTasksInput!]
+  connect: [DailyReportWhereUniqueInput!]
+  disconnect: [DailyReportWhereUniqueInput!]
+  delete: [DailyReportWhereUniqueInput!]
+  update: [DailyReportUpdateWithWhereUniqueWithoutTasksInput!]
+  upsert: [DailyReportUpsertWithWhereUniqueWithoutTasksInput!]
 }
 
 input DailyReportUpdateWithoutAuthorDataInput {
   emotion: String
   title: String
-  achievement: String
   plan: String
   comment: String
+  projects: ProjectUpdateManyWithoutAttachesInput
+  tasks: TaskUpdateManyWithoutAttachesInput
+}
+
+input DailyReportUpdateWithoutProjectsDataInput {
+  emotion: String
+  title: String
+  plan: String
+  comment: String
+  tasks: TaskUpdateManyWithoutAttachesInput
+  author: UserUpdateOneRequiredWithoutDailyReportsInput
+}
+
+input DailyReportUpdateWithoutTasksDataInput {
+  emotion: String
+  title: String
+  plan: String
+  comment: String
+  projects: ProjectUpdateManyWithoutAttachesInput
+  author: UserUpdateOneRequiredWithoutDailyReportsInput
 }
 
 input DailyReportUpdateWithWhereUniqueWithoutAuthorInput {
@@ -501,10 +264,32 @@ input DailyReportUpdateWithWhereUniqueWithoutAuthorInput {
   data: DailyReportUpdateWithoutAuthorDataInput!
 }
 
+input DailyReportUpdateWithWhereUniqueWithoutProjectsInput {
+  where: DailyReportWhereUniqueInput!
+  data: DailyReportUpdateWithoutProjectsDataInput!
+}
+
+input DailyReportUpdateWithWhereUniqueWithoutTasksInput {
+  where: DailyReportWhereUniqueInput!
+  data: DailyReportUpdateWithoutTasksDataInput!
+}
+
 input DailyReportUpsertWithWhereUniqueWithoutAuthorInput {
   where: DailyReportWhereUniqueInput!
   update: DailyReportUpdateWithoutAuthorDataInput!
   create: DailyReportCreateWithoutAuthorInput!
+}
+
+input DailyReportUpsertWithWhereUniqueWithoutProjectsInput {
+  where: DailyReportWhereUniqueInput!
+  update: DailyReportUpdateWithoutProjectsDataInput!
+  create: DailyReportCreateWithoutProjectsInput!
+}
+
+input DailyReportUpsertWithWhereUniqueWithoutTasksInput {
+  where: DailyReportWhereUniqueInput!
+  update: DailyReportUpdateWithoutTasksDataInput!
+  create: DailyReportCreateWithoutTasksInput!
 }
 
 input DailyReportWhereInput {
@@ -636,46 +421,6 @@ input DailyReportWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
-  achievement: String
-
-  """All values that are not equal to given value."""
-  achievement_not: String
-
-  """All values that are contained in given list."""
-  achievement_in: [String!]
-
-  """All values that are not contained in given list."""
-  achievement_not_in: [String!]
-
-  """All values less than the given value."""
-  achievement_lt: String
-
-  """All values less than or equal the given value."""
-  achievement_lte: String
-
-  """All values greater than the given value."""
-  achievement_gt: String
-
-  """All values greater than or equal the given value."""
-  achievement_gte: String
-
-  """All values containing the given string."""
-  achievement_contains: String
-
-  """All values not containing the given string."""
-  achievement_not_contains: String
-
-  """All values starting with the given string."""
-  achievement_starts_with: String
-
-  """All values not starting with the given string."""
-  achievement_not_starts_with: String
-
-  """All values ending with the given string."""
-  achievement_ends_with: String
-
-  """All values not ending with the given string."""
-  achievement_not_ends_with: String
   plan: String
 
   """All values that are not equal to given value."""
@@ -800,6 +545,12 @@ input DailyReportWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  projects_every: ProjectWhereInput
+  projects_some: ProjectWhereInput
+  projects_none: ProjectWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
   author: UserWhereInput
 }
 
@@ -1204,181 +955,6 @@ type GroupPreviousValues {
   updatedAt: DateTime!
 }
 
-input GroupScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [GroupScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [GroupScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [GroupScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-}
-
 type GroupSubscriptionPayload {
   mutation: MutationType!
   node: Group
@@ -1425,11 +1001,6 @@ input GroupUpdateInput {
   teams: TeamUpdateManyWithoutGroupInput
 }
 
-input GroupUpdateManyDataInput {
-  name: String
-  description: String
-}
-
 input GroupUpdateManyMutationInput {
   name: String
   description: String
@@ -1441,14 +1012,7 @@ input GroupUpdateManyWithoutDivisionInput {
   disconnect: [GroupWhereUniqueInput!]
   delete: [GroupWhereUniqueInput!]
   update: [GroupUpdateWithWhereUniqueWithoutDivisionInput!]
-  updateMany: [GroupUpdateManyWithWhereNestedInput!]
-  deleteMany: [GroupScalarWhereInput!]
   upsert: [GroupUpsertWithWhereUniqueWithoutDivisionInput!]
-}
-
-input GroupUpdateManyWithWhereNestedInput {
-  where: GroupScalarWhereInput!
-  data: GroupUpdateManyDataInput!
 }
 
 input GroupUpdateOneWithoutTeamsInput {
@@ -1678,42 +1242,54 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
+  createTask(data: TaskCreateInput!): Task!
+  createProject(data: ProjectCreateInput!): Project!
+  createDailyReport(data: DailyReportCreateInput!): DailyReport!
+  createWeeklyReport(data: WeeklyReportCreateInput!): WeeklyReport!
   createDivision(data: DivisionCreateInput!): Division!
   createGroup(data: GroupCreateInput!): Group!
   createTeam(data: TeamCreateInput!): Team!
-  createDailyReport(data: DailyReportCreateInput!): DailyReport!
-  createWeeklyReport(data: WeeklyReportCreateInput!): WeeklyReport!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createUser(data: UserCreateInput!): User!
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
+  updateDailyReport(data: DailyReportUpdateInput!, where: DailyReportWhereUniqueInput!): DailyReport
+  updateWeeklyReport(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereUniqueInput!): WeeklyReport
   updateDivision(data: DivisionUpdateInput!, where: DivisionWhereUniqueInput!): Division
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
-  updateDailyReport(data: DailyReportUpdateInput!, where: DailyReportWhereUniqueInput!): DailyReport
-  updateWeeklyReport(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereUniqueInput!): WeeklyReport
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteTask(where: TaskWhereUniqueInput!): Task
+  deleteProject(where: ProjectWhereUniqueInput!): Project
+  deleteDailyReport(where: DailyReportWhereUniqueInput!): DailyReport
+  deleteWeeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
   deleteDivision(where: DivisionWhereUniqueInput!): Division
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteTeam(where: TeamWhereUniqueInput!): Team
-  deleteDailyReport(where: DailyReportWhereUniqueInput!): DailyReport
-  deleteWeeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
+  upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
+  upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
+  upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
   upsertDivision(where: DivisionWhereUniqueInput!, create: DivisionCreateInput!, update: DivisionUpdateInput!): Division!
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
-  upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
-  upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
+  updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
+  updateManyDailyReports(data: DailyReportUpdateManyMutationInput!, where: DailyReportWhereInput): BatchPayload!
+  updateManyWeeklyReports(data: WeeklyReportUpdateManyMutationInput!, where: WeeklyReportWhereInput): BatchPayload!
   updateManyDivisions(data: DivisionUpdateManyMutationInput!, where: DivisionWhereInput): BatchPayload!
   updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
   updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
-  updateManyDailyReports(data: DailyReportUpdateManyMutationInput!, where: DailyReportWhereInput): BatchPayload!
-  updateManyWeeklyReports(data: WeeklyReportUpdateManyMutationInput!, where: WeeklyReportWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
+  deleteManyProjects(where: ProjectWhereInput): BatchPayload!
+  deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
+  deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
   deleteManyDivisions(where: DivisionWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
-  deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
-  deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1743,112 +1319,90 @@ type PageInfo {
   endCursor: String
 }
 
-type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  divisions(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Division]!
-  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
-  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
-  dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport]!
-  weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport]!
-  user(where: UserWhereUniqueInput!): User
-  division(where: DivisionWhereUniqueInput!): Division
-  group(where: GroupWhereUniqueInput!): Group
-  team(where: TeamWhereUniqueInput!): Team
-  dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
-  weeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  divisionsConnection(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DivisionConnection!
-  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
-  teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
-  dailyReportsConnection(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyReportConnection!
-  weeklyReportsConnection(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeeklyReportConnection!
-
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-}
-
-enum Role {
-  MEMBER
-  TEAM_LEADER
-  GROUP_LEADER
-  ADMIN
-}
-
-type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  division(where: DivisionSubscriptionWhereInput): DivisionSubscriptionPayload
-  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
-  team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
-  dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
-  weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
-}
-
-type Team implements Node {
+type Project implements Node {
   id: ID!
-  name: String!
+  title: String!
   description: String
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  group: Group
+  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  attaches(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
+  teamLeader: User
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
-type TeamConnection {
+type ProjectConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [TeamEdge]!
-  aggregate: AggregateTeam!
+  edges: [ProjectEdge]!
+  aggregate: AggregateProject!
 }
 
-input TeamCreateInput {
-  name: String!
+input ProjectCreateInput {
+  title: String!
   description: String
-  users: UserCreateManyWithoutTeamInput
-  group: GroupCreateOneWithoutTeamsInput
+  members: UserCreateManyWithoutProjectsInput
+  tasks: TaskCreateManyWithoutProjectInput
+  attaches: DailyReportCreateManyWithoutProjectsInput
+  teamLeader: UserCreateOneInput
 }
 
-input TeamCreateManyWithoutGroupInput {
-  create: [TeamCreateWithoutGroupInput!]
-  connect: [TeamWhereUniqueInput!]
+input ProjectCreateManyWithoutAttachesInput {
+  create: [ProjectCreateWithoutAttachesInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
-input TeamCreateOneWithoutUsersInput {
-  create: TeamCreateWithoutUsersInput
-  connect: TeamWhereUniqueInput
+input ProjectCreateManyWithoutMembersInput {
+  create: [ProjectCreateWithoutMembersInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
-input TeamCreateWithoutGroupInput {
-  name: String!
+input ProjectCreateOneWithoutTasksInput {
+  create: ProjectCreateWithoutTasksInput
+  connect: ProjectWhereUniqueInput
+}
+
+input ProjectCreateWithoutAttachesInput {
+  title: String!
   description: String
-  users: UserCreateManyWithoutTeamInput
+  members: UserCreateManyWithoutProjectsInput
+  tasks: TaskCreateManyWithoutProjectInput
+  teamLeader: UserCreateOneInput
 }
 
-input TeamCreateWithoutUsersInput {
-  name: String!
+input ProjectCreateWithoutMembersInput {
+  title: String!
   description: String
-  group: GroupCreateOneWithoutTeamsInput
+  tasks: TaskCreateManyWithoutProjectInput
+  attaches: DailyReportCreateManyWithoutProjectsInput
+  teamLeader: UserCreateOneInput
+}
+
+input ProjectCreateWithoutTasksInput {
+  title: String!
+  description: String
+  members: UserCreateManyWithoutProjectsInput
+  attaches: DailyReportCreateManyWithoutProjectsInput
+  teamLeader: UserCreateOneInput
 }
 
 """An edge in a connection."""
-type TeamEdge {
+type ProjectEdge {
   """The item at the end of the edge."""
-  node: Team!
+  node: Project!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum TeamOrderByInput {
+enum ProjectOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  title_ASC
+  title_DESC
   description_ASC
   description_DESC
   createdAt_ASC
@@ -1857,23 +1411,154 @@ enum TeamOrderByInput {
   updatedAt_DESC
 }
 
-type TeamPreviousValues {
+type ProjectPreviousValues {
   id: ID!
-  name: String!
+  title: String!
   description: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-input TeamScalarWhereInput {
+type ProjectSubscriptionPayload {
+  mutation: MutationType!
+  node: Project
+  updatedFields: [String!]
+  previousValues: ProjectPreviousValues
+}
+
+input ProjectSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [TeamScalarWhereInput!]
+  AND: [ProjectSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [TeamScalarWhereInput!]
+  OR: [ProjectSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [TeamScalarWhereInput!]
+  NOT: [ProjectSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProjectWhereInput
+}
+
+input ProjectUpdateInput {
+  title: String
+  description: String
+  members: UserUpdateManyWithoutProjectsInput
+  tasks: TaskUpdateManyWithoutProjectInput
+  attaches: DailyReportUpdateManyWithoutProjectsInput
+  teamLeader: UserUpdateOneInput
+}
+
+input ProjectUpdateManyMutationInput {
+  title: String
+  description: String
+}
+
+input ProjectUpdateManyWithoutAttachesInput {
+  create: [ProjectCreateWithoutAttachesInput!]
+  connect: [ProjectWhereUniqueInput!]
+  disconnect: [ProjectWhereUniqueInput!]
+  delete: [ProjectWhereUniqueInput!]
+  update: [ProjectUpdateWithWhereUniqueWithoutAttachesInput!]
+  upsert: [ProjectUpsertWithWhereUniqueWithoutAttachesInput!]
+}
+
+input ProjectUpdateManyWithoutMembersInput {
+  create: [ProjectCreateWithoutMembersInput!]
+  connect: [ProjectWhereUniqueInput!]
+  disconnect: [ProjectWhereUniqueInput!]
+  delete: [ProjectWhereUniqueInput!]
+  update: [ProjectUpdateWithWhereUniqueWithoutMembersInput!]
+  upsert: [ProjectUpsertWithWhereUniqueWithoutMembersInput!]
+}
+
+input ProjectUpdateOneWithoutTasksInput {
+  create: ProjectCreateWithoutTasksInput
+  connect: ProjectWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ProjectUpdateWithoutTasksDataInput
+  upsert: ProjectUpsertWithoutTasksInput
+}
+
+input ProjectUpdateWithoutAttachesDataInput {
+  title: String
+  description: String
+  members: UserUpdateManyWithoutProjectsInput
+  tasks: TaskUpdateManyWithoutProjectInput
+  teamLeader: UserUpdateOneInput
+}
+
+input ProjectUpdateWithoutMembersDataInput {
+  title: String
+  description: String
+  tasks: TaskUpdateManyWithoutProjectInput
+  attaches: DailyReportUpdateManyWithoutProjectsInput
+  teamLeader: UserUpdateOneInput
+}
+
+input ProjectUpdateWithoutTasksDataInput {
+  title: String
+  description: String
+  members: UserUpdateManyWithoutProjectsInput
+  attaches: DailyReportUpdateManyWithoutProjectsInput
+  teamLeader: UserUpdateOneInput
+}
+
+input ProjectUpdateWithWhereUniqueWithoutAttachesInput {
+  where: ProjectWhereUniqueInput!
+  data: ProjectUpdateWithoutAttachesDataInput!
+}
+
+input ProjectUpdateWithWhereUniqueWithoutMembersInput {
+  where: ProjectWhereUniqueInput!
+  data: ProjectUpdateWithoutMembersDataInput!
+}
+
+input ProjectUpsertWithoutTasksInput {
+  update: ProjectUpdateWithoutTasksDataInput!
+  create: ProjectCreateWithoutTasksInput!
+}
+
+input ProjectUpsertWithWhereUniqueWithoutAttachesInput {
+  where: ProjectWhereUniqueInput!
+  update: ProjectUpdateWithoutAttachesDataInput!
+  create: ProjectCreateWithoutAttachesInput!
+}
+
+input ProjectUpsertWithWhereUniqueWithoutMembersInput {
+  where: ProjectWhereUniqueInput!
+  update: ProjectUpdateWithoutMembersDataInput!
+  create: ProjectCreateWithoutMembersInput!
+}
+
+input ProjectWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProjectWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProjectWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProjectWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1914,46 +1599,46 @@ input TeamScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  title: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  title_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  title_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  title_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  title_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  title_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  title_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  title_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  title_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  title_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  title_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  title_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  title_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
+  title_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""
@@ -2038,6 +1723,652 @@ input TeamScalarWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  members_every: UserWhereInput
+  members_some: UserWhereInput
+  members_none: UserWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+  attaches_every: DailyReportWhereInput
+  attaches_some: DailyReportWhereInput
+  attaches_none: DailyReportWhereInput
+  teamLeader: UserWhereInput
+}
+
+input ProjectWhereUniqueInput {
+  id: ID
+}
+
+type Query {
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
+  dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport]!
+  weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport]!
+  divisions(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Division]!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  task(where: TaskWhereUniqueInput!): Task
+  project(where: ProjectWhereUniqueInput!): Project
+  dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
+  weeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
+  division(where: DivisionWhereUniqueInput!): Division
+  group(where: GroupWhereUniqueInput!): Group
+  team(where: TeamWhereUniqueInput!): Team
+  user(where: UserWhereUniqueInput!): User
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
+  projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
+  dailyReportsConnection(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyReportConnection!
+  weeklyReportsConnection(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeeklyReportConnection!
+  divisionsConnection(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DivisionConnection!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+  teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+enum Role {
+  MEMBER
+  TEAM_LEADER
+  GROUP_LEADER
+  ADMIN
+}
+
+type Subscription {
+  task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
+  project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
+  dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
+  weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
+  division(where: DivisionSubscriptionWhereInput): DivisionSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+  team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Task implements Node {
+  id: ID!
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  attaches(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
+  project: Project
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type TaskConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TaskEdge]!
+  aggregate: AggregateTask!
+}
+
+input TaskCreateInput {
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  members: UserCreateManyWithoutTasksInput
+  attaches: DailyReportCreateManyWithoutTasksInput
+  project: ProjectCreateOneWithoutTasksInput
+}
+
+input TaskCreateManyWithoutAttachesInput {
+  create: [TaskCreateWithoutAttachesInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateManyWithoutMembersInput {
+  create: [TaskCreateWithoutMembersInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateManyWithoutProjectInput {
+  create: [TaskCreateWithoutProjectInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateWithoutAttachesInput {
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  members: UserCreateManyWithoutTasksInput
+  project: ProjectCreateOneWithoutTasksInput
+}
+
+input TaskCreateWithoutMembersInput {
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  attaches: DailyReportCreateManyWithoutTasksInput
+  project: ProjectCreateOneWithoutTasksInput
+}
+
+input TaskCreateWithoutProjectInput {
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  members: UserCreateManyWithoutTasksInput
+  attaches: DailyReportCreateManyWithoutTasksInput
+}
+
+"""An edge in a connection."""
+type TaskEdge {
+  """The item at the end of the edge."""
+  node: Task!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TaskOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  url_ASC
+  url_DESC
+  logtime_ASC
+  logtime_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TaskPreviousValues {
+  id: ID!
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TaskSubscriptionPayload {
+  mutation: MutationType!
+  node: Task
+  updatedFields: [String!]
+  previousValues: TaskPreviousValues
+}
+
+input TaskSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TaskWhereInput
+}
+
+input TaskUpdateInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+  members: UserUpdateManyWithoutTasksInput
+  attaches: DailyReportUpdateManyWithoutTasksInput
+  project: ProjectUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateManyMutationInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+}
+
+input TaskUpdateManyWithoutAttachesInput {
+  create: [TaskCreateWithoutAttachesInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutAttachesInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutAttachesInput!]
+}
+
+input TaskUpdateManyWithoutMembersInput {
+  create: [TaskCreateWithoutMembersInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutMembersInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutMembersInput!]
+}
+
+input TaskUpdateManyWithoutProjectInput {
+  create: [TaskCreateWithoutProjectInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutProjectInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutProjectInput!]
+}
+
+input TaskUpdateWithoutAttachesDataInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+  members: UserUpdateManyWithoutTasksInput
+  project: ProjectUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateWithoutMembersDataInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+  attaches: DailyReportUpdateManyWithoutTasksInput
+  project: ProjectUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateWithoutProjectDataInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+  members: UserUpdateManyWithoutTasksInput
+  attaches: DailyReportUpdateManyWithoutTasksInput
+}
+
+input TaskUpdateWithWhereUniqueWithoutAttachesInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutAttachesDataInput!
+}
+
+input TaskUpdateWithWhereUniqueWithoutMembersInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutMembersDataInput!
+}
+
+input TaskUpdateWithWhereUniqueWithoutProjectInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutProjectDataInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutAttachesInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutAttachesDataInput!
+  create: TaskCreateWithoutAttachesInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutMembersInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutMembersDataInput!
+  create: TaskCreateWithoutMembersInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutProjectInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutProjectDataInput!
+  create: TaskCreateWithoutProjectInput!
+}
+
+input TaskWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  logtime: Int
+
+  """All values that are not equal to given value."""
+  logtime_not: Int
+
+  """All values that are contained in given list."""
+  logtime_in: [Int!]
+
+  """All values that are not contained in given list."""
+  logtime_not_in: [Int!]
+
+  """All values less than the given value."""
+  logtime_lt: Int
+
+  """All values less than or equal the given value."""
+  logtime_lte: Int
+
+  """All values greater than the given value."""
+  logtime_gt: Int
+
+  """All values greater than or equal the given value."""
+  logtime_gte: Int
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  members_every: UserWhereInput
+  members_some: UserWhereInput
+  members_none: UserWhereInput
+  attaches_every: DailyReportWhereInput
+  attaches_some: DailyReportWhereInput
+  attaches_none: DailyReportWhereInput
+  project: ProjectWhereInput
+}
+
+input TaskWhereUniqueInput {
+  id: ID
+}
+
+type Team implements Node {
+  id: ID!
+  name: String!
+  description: String
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  group: Group
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type TeamConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TeamEdge]!
+  aggregate: AggregateTeam!
+}
+
+input TeamCreateInput {
+  name: String!
+  description: String
+  users: UserCreateManyWithoutTeamInput
+  group: GroupCreateOneWithoutTeamsInput
+}
+
+input TeamCreateManyWithoutGroupInput {
+  create: [TeamCreateWithoutGroupInput!]
+  connect: [TeamWhereUniqueInput!]
+}
+
+input TeamCreateOneWithoutUsersInput {
+  create: TeamCreateWithoutUsersInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateWithoutGroupInput {
+  name: String!
+  description: String
+  users: UserCreateManyWithoutTeamInput
+}
+
+input TeamCreateWithoutUsersInput {
+  name: String!
+  description: String
+  group: GroupCreateOneWithoutTeamsInput
+}
+
+"""An edge in a connection."""
+type TeamEdge {
+  """The item at the end of the edge."""
+  node: Team!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TeamOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TeamPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type TeamSubscriptionPayload {
@@ -2086,11 +2417,6 @@ input TeamUpdateInput {
   group: GroupUpdateOneWithoutTeamsInput
 }
 
-input TeamUpdateManyDataInput {
-  name: String
-  description: String
-}
-
 input TeamUpdateManyMutationInput {
   name: String
   description: String
@@ -2102,14 +2428,7 @@ input TeamUpdateManyWithoutGroupInput {
   disconnect: [TeamWhereUniqueInput!]
   delete: [TeamWhereUniqueInput!]
   update: [TeamUpdateWithWhereUniqueWithoutGroupInput!]
-  updateMany: [TeamUpdateManyWithWhereNestedInput!]
-  deleteMany: [TeamScalarWhereInput!]
   upsert: [TeamUpsertWithWhereUniqueWithoutGroupInput!]
-}
-
-input TeamUpdateManyWithWhereNestedInput {
-  where: TeamScalarWhereInput!
-  data: TeamUpdateManyDataInput!
 }
 
 input TeamUpdateOneWithoutUsersInput {
@@ -2344,6 +2663,9 @@ type User implements Node {
   completed: Boolean!
   dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport!]
   weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  membersActivities(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
   team: Team
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2370,12 +2692,35 @@ input UserCreateInput {
   roles: UserCreaterolesInput
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  tasks: TaskCreateManyWithoutMembersInput
+  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
   team: TeamCreateOneWithoutUsersInput
+}
+
+input UserCreateManyWithoutMembersActivitiesInput {
+  create: [UserCreateWithoutMembersActivitiesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutProjectsInput {
+  create: [UserCreateWithoutProjectsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutTasksInput {
+  create: [UserCreateWithoutTasksInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateManyWithoutTeamInput {
   create: [UserCreateWithoutTeamInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutDailyReportsInput {
@@ -2402,6 +2747,57 @@ input UserCreateWithoutDailyReportsInput {
   completed: Boolean
   roles: UserCreaterolesInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  tasks: TaskCreateManyWithoutMembersInput
+  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  team: TeamCreateOneWithoutUsersInput
+}
+
+input UserCreateWithoutMembersActivitiesInput {
+  name: String!
+  address: String
+  phone: String
+  email: String!
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserCreaterolesInput
+  dailyReports: DailyReportCreateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  tasks: TaskCreateManyWithoutMembersInput
+  team: TeamCreateOneWithoutUsersInput
+}
+
+input UserCreateWithoutProjectsInput {
+  name: String!
+  address: String
+  phone: String
+  email: String!
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserCreaterolesInput
+  dailyReports: DailyReportCreateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  tasks: TaskCreateManyWithoutMembersInput
+  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  team: TeamCreateOneWithoutUsersInput
+}
+
+input UserCreateWithoutTasksInput {
+  name: String!
+  address: String
+  phone: String
+  email: String!
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserCreaterolesInput
+  dailyReports: DailyReportCreateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -2416,6 +2812,9 @@ input UserCreateWithoutTeamInput {
   roles: UserCreaterolesInput
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  tasks: TaskCreateManyWithoutMembersInput
+  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
 }
 
 input UserCreateWithoutWeeklyReportsInput {
@@ -2428,6 +2827,9 @@ input UserCreateWithoutWeeklyReportsInput {
   completed: Boolean
   roles: UserCreaterolesInput
   dailyReports: DailyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  tasks: TaskCreateManyWithoutMembersInput
+  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -2477,345 +2879,6 @@ type UserPreviousValues {
   updatedAt: DateTime!
 }
 
-input UserScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  address: String
-
-  """All values that are not equal to given value."""
-  address_not: String
-
-  """All values that are contained in given list."""
-  address_in: [String!]
-
-  """All values that are not contained in given list."""
-  address_not_in: [String!]
-
-  """All values less than the given value."""
-  address_lt: String
-
-  """All values less than or equal the given value."""
-  address_lte: String
-
-  """All values greater than the given value."""
-  address_gt: String
-
-  """All values greater than or equal the given value."""
-  address_gte: String
-
-  """All values containing the given string."""
-  address_contains: String
-
-  """All values not containing the given string."""
-  address_not_contains: String
-
-  """All values starting with the given string."""
-  address_starts_with: String
-
-  """All values not starting with the given string."""
-  address_not_starts_with: String
-
-  """All values ending with the given string."""
-  address_ends_with: String
-
-  """All values not ending with the given string."""
-  address_not_ends_with: String
-  phone: String
-
-  """All values that are not equal to given value."""
-  phone_not: String
-
-  """All values that are contained in given list."""
-  phone_in: [String!]
-
-  """All values that are not contained in given list."""
-  phone_not_in: [String!]
-
-  """All values less than the given value."""
-  phone_lt: String
-
-  """All values less than or equal the given value."""
-  phone_lte: String
-
-  """All values greater than the given value."""
-  phone_gt: String
-
-  """All values greater than or equal the given value."""
-  phone_gte: String
-
-  """All values containing the given string."""
-  phone_contains: String
-
-  """All values not containing the given string."""
-  phone_not_contains: String
-
-  """All values starting with the given string."""
-  phone_starts_with: String
-
-  """All values not starting with the given string."""
-  phone_not_starts_with: String
-
-  """All values ending with the given string."""
-  phone_ends_with: String
-
-  """All values not ending with the given string."""
-  phone_not_ends_with: String
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  avatar: String
-
-  """All values that are not equal to given value."""
-  avatar_not: String
-
-  """All values that are contained in given list."""
-  avatar_in: [String!]
-
-  """All values that are not contained in given list."""
-  avatar_not_in: [String!]
-
-  """All values less than the given value."""
-  avatar_lt: String
-
-  """All values less than or equal the given value."""
-  avatar_lte: String
-
-  """All values greater than the given value."""
-  avatar_gt: String
-
-  """All values greater than or equal the given value."""
-  avatar_gte: String
-
-  """All values containing the given string."""
-  avatar_contains: String
-
-  """All values not containing the given string."""
-  avatar_not_contains: String
-
-  """All values starting with the given string."""
-  avatar_starts_with: String
-
-  """All values not starting with the given string."""
-  avatar_not_starts_with: String
-
-  """All values ending with the given string."""
-  avatar_ends_with: String
-
-  """All values not ending with the given string."""
-  avatar_not_ends_with: String
-  googleId: String
-
-  """All values that are not equal to given value."""
-  googleId_not: String
-
-  """All values that are contained in given list."""
-  googleId_in: [String!]
-
-  """All values that are not contained in given list."""
-  googleId_not_in: [String!]
-
-  """All values less than the given value."""
-  googleId_lt: String
-
-  """All values less than or equal the given value."""
-  googleId_lte: String
-
-  """All values greater than the given value."""
-  googleId_gt: String
-
-  """All values greater than or equal the given value."""
-  googleId_gte: String
-
-  """All values containing the given string."""
-  googleId_contains: String
-
-  """All values not containing the given string."""
-  googleId_not_contains: String
-
-  """All values starting with the given string."""
-  googleId_starts_with: String
-
-  """All values not starting with the given string."""
-  googleId_not_starts_with: String
-
-  """All values ending with the given string."""
-  googleId_ends_with: String
-
-  """All values not ending with the given string."""
-  googleId_not_ends_with: String
-  completed: Boolean
-
-  """All values that are not equal to given value."""
-  completed_not: Boolean
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-}
-
 type UserSubscriptionPayload {
   mutation: MutationType!
   node: User
@@ -2855,6 +2918,23 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserUpdaterolesInput
+  dailyReports: DailyReportUpdateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  team: TeamUpdateOneWithoutUsersInput
+}
+
 input UserUpdateInput {
   name: String
   address: String
@@ -2866,18 +2946,10 @@ input UserUpdateInput {
   roles: UserUpdaterolesInput
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
   team: TeamUpdateOneWithoutUsersInput
-}
-
-input UserUpdateManyDataInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  completed: Boolean
-  roles: UserUpdaterolesInput
 }
 
 input UserUpdateManyMutationInput {
@@ -2891,20 +2963,49 @@ input UserUpdateManyMutationInput {
   roles: UserUpdaterolesInput
 }
 
+input UserUpdateManyWithoutMembersActivitiesInput {
+  create: [UserCreateWithoutMembersActivitiesInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutMembersActivitiesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutMembersActivitiesInput!]
+}
+
+input UserUpdateManyWithoutProjectsInput {
+  create: [UserCreateWithoutProjectsInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutProjectsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutProjectsInput!]
+}
+
+input UserUpdateManyWithoutTasksInput {
+  create: [UserCreateWithoutTasksInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutTasksInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutTasksInput!]
+}
+
 input UserUpdateManyWithoutTeamInput {
   create: [UserCreateWithoutTeamInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutTeamInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-  deleteMany: [UserScalarWhereInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutTeamInput!]
 }
 
-input UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput!
-  data: UserUpdateManyDataInput!
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
 }
 
 input UserUpdateOneRequiredWithoutDailyReportsInput {
@@ -2935,6 +3036,57 @@ input UserUpdateWithoutDailyReportsDataInput {
   completed: Boolean
   roles: UserUpdaterolesInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  team: TeamUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithoutMembersActivitiesDataInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserUpdaterolesInput
+  dailyReports: DailyReportUpdateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  team: TeamUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithoutProjectsDataInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserUpdaterolesInput
+  dailyReports: DailyReportUpdateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  team: TeamUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithoutTasksDataInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: UserUpdaterolesInput
+  dailyReports: DailyReportUpdateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
@@ -2949,6 +3101,9 @@ input UserUpdateWithoutTeamDataInput {
   roles: UserUpdaterolesInput
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
 }
 
 input UserUpdateWithoutWeeklyReportsDataInput {
@@ -2961,12 +3116,35 @@ input UserUpdateWithoutWeeklyReportsDataInput {
   completed: Boolean
   roles: UserUpdaterolesInput
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
   team: TeamUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithWhereUniqueWithoutMembersActivitiesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutMembersActivitiesDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutProjectsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutProjectsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutTasksInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutTasksDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutTeamInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutTeamDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutDailyReportsInput {
@@ -2977,6 +3155,24 @@ input UserUpsertWithoutDailyReportsInput {
 input UserUpsertWithoutWeeklyReportsInput {
   update: UserUpdateWithoutWeeklyReportsDataInput!
   create: UserCreateWithoutWeeklyReportsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutMembersActivitiesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutMembersActivitiesDataInput!
+  create: UserCreateWithoutMembersActivitiesInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutProjectsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutProjectsDataInput!
+  create: UserCreateWithoutProjectsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutTasksInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutTasksDataInput!
+  create: UserCreateWithoutTasksInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutTeamInput {
@@ -3328,6 +3524,15 @@ input UserWhereInput {
   weeklyReports_every: WeeklyReportWhereInput
   weeklyReports_some: WeeklyReportWhereInput
   weeklyReports_none: WeeklyReportWhereInput
+  projects_every: ProjectWhereInput
+  projects_some: ProjectWhereInput
+  projects_none: ProjectWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+  membersActivities_every: WeeklyReportWhereInput
+  membersActivities_some: WeeklyReportWhereInput
+  membersActivities_none: WeeklyReportWhereInput
   team: TeamWhereInput
 }
 
@@ -3343,6 +3548,7 @@ type WeeklyReport implements Node {
   solution: String!
   description: String
   summary: String!
+  membersActivities(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -3363,6 +3569,7 @@ input WeeklyReportCreateInput {
   solution: String!
   description: String
   summary: String!
+  membersActivities: UserCreateManyWithoutMembersActivitiesInput
   author: UserCreateOneWithoutWeeklyReportsInput!
 }
 
@@ -3371,11 +3578,25 @@ input WeeklyReportCreateManyWithoutAuthorInput {
   connect: [WeeklyReportWhereUniqueInput!]
 }
 
+input WeeklyReportCreateManyWithoutMembersActivitiesInput {
+  create: [WeeklyReportCreateWithoutMembersActivitiesInput!]
+  connect: [WeeklyReportWhereUniqueInput!]
+}
+
 input WeeklyReportCreateWithoutAuthorInput {
   issue: String!
   solution: String!
   description: String
   summary: String!
+  membersActivities: UserCreateManyWithoutMembersActivitiesInput
+}
+
+input WeeklyReportCreateWithoutMembersActivitiesInput {
+  issue: String!
+  solution: String!
+  description: String
+  summary: String!
+  author: UserCreateOneWithoutWeeklyReportsInput!
 }
 
 """An edge in a connection."""
@@ -3412,261 +3633,6 @@ type WeeklyReportPreviousValues {
   summary: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-input WeeklyReportScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [WeeklyReportScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [WeeklyReportScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [WeeklyReportScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  issue: String
-
-  """All values that are not equal to given value."""
-  issue_not: String
-
-  """All values that are contained in given list."""
-  issue_in: [String!]
-
-  """All values that are not contained in given list."""
-  issue_not_in: [String!]
-
-  """All values less than the given value."""
-  issue_lt: String
-
-  """All values less than or equal the given value."""
-  issue_lte: String
-
-  """All values greater than the given value."""
-  issue_gt: String
-
-  """All values greater than or equal the given value."""
-  issue_gte: String
-
-  """All values containing the given string."""
-  issue_contains: String
-
-  """All values not containing the given string."""
-  issue_not_contains: String
-
-  """All values starting with the given string."""
-  issue_starts_with: String
-
-  """All values not starting with the given string."""
-  issue_not_starts_with: String
-
-  """All values ending with the given string."""
-  issue_ends_with: String
-
-  """All values not ending with the given string."""
-  issue_not_ends_with: String
-  solution: String
-
-  """All values that are not equal to given value."""
-  solution_not: String
-
-  """All values that are contained in given list."""
-  solution_in: [String!]
-
-  """All values that are not contained in given list."""
-  solution_not_in: [String!]
-
-  """All values less than the given value."""
-  solution_lt: String
-
-  """All values less than or equal the given value."""
-  solution_lte: String
-
-  """All values greater than the given value."""
-  solution_gt: String
-
-  """All values greater than or equal the given value."""
-  solution_gte: String
-
-  """All values containing the given string."""
-  solution_contains: String
-
-  """All values not containing the given string."""
-  solution_not_contains: String
-
-  """All values starting with the given string."""
-  solution_starts_with: String
-
-  """All values not starting with the given string."""
-  solution_not_starts_with: String
-
-  """All values ending with the given string."""
-  solution_ends_with: String
-
-  """All values not ending with the given string."""
-  solution_not_ends_with: String
-  description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  summary: String
-
-  """All values that are not equal to given value."""
-  summary_not: String
-
-  """All values that are contained in given list."""
-  summary_in: [String!]
-
-  """All values that are not contained in given list."""
-  summary_not_in: [String!]
-
-  """All values less than the given value."""
-  summary_lt: String
-
-  """All values less than or equal the given value."""
-  summary_lte: String
-
-  """All values greater than the given value."""
-  summary_gt: String
-
-  """All values greater than or equal the given value."""
-  summary_gte: String
-
-  """All values containing the given string."""
-  summary_contains: String
-
-  """All values not containing the given string."""
-  summary_not_contains: String
-
-  """All values starting with the given string."""
-  summary_starts_with: String
-
-  """All values not starting with the given string."""
-  summary_not_starts_with: String
-
-  """All values ending with the given string."""
-  summary_ends_with: String
-
-  """All values not ending with the given string."""
-  summary_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
 }
 
 type WeeklyReportSubscriptionPayload {
@@ -3713,14 +3679,8 @@ input WeeklyReportUpdateInput {
   solution: String
   description: String
   summary: String
+  membersActivities: UserUpdateManyWithoutMembersActivitiesInput
   author: UserUpdateOneRequiredWithoutWeeklyReportsInput
-}
-
-input WeeklyReportUpdateManyDataInput {
-  issue: String
-  solution: String
-  description: String
-  summary: String
 }
 
 input WeeklyReportUpdateManyMutationInput {
@@ -3736,14 +3696,16 @@ input WeeklyReportUpdateManyWithoutAuthorInput {
   disconnect: [WeeklyReportWhereUniqueInput!]
   delete: [WeeklyReportWhereUniqueInput!]
   update: [WeeklyReportUpdateWithWhereUniqueWithoutAuthorInput!]
-  updateMany: [WeeklyReportUpdateManyWithWhereNestedInput!]
-  deleteMany: [WeeklyReportScalarWhereInput!]
   upsert: [WeeklyReportUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
-input WeeklyReportUpdateManyWithWhereNestedInput {
-  where: WeeklyReportScalarWhereInput!
-  data: WeeklyReportUpdateManyDataInput!
+input WeeklyReportUpdateManyWithoutMembersActivitiesInput {
+  create: [WeeklyReportCreateWithoutMembersActivitiesInput!]
+  connect: [WeeklyReportWhereUniqueInput!]
+  disconnect: [WeeklyReportWhereUniqueInput!]
+  delete: [WeeklyReportWhereUniqueInput!]
+  update: [WeeklyReportUpdateWithWhereUniqueWithoutMembersActivitiesInput!]
+  upsert: [WeeklyReportUpsertWithWhereUniqueWithoutMembersActivitiesInput!]
 }
 
 input WeeklyReportUpdateWithoutAuthorDataInput {
@@ -3751,6 +3713,15 @@ input WeeklyReportUpdateWithoutAuthorDataInput {
   solution: String
   description: String
   summary: String
+  membersActivities: UserUpdateManyWithoutMembersActivitiesInput
+}
+
+input WeeklyReportUpdateWithoutMembersActivitiesDataInput {
+  issue: String
+  solution: String
+  description: String
+  summary: String
+  author: UserUpdateOneRequiredWithoutWeeklyReportsInput
 }
 
 input WeeklyReportUpdateWithWhereUniqueWithoutAuthorInput {
@@ -3758,10 +3729,21 @@ input WeeklyReportUpdateWithWhereUniqueWithoutAuthorInput {
   data: WeeklyReportUpdateWithoutAuthorDataInput!
 }
 
+input WeeklyReportUpdateWithWhereUniqueWithoutMembersActivitiesInput {
+  where: WeeklyReportWhereUniqueInput!
+  data: WeeklyReportUpdateWithoutMembersActivitiesDataInput!
+}
+
 input WeeklyReportUpsertWithWhereUniqueWithoutAuthorInput {
   where: WeeklyReportWhereUniqueInput!
   update: WeeklyReportUpdateWithoutAuthorDataInput!
   create: WeeklyReportCreateWithoutAuthorInput!
+}
+
+input WeeklyReportUpsertWithWhereUniqueWithoutMembersActivitiesInput {
+  where: WeeklyReportWhereUniqueInput!
+  update: WeeklyReportUpdateWithoutMembersActivitiesDataInput!
+  create: WeeklyReportCreateWithoutMembersActivitiesInput!
 }
 
 input WeeklyReportWhereInput {
@@ -4017,6 +3999,9 @@ input WeeklyReportWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  membersActivities_every: UserWhereInput
+  membersActivities_some: UserWhereInput
+  membersActivities_none: UserWhereInput
   author: UserWhereInput
 }
 

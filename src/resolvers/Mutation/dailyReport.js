@@ -5,17 +5,43 @@ const dailyReport = {
   createDailyReport: async (parent, args, ctx, info) => {
     const userId = getUserId(ctx);
 
-    return ctx.db.mutation.createDailyReport(
+    const tasksId = args.tasks.map(task => ({ id: task.id }));
+
+    const tasksUrlandLogtime = args.tasks.map(task => ({
+        where: { id: task.id },
+        data: {  url: task.url,  logtime: task.logtime  }
+      })
+    );
+
+    // Step 1: Connect to task.
+    const dailyReport = await ctx.db.mutation.createDailyReport(
       {
         data: {
           ...args,
           author: {
             connect: { id: userId }
+          },
+          tasks: {
+            connect: tasksId
           }
         },
       },
       info
     );
+
+    // // Step 2: Update field in Task Node.
+    return ctx.db.mutation.updateDailyReport(
+      {
+        where: { id: dailyReport.id },
+        data: {
+          tasks: {
+            update: tasksUrlandLogtime
+          }
+        }
+      },
+      info
+    );
+
   },
 
   updateDailyReport: async (parent, args, ctx, info) => {
