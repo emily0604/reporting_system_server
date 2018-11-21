@@ -10,7 +10,8 @@ type DailyReportList {
 }
 
 input TaskInput {
-  id: String!
+  projectId: String!
+  title: String
   url: String
   logtime: String
 }

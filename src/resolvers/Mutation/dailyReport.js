@@ -5,16 +5,15 @@ const dailyReport = {
   createDailyReport: async (parent, args, ctx, info) => {
     const userId = getUserId(ctx);
 
-    const tasksId = args.tasks.map(task => ({ id: task.id }));
-
-    const tasksUrlandLogtime = args.tasks.map(task => ({
-        where: { id: task.id },
-        data: {  url: task.url,  logtime: task.logtime  }
+    const taskArgs = args.tasks.map(task => ({
+        url: task.url,
+        logtime: task.logtime,
+        project: { connect: { id: task.projectId } },
+        members: { connect: [ { id: userId } ] }
       })
     );
 
-    // Step 1: Connect to task.
-    const dailyReport = await ctx.db.mutation.createDailyReport(
+    return ctx.db.mutation.createDailyReport(
       {
         data: {
           ...args,
@@ -22,22 +21,9 @@ const dailyReport = {
             connect: { id: userId }
           },
           tasks: {
-            connect: tasksId
+            create: taskArgs
           }
         },
-      },
-      info
-    );
-
-    // // Step 2: Update field in Task Node.
-    return ctx.db.mutation.updateDailyReport(
-      {
-        where: { id: dailyReport.id },
-        data: {
-          tasks: {
-            update: tasksUrlandLogtime
-          }
-        }
       },
       info
     );
@@ -56,14 +42,56 @@ const dailyReport = {
       throw new Error('Daily Report not found or you are not the author');
     }
 
-    const updates = { ...args };
+    const dailyReport = await ctx.db.query.dailyReport({
+      where: { id: args.id }
+    }, `{ id tasks { id } }`);
 
-    delete updates.id;
+    // Update 1: Delete all of tasks in dailyReport.
+    // Check if daily Report don't have any tasks, skip this step.
+    if (dailyReport.tasks.length > 0) {
+
+      const updates1 = {
+        ...args,
+        tasks: {
+          delete: dailyReport.tasks
+        }
+      };
+
+      delete updates1.id;
+
+      await ctx.db.mutation.updateDailyReport(
+        {
+          where: { id: args.id },
+          data: updates1
+        },
+        info
+      );
+    }
+
+    // Update 2: Create new tasks
+    // Get all tasks from client.
+    const taskArgs = args.tasks.map(task => ({
+        url: task.url,
+        logtime: task.logtime,
+
+        // connect to exists project
+        project: { connect: { id: task.projectId } }
+      })
+    );
+
+    const updates2 = {
+      ...args,
+      tasks: {
+        create: taskArgs
+      }
+    };
+
+    delete updates2.id;
 
     return ctx.db.mutation.updateDailyReport(
       {
         where: { id: args.id },
-        data: updates
+        data: updates2
       },
       info
     );

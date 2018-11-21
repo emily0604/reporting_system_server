@@ -1,5 +1,5 @@
-# source: https://rs-prod-e483940128.herokuapp.com/rs-prod/prod
-# timestamp: Thu Nov 15 2018 08:47:44 GMT+0700 (+07)
+# source: http://localhost:4466
+# timestamp: Wed Nov 21 2018 09:52:45 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -880,8 +880,8 @@ type Group implements Node {
   id: ID!
   name: String!
   description: String
-  division: Division
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
+  division: Division
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -899,8 +899,8 @@ type GroupConnection {
 input GroupCreateInput {
   name: String!
   description: String
-  division: DivisionCreateOneWithoutGroupsInput
   teams: TeamCreateManyWithoutGroupInput
+  division: DivisionCreateOneWithoutGroupsInput
 }
 
 input GroupCreateManyWithoutDivisionInput {
@@ -997,8 +997,8 @@ input GroupSubscriptionWhereInput {
 input GroupUpdateInput {
   name: String
   description: String
-  division: DivisionUpdateOneWithoutGroupsInput
   teams: TeamUpdateManyWithoutGroupInput
+  division: DivisionUpdateOneWithoutGroupsInput
 }
 
 input GroupUpdateManyMutationInput {
@@ -1225,10 +1225,10 @@ input GroupWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  division: DivisionWhereInput
   teams_every: TeamWhereInput
   teams_some: TeamWhereInput
   teams_none: TeamWhereInput
+  division: DivisionWhereInput
 }
 
 input GroupWhereUniqueInput {
@@ -1792,7 +1792,7 @@ type Subscription {
 
 type Task implements Node {
   id: ID!
-  title: String!
+  title: String
   url: String!
   logtime: Int!
   description: String
@@ -1814,7 +1814,7 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
-  title: String!
+  title: String
   url: String!
   logtime: Int!
   description: String
@@ -1839,7 +1839,7 @@ input TaskCreateManyWithoutProjectInput {
 }
 
 input TaskCreateWithoutAttachesInput {
-  title: String!
+  title: String
   url: String!
   logtime: Int!
   description: String
@@ -1848,7 +1848,7 @@ input TaskCreateWithoutAttachesInput {
 }
 
 input TaskCreateWithoutMembersInput {
-  title: String!
+  title: String
   url: String!
   logtime: Int!
   description: String
@@ -1857,7 +1857,7 @@ input TaskCreateWithoutMembersInput {
 }
 
 input TaskCreateWithoutProjectInput {
-  title: String!
+  title: String
   url: String!
   logtime: Int!
   description: String
@@ -1893,7 +1893,7 @@ enum TaskOrderByInput {
 
 type TaskPreviousValues {
   id: ID!
-  title: String!
+  title: String
   url: String!
   logtime: Int!
   description: String
