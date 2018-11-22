@@ -1,28 +1,22 @@
-const { getUserId } = require('../../utils');
+const { getUserId, checkPermission } = require('../../utils');
+const permittedRoles = ['ADMIN'];
 
 const division = {
-
   createDivision: async (parent, args, ctx, info) => {
     // Check if user logged in
     const userId = getUserId(ctx);
 
     // Check if user has permission to do this
-    const hasPermissions = ctx.request.user.roles.some(role =>
-      ['ADMIN'].includes(role)
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!")
-    }
+    checkPermission(ctx.request.roles, permittedRoles);
 
     const { name, description } = args;
 
     return ctx.db.mutation.createDivision(
       {
-        data: { name, description },
+        data: { name, description }
       },
       info
-    )
+    );
   },
 
   updateDivision: async (parent, args, ctx, info) => {
@@ -30,13 +24,7 @@ const division = {
     const userId = getUserId(ctx);
 
     // Check if user has permission to do this
-    const hasPermissions = ctx.request.user.roles.some(role =>
-      ['ADMIN'].includes(role)
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!")
-    }
+    checkPermission(ctx.request.roles, permittedRoles);
 
     // Check if division exists
     const divisionExists = await ctx.db.exists.Division({
@@ -54,7 +42,7 @@ const division = {
         data: updates
       },
       info
-    )
+    );
   },
 
   deleteDivision: async (parent, { id }, ctx, info) => {
@@ -62,13 +50,7 @@ const division = {
     const userId = getUserId(ctx);
 
     // Check if user has permission to do this
-    const hasPermissions = ctx.request.user.roles.some(role =>
-      ['ADMIN'].includes(role)
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!")
-    }
+    checkPermission(ctx.request.roles, permittedRoles);
 
     // Check if division exists
     const divisionExists = await ctx.db.exists.Division({
@@ -79,13 +61,11 @@ const division = {
 
     return ctx.db.mutation.deleteDivision(
       {
-        where: { id },
+        where: { id }
       },
       info
-    )
-  },
-
+    );
+  }
 };
 
 module.exports = { division };
-
