@@ -1,0 +1,19 @@
+# Create 4 Roles as seed data ['ADMIN', 'GROUP_LEADER', 'TEAM_LEADER', 'MEMBER']...
+
+mutation {
+  admin: createRole(data: { name: "ADMIN" }) {
+    name
+  }
+
+  groupLeader: createRole(data: { name: "GROUP_LEADER" }) {
+    name
+  }
+
+  teamLeader: createRole(data: { name: "TEAM_LEADER" }) {
+    name
+  }
+
+  member: createRole(data: { name: "MEMBER" }) {
+    name
+  }
+}
