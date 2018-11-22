@@ -117,6 +117,8 @@ type Mutation {
 
   # Project CRUD
   createProject(title: String!, members: [ID!], teamLeader: ID!): Project!
+  updateProject(id: ID!, title: String, members: [ID!], teamLeader: ID): Project!
+  deleteProject(id: ID!): Project!
 
   #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
