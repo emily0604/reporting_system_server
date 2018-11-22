@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Nov 22 2018 08:24:13 GMT+0700 (+07)
+# timestamp: Thu Nov 22 2018 09:39:55 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
