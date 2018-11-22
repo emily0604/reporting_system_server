@@ -13,13 +13,14 @@ const createPrismaUser = async (ctx, googleUser) => {
       googleId: googleUser.id,
       email: googleUser.email,
       avatar: googleUser.picture,
-      roles: { set: ['MEMBER'] }
+      roles: {
+        connect: { name: 'MEMBER' }
+      }
     }
   });
 };
 
 const auth = {
-
   authenticate: async (parent, args, ctx, info) => {
     const { googleCode } = args;
     const googleToken = await google.getGoogleToken(googleCode);
@@ -35,7 +36,7 @@ const auth = {
 
     ctx.response.cookie('token', token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365,
+      maxAge: 1000 * 60 * 60 * 24 * 365
     });
 
     return {
@@ -45,7 +46,7 @@ const auth = {
 
   signout: (parent, args, ctx, info) => {
     ctx.response.clearCookie('token');
-    return { message: 'Goodbye!'};
+    return { message: 'Goodbye!' };
   },
 
   editProfile: (parent, args, ctx, info) => {
@@ -53,7 +54,7 @@ const auth = {
 
     if (!userId) throw new Error('You are not logged in');
 
-    const updates = {...args};
+    const updates = { ...args };
 
     delete updates.id;
 
@@ -64,9 +65,7 @@ const auth = {
       },
       info
     );
-
-  },
-
+  }
 };
 
 module.exports = { auth };

@@ -21,11 +21,20 @@ server.express.use((req, res, next) => {
 // Populates the user cookie on each request
 server.express.use(async (req, res, next) => {
   if (!req.userId) return next();
-  const user = await db.query.user(
-    { where: { id: req.userId } },
-    `{ id, roles, email, name }`
+  const user = await db.query.user({ where: { id: req.userId } }, `{ id, email, name }`);
+  const roles = await db.query.roles(
+    {
+      where: {
+        users_some: {
+          id: user.id
+        }
+      }
+    },
+    `{ name }`
   );
   req.user = user;
+  req.roles = roles;
+
   next();
 });
 
@@ -34,7 +43,7 @@ server.start(
     cors: {
       credentials: true,
       origin: process.env.FRONT_END_URL
-    },
+    }
   },
   () => console.log(`Server is running on http://localhost:${process.env.PORT}`)
 );

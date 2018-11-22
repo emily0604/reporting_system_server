@@ -1,17 +1,11 @@
-const { getUserId } = require('../../utils');
+const { getUserId, checkPermission } = require('../../utils');
+const permittedRoles = ['ADMIN', 'TEAM_LEADER'];
 
 const weeklyReport = {
-
   createWeeklyReport: async (parent, args, ctx, info) => {
     const userId = getUserId(ctx);
 
-    const hasPermissions = ctx.request.user.roles.some(role =>
-      ['TEAM_LEADER'].includes(role)
-    );
-
-    if (!hasPermissions) {
-      throw new Error("You don't have permission to do that!")
-    }
+    checkPermission(ctx.request.roles, permittedRoles);
 
     return ctx.db.mutation.createWeeklyReport(
       {
@@ -20,13 +14,11 @@ const weeklyReport = {
           author: {
             connect: { id: userId }
           }
-        },
+        }
       },
       info
     );
-  },
-
+  }
 };
 
 module.exports = { weeklyReport };
-
