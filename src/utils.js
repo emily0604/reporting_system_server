@@ -6,6 +6,14 @@ function getUserId(ctx) {
   throw new AuthError();
 }
 
+function checkPermission(requestRoles, permittedRoles) {
+  const hasPermissions = requestRoles.some(role => permittedRoles.includes(role.name));
+
+  if (!hasPermissions) {
+    throw new Error("You don't have permission to do that!");
+  }
+}
+
 class AuthError extends Error {
   constructor() {
     super('Not authorized');
@@ -14,5 +22,6 @@ class AuthError extends Error {
 
 module.exports = {
   getUserId,
+  checkPermission,
   AuthError
 };

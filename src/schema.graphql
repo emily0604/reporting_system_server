@@ -10,9 +10,14 @@ type DailyReportList {
 }
 
 input TaskInput {
-  id: String!
+  projectId: String!
+  title: String
   url: String
   logtime: String
+}
+
+input UserInput {
+  id: ID!
 }
 
 type Query {
@@ -48,7 +53,27 @@ type Query {
     last: Int
   ): DailyReportList
   me: User!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]!
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]!
+
+  # Project Query
+  project(where: ProjectWhereUniqueInput!): Project!
+  projects(
+    where: ProjectWhereInput
+    orderBy: ProjectOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Project!]!
 }
 
 type Mutation {
@@ -90,18 +115,15 @@ type Mutation {
     summary: String!
   ): WeeklyReport!
 
+  # Project CRUD
+  createProject(title: String!, members: [ID!], teamLeader: ID!): Project!
+
   #  Google Authentication
   authenticate(googleCode: String!): AuthPayload
   signout: SuccessMessage
 
   # Edit Profile
-  editProfile(
-    id: ID!
-    address: String
-    phone: String
-    email: String
-    avatar: String
-  ): User
+  editProfile(id: ID!, address: String, phone: String, email: String, avatar: String): User
 }
 
 type Subscription {

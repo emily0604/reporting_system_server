@@ -9,6 +9,8 @@ const Query = {
   users: forwardTo('db'),
   teams: forwardTo('db'),
   team: forwardTo('db'),
+  project: forwardTo('db'),
+  projects: forwardTo('db'),
 
   me: (parent, args, ctx, info) => {
     const id = getUserId(ctx);
@@ -56,8 +58,7 @@ const Query = {
       dailyReportIds: dailyReports.map(dailyReport => dailyReport.id),
       orderBy
     };
-  },
-
+  }
 };
 
 module.exports = { Query };
