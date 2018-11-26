@@ -6,6 +6,13 @@ const getPrismaUser = async (ctx, googleId) => {
   return await ctx.db.query.user({ where: { googleId } });
 };
 
+const initializeRoles = async ctx => {
+  const rolesToBeInitialized = ['MEMBER', 'TEAM_LEADER', 'GROUP_LEADER', 'ADMIN'];
+  return await rolesToBeInitialized.map(async name => {
+    await ctx.db.mutation.createRole({ data: { name } });
+  });
+};
+
 const createPrismaUser = async (ctx, googleUser) => {
   return await ctx.db.mutation.createUser({
     data: {
@@ -27,6 +34,12 @@ const auth = {
     const googleUser = await google.getGoogleUser(googleToken);
 
     let user = await getPrismaUser(ctx, googleUser.id);
+    const roles = await ctx.db.query.roles({});
+
+    // initialize roles if they are not created yet
+    if (roles.length <= 0) {
+      const createdRoles = await initializeRoles(ctx);
+    }
 
     if (!user) {
       user = await createPrismaUser(ctx, googleUser);
