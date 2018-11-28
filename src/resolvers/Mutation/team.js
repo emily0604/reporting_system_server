@@ -1,4 +1,4 @@
-const { getUserId } = require('../../utils');
+const { getUserId, checkPermission } = require('../../utils');
 const permittedRoles = ['ADMIN', 'GROUP_LEADER'];
 
 const team = {
@@ -35,6 +35,34 @@ const team = {
 
     const updates = { ...args };
     delete updates.id;
+
+    return ctx.db.mutation.updateTeam(
+      {
+        where: { id: args.id },
+        data: updates
+      },
+      info
+    );
+  },
+
+  assignMembers: async (parent, args, ctx, info) => {
+    const userId = getUserId(ctx);
+    checkPermission(ctx.request.roles, permittedRoles);
+
+    const teamExists = await ctx.db.exists.Team({
+      id: args.id
+    });
+    if (!teamExists) throw new Error('Team not found');
+
+    const membersId = args.members.map(id => ({
+      id
+    }));
+
+    const updates = {
+      users: {
+        connect: membersId
+      }
+    };
 
     return ctx.db.mutation.updateTeam(
       {

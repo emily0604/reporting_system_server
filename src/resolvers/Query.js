@@ -7,10 +7,11 @@ const Query = {
   divisions: forwardTo('db'),
   dailyReport: forwardTo('db'),
   users: forwardTo('db'),
-  teams: forwardTo('db'),
   team: forwardTo('db'),
+  teams: forwardTo('db'),
   project: forwardTo('db'),
   projects: forwardTo('db'),
+  group: forwardTo('db'),
 
   me: (parent, args, ctx, info) => {
     const id = getUserId(ctx);
