@@ -63,6 +63,9 @@ type Query {
     last: Int
   ): [User!]!
 
+  # Group Query
+  group(where: GroupWhereUniqueInput!): Group
+
   # Project Query
   project(where: ProjectWhereUniqueInput!): Project!
   projects(
@@ -85,6 +88,7 @@ type Mutation {
   # Team CRUD
   createTeam(name: String!, description: String): Team!
   updateTeam(id: ID!, name: String, description: String): Team!
+  assignMembers(id: ID!, members: [ID!]): Team!
   deleteTeam(id: ID!): Team
 
   #  DailyReport CRUD
