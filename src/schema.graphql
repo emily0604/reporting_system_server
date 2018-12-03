@@ -16,6 +16,17 @@ input TaskInput {
   logtime: String
 }
 
+input TaskActivityInput {
+  title: String
+  url: String
+  logtime: String
+}
+
+input UserActivityInput {
+  user: String!
+  activities: [TaskActivityInput!]
+}
+
 input UserInput {
   id: ID!
 }
@@ -117,6 +128,7 @@ type Mutation {
     solution: String!
     description: String
     summary: String!
+    membersActivities: [UserActivityInput!]
   ): WeeklyReport!
 
   # Project CRUD

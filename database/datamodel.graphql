@@ -18,7 +18,7 @@ type User {
   weeklyReports: [WeeklyReport!]! @relation(name: "WeeklyReportsByUser", onDelete: CASCADE) # A user can has many weekly reports.
   projects: [Project!]! @relation(name: "MembersProjects", onDelete: SET_NULL) # A user can belong to many different projects.
   tasks: [Task!]! @relation(name: "MembersTasks", onDelete: SET_NULL) # A user can do many tasks in many projects.
-  membersActivities: [WeeklyReport!]! @relation(name: "MembersActivities", onDelete: CASCADE) # Reference to membersActivities in Weekly Report.
+  activities: [UserActivity!]! @relation(name: "UserActivity", onDelete: CASCADE) # A user can has many activities.
   team: Team @relation(name: "UsersOfTeam", onDelete: SET_NULL) # A user belong to a team.
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -26,7 +26,7 @@ type User {
 
 type Task {
   id: ID! @unique
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -68,8 +68,28 @@ type WeeklyReport {
   solution: String!
   description: String
   summary: String!
-  membersActivities: [User!]! @relation(name: "MembersActivities", onDelete: SET_NULL) # Each member has their own activities.
+  membersActivities: [UserActivity!]! @relation(name: "WeeklyReportUserActivity", onDelete: SET_NULL)
   author: User! @relation(name: "WeeklyReportsByUser", onDelete: SET_NULL) # A weekly report was created by the author (Team Leader)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserActivity {
+  id: ID! @unique
+  user: User @relation(name: "UserActivity", onDelete: SET_NULL)
+  activities: [TaskActivity!]! @relation(name: "UserTaskActivity", onDelete: CASCADE) # The works that user do (can be a list of tasks)
+  attaches: [WeeklyReport!]! @relation(name: "WeeklyReportUserActivity", onDelete: SET_NULL) # Number of UserActivity has beed attached in WeeklyReport
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TaskActivity {
+  id: ID! @unique
+  userActivity: UserActivity @relation(name: "UserTaskActivity", onDelete: SET_NULL)
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
