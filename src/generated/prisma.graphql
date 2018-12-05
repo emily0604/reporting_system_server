@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Nov 22 2018 09:39:55 GMT+0700 (+07)
+# timestamp: Wed Dec 05 2018 14:52:30 GMT+0700 (Indochina Time)
 
 type AggregateDailyReport {
   count: Int!
@@ -25,11 +25,19 @@ type AggregateTask {
   count: Int!
 }
 
+type AggregateTaskActivity {
+  count: Int!
+}
+
 type AggregateTeam {
   count: Int!
 }
 
 type AggregateUser {
+  count: Int!
+}
+
+type AggregateUserActivity {
   count: Int!
 }
 
@@ -200,6 +208,13 @@ input DailyReportUpdateInput {
   projects: ProjectUpdateManyWithoutAttachesInput
   tasks: TaskUpdateManyWithoutAttachesInput
   author: UserUpdateOneRequiredWithoutDailyReportsInput
+}
+
+input DailyReportUpdateManyMutationInput {
+  emotion: String
+  title: String
+  plan: String
+  comment: String
 }
 
 input DailyReportUpdateManyWithoutAuthorInput {
@@ -667,6 +682,11 @@ input DivisionUpdateInput {
   groups: GroupUpdateManyWithoutDivisionInput
 }
 
+input DivisionUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
 input DivisionUpdateOneWithoutGroupsInput {
   create: DivisionCreateWithoutGroupsInput
   connect: DivisionWhereUniqueInput
@@ -993,6 +1013,11 @@ input GroupUpdateInput {
   division: DivisionUpdateOneWithoutGroupsInput
 }
 
+input GroupUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
 input GroupUpdateManyWithoutDivisionInput {
   create: [GroupCreateWithoutDivisionInput!]
   connect: [GroupWhereUniqueInput!]
@@ -1222,9 +1247,6 @@ input GroupWhereUniqueInput {
   id: ID
 }
 
-"""Raw JSON value"""
-scalar Json
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -1237,6 +1259,8 @@ type Mutation {
   createProject(data: ProjectCreateInput!): Project!
   createDailyReport(data: DailyReportCreateInput!): DailyReport!
   createWeeklyReport(data: WeeklyReportCreateInput!): WeeklyReport!
+  createUserActivity(data: UserActivityCreateInput!): UserActivity!
+  createTaskActivity(data: TaskActivityCreateInput!): TaskActivity!
   createDivision(data: DivisionCreateInput!): Division!
   createGroup(data: GroupCreateInput!): Group!
   createTeam(data: TeamCreateInput!): Team!
@@ -1246,6 +1270,8 @@ type Mutation {
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateDailyReport(data: DailyReportUpdateInput!, where: DailyReportWhereUniqueInput!): DailyReport
   updateWeeklyReport(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereUniqueInput!): WeeklyReport
+  updateUserActivity(data: UserActivityUpdateInput!, where: UserActivityWhereUniqueInput!): UserActivity
+  updateTaskActivity(data: TaskActivityUpdateInput!, where: TaskActivityWhereUniqueInput!): TaskActivity
   updateDivision(data: DivisionUpdateInput!, where: DivisionWhereUniqueInput!): Division
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
@@ -1255,6 +1281,8 @@ type Mutation {
   deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteDailyReport(where: DailyReportWhereUniqueInput!): DailyReport
   deleteWeeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
+  deleteUserActivity(where: UserActivityWhereUniqueInput!): UserActivity
+  deleteTaskActivity(where: TaskActivityWhereUniqueInput!): TaskActivity
   deleteDivision(where: DivisionWhereUniqueInput!): Division
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deleteTeam(where: TeamWhereUniqueInput!): Team
@@ -1264,29 +1292,33 @@ type Mutation {
   upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   upsertDailyReport(where: DailyReportWhereUniqueInput!, create: DailyReportCreateInput!, update: DailyReportUpdateInput!): DailyReport!
   upsertWeeklyReport(where: WeeklyReportWhereUniqueInput!, create: WeeklyReportCreateInput!, update: WeeklyReportUpdateInput!): WeeklyReport!
+  upsertUserActivity(where: UserActivityWhereUniqueInput!, create: UserActivityCreateInput!, update: UserActivityUpdateInput!): UserActivity!
+  upsertTaskActivity(where: TaskActivityWhereUniqueInput!, create: TaskActivityCreateInput!, update: TaskActivityUpdateInput!): TaskActivity!
   upsertDivision(where: DivisionWhereUniqueInput!, create: DivisionCreateInput!, update: DivisionUpdateInput!): Division!
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyRoles(data: RoleUpdateInput!, where: RoleWhereInput): BatchPayload!
-  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
-  updateManyProjects(data: ProjectUpdateInput!, where: ProjectWhereInput): BatchPayload!
-  updateManyDailyReports(data: DailyReportUpdateInput!, where: DailyReportWhereInput): BatchPayload!
-  updateManyWeeklyReports(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereInput): BatchPayload!
-  updateManyDivisions(data: DivisionUpdateInput!, where: DivisionWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
-  updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
+  updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
+  updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
+  updateManyDailyReports(data: DailyReportUpdateManyMutationInput!, where: DailyReportWhereInput): BatchPayload!
+  updateManyWeeklyReports(data: WeeklyReportUpdateManyMutationInput!, where: WeeklyReportWhereInput): BatchPayload!
+  updateManyTaskActivities(data: TaskActivityUpdateManyMutationInput!, where: TaskActivityWhereInput): BatchPayload!
+  updateManyDivisions(data: DivisionUpdateManyMutationInput!, where: DivisionWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
+  updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyRoles(where: RoleWhereInput): BatchPayload!
   deleteManyTasks(where: TaskWhereInput): BatchPayload!
   deleteManyProjects(where: ProjectWhereInput): BatchPayload!
   deleteManyDailyReports(where: DailyReportWhereInput): BatchPayload!
   deleteManyWeeklyReports(where: WeeklyReportWhereInput): BatchPayload!
+  deleteManyUserActivities(where: UserActivityWhereInput): BatchPayload!
+  deleteManyTaskActivities(where: TaskActivityWhereInput): BatchPayload!
   deleteManyDivisions(where: DivisionWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
@@ -1314,10 +1346,6 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: String
-}
-
-enum PrismaDatabase {
-  default
 }
 
 type Project implements Node {
@@ -1466,6 +1494,11 @@ input ProjectUpdateInput {
   tasks: TaskUpdateManyWithoutProjectInput
   attaches: DailyReportUpdateManyWithoutProjectsInput
   teamLeader: UserUpdateOneInput
+}
+
+input ProjectUpdateManyMutationInput {
+  title: String
+  description: String
 }
 
 input ProjectUpdateManyWithoutAttachesInput {
@@ -1741,6 +1774,8 @@ type Query {
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   dailyReports(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DailyReport]!
   weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport]!
+  userActivities(where: UserActivityWhereInput, orderBy: UserActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActivity]!
+  taskActivities(where: TaskActivityWhereInput, orderBy: TaskActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TaskActivity]!
   divisions(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Division]!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
@@ -1750,6 +1785,8 @@ type Query {
   project(where: ProjectWhereUniqueInput!): Project
   dailyReport(where: DailyReportWhereUniqueInput!): DailyReport
   weeklyReport(where: WeeklyReportWhereUniqueInput!): WeeklyReport
+  userActivity(where: UserActivityWhereUniqueInput!): UserActivity
+  taskActivity(where: TaskActivityWhereUniqueInput!): TaskActivity
   division(where: DivisionWhereUniqueInput!): Division
   group(where: GroupWhereUniqueInput!): Group
   team(where: TeamWhereUniqueInput!): Team
@@ -1759,6 +1796,8 @@ type Query {
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
   dailyReportsConnection(where: DailyReportWhereInput, orderBy: DailyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DailyReportConnection!
   weeklyReportsConnection(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeeklyReportConnection!
+  userActivitiesConnection(where: UserActivityWhereInput, orderBy: UserActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserActivityConnection!
+  taskActivitiesConnection(where: TaskActivityWhereInput, orderBy: TaskActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskActivityConnection!
   divisionsConnection(where: DivisionWhereInput, orderBy: DivisionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DivisionConnection!
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
@@ -1868,6 +1907,10 @@ input RoleSubscriptionWhereInput {
 input RoleUpdateInput {
   name: String
   users: UserUpdateManyWithoutRolesInput
+}
+
+input RoleUpdateManyMutationInput {
+  name: String
 }
 
 input RoleUpdateManyWithoutUsersInput {
@@ -1999,6 +2042,8 @@ type Subscription {
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   dailyReport(where: DailyReportSubscriptionWhereInput): DailyReportSubscriptionPayload
   weeklyReport(where: WeeklyReportSubscriptionWhereInput): WeeklyReportSubscriptionPayload
+  userActivity(where: UserActivitySubscriptionWhereInput): UserActivitySubscriptionPayload
+  taskActivity(where: TaskActivitySubscriptionWhereInput): TaskActivitySubscriptionPayload
   division(where: DivisionSubscriptionWhereInput): DivisionSubscriptionPayload
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
@@ -2007,7 +2052,7 @@ type Subscription {
 
 type Task implements Node {
   id: ID!
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -2016,6 +2061,406 @@ type Task implements Node {
   project: Project
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type TaskActivity implements Node {
+  id: ID!
+  userActivity: UserActivity
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type TaskActivityConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TaskActivityEdge]!
+  aggregate: AggregateTaskActivity!
+}
+
+input TaskActivityCreateInput {
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  userActivity: UserActivityCreateOneWithoutActivitiesInput
+}
+
+input TaskActivityCreateManyWithoutUserActivityInput {
+  create: [TaskActivityCreateWithoutUserActivityInput!]
+  connect: [TaskActivityWhereUniqueInput!]
+}
+
+input TaskActivityCreateWithoutUserActivityInput {
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+}
+
+"""An edge in a connection."""
+type TaskActivityEdge {
+  """The item at the end of the edge."""
+  node: TaskActivity!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TaskActivityOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  url_ASC
+  url_DESC
+  logtime_ASC
+  logtime_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TaskActivityPreviousValues {
+  id: ID!
+  title: String!
+  url: String!
+  logtime: Int!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TaskActivitySubscriptionPayload {
+  mutation: MutationType!
+  node: TaskActivity
+  updatedFields: [String!]
+  previousValues: TaskActivityPreviousValues
+}
+
+input TaskActivitySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskActivitySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskActivitySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskActivitySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TaskActivityWhereInput
+}
+
+input TaskActivityUpdateInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+  userActivity: UserActivityUpdateOneWithoutActivitiesInput
+}
+
+input TaskActivityUpdateManyMutationInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+}
+
+input TaskActivityUpdateManyWithoutUserActivityInput {
+  create: [TaskActivityCreateWithoutUserActivityInput!]
+  connect: [TaskActivityWhereUniqueInput!]
+  disconnect: [TaskActivityWhereUniqueInput!]
+  delete: [TaskActivityWhereUniqueInput!]
+  update: [TaskActivityUpdateWithWhereUniqueWithoutUserActivityInput!]
+  upsert: [TaskActivityUpsertWithWhereUniqueWithoutUserActivityInput!]
+}
+
+input TaskActivityUpdateWithoutUserActivityDataInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
+}
+
+input TaskActivityUpdateWithWhereUniqueWithoutUserActivityInput {
+  where: TaskActivityWhereUniqueInput!
+  data: TaskActivityUpdateWithoutUserActivityDataInput!
+}
+
+input TaskActivityUpsertWithWhereUniqueWithoutUserActivityInput {
+  where: TaskActivityWhereUniqueInput!
+  update: TaskActivityUpdateWithoutUserActivityDataInput!
+  create: TaskActivityCreateWithoutUserActivityInput!
+}
+
+input TaskActivityWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskActivityWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskActivityWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskActivityWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  logtime: Int
+
+  """All values that are not equal to given value."""
+  logtime_not: Int
+
+  """All values that are contained in given list."""
+  logtime_in: [Int!]
+
+  """All values that are not contained in given list."""
+  logtime_not_in: [Int!]
+
+  """All values less than the given value."""
+  logtime_lt: Int
+
+  """All values less than or equal the given value."""
+  logtime_lte: Int
+
+  """All values greater than the given value."""
+  logtime_gt: Int
+
+  """All values greater than or equal the given value."""
+  logtime_gte: Int
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  userActivity: UserActivityWhereInput
+}
+
+input TaskActivityWhereUniqueInput {
+  id: ID
 }
 
 """A connection to a list of items."""
@@ -2029,7 +2474,7 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -2054,7 +2499,7 @@ input TaskCreateManyWithoutProjectInput {
 }
 
 input TaskCreateWithoutAttachesInput {
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -2063,7 +2508,7 @@ input TaskCreateWithoutAttachesInput {
 }
 
 input TaskCreateWithoutMembersInput {
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -2072,7 +2517,7 @@ input TaskCreateWithoutMembersInput {
 }
 
 input TaskCreateWithoutProjectInput {
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -2108,7 +2553,7 @@ enum TaskOrderByInput {
 
 type TaskPreviousValues {
   id: ID!
-  title: String
+  title: String!
   url: String!
   logtime: Int!
   description: String
@@ -2163,6 +2608,13 @@ input TaskUpdateInput {
   members: UserUpdateManyWithoutTasksInput
   attaches: DailyReportUpdateManyWithoutTasksInput
   project: ProjectUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateManyMutationInput {
+  title: String
+  url: String
+  logtime: Int
+  description: String
 }
 
 input TaskUpdateManyWithoutAttachesInput {
@@ -2625,6 +3077,11 @@ input TeamUpdateInput {
   group: GroupUpdateOneWithoutTeamsInput
 }
 
+input TeamUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
 input TeamUpdateManyWithoutGroupInput {
   create: [TeamCreateWithoutGroupInput!]
   connect: [TeamWhereUniqueInput!]
@@ -2868,10 +3325,309 @@ type User implements Node {
   weeklyReports(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
-  membersActivities(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
+  activities(where: UserActivityWhereInput, orderBy: UserActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActivity!]
   team: Team
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type UserActivity implements Node {
+  id: ID!
+  user: User
+  activities(where: TaskActivityWhereInput, orderBy: TaskActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TaskActivity!]
+  attaches(where: WeeklyReportWhereInput, orderBy: WeeklyReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WeeklyReport!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type UserActivityConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserActivityEdge]!
+  aggregate: AggregateUserActivity!
+}
+
+input UserActivityCreateInput {
+  user: UserCreateOneWithoutActivitiesInput
+  activities: TaskActivityCreateManyWithoutUserActivityInput
+  attaches: WeeklyReportCreateManyWithoutMembersActivitiesInput
+}
+
+input UserActivityCreateManyWithoutAttachesInput {
+  create: [UserActivityCreateWithoutAttachesInput!]
+  connect: [UserActivityWhereUniqueInput!]
+}
+
+input UserActivityCreateManyWithoutUserInput {
+  create: [UserActivityCreateWithoutUserInput!]
+  connect: [UserActivityWhereUniqueInput!]
+}
+
+input UserActivityCreateOneWithoutActivitiesInput {
+  create: UserActivityCreateWithoutActivitiesInput
+  connect: UserActivityWhereUniqueInput
+}
+
+input UserActivityCreateWithoutActivitiesInput {
+  user: UserCreateOneWithoutActivitiesInput
+  attaches: WeeklyReportCreateManyWithoutMembersActivitiesInput
+}
+
+input UserActivityCreateWithoutAttachesInput {
+  user: UserCreateOneWithoutActivitiesInput
+  activities: TaskActivityCreateManyWithoutUserActivityInput
+}
+
+input UserActivityCreateWithoutUserInput {
+  activities: TaskActivityCreateManyWithoutUserActivityInput
+  attaches: WeeklyReportCreateManyWithoutMembersActivitiesInput
+}
+
+"""An edge in a connection."""
+type UserActivityEdge {
+  """The item at the end of the edge."""
+  node: UserActivity!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserActivityOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type UserActivityPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserActivitySubscriptionPayload {
+  mutation: MutationType!
+  node: UserActivity
+  updatedFields: [String!]
+  previousValues: UserActivityPreviousValues
+}
+
+input UserActivitySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserActivitySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserActivitySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserActivitySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserActivityWhereInput
+}
+
+input UserActivityUpdateInput {
+  user: UserUpdateOneWithoutActivitiesInput
+  activities: TaskActivityUpdateManyWithoutUserActivityInput
+  attaches: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+}
+
+input UserActivityUpdateManyWithoutAttachesInput {
+  create: [UserActivityCreateWithoutAttachesInput!]
+  connect: [UserActivityWhereUniqueInput!]
+  disconnect: [UserActivityWhereUniqueInput!]
+  delete: [UserActivityWhereUniqueInput!]
+  update: [UserActivityUpdateWithWhereUniqueWithoutAttachesInput!]
+  upsert: [UserActivityUpsertWithWhereUniqueWithoutAttachesInput!]
+}
+
+input UserActivityUpdateManyWithoutUserInput {
+  create: [UserActivityCreateWithoutUserInput!]
+  connect: [UserActivityWhereUniqueInput!]
+  disconnect: [UserActivityWhereUniqueInput!]
+  delete: [UserActivityWhereUniqueInput!]
+  update: [UserActivityUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [UserActivityUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input UserActivityUpdateOneWithoutActivitiesInput {
+  create: UserActivityCreateWithoutActivitiesInput
+  connect: UserActivityWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserActivityUpdateWithoutActivitiesDataInput
+  upsert: UserActivityUpsertWithoutActivitiesInput
+}
+
+input UserActivityUpdateWithoutActivitiesDataInput {
+  user: UserUpdateOneWithoutActivitiesInput
+  attaches: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+}
+
+input UserActivityUpdateWithoutAttachesDataInput {
+  user: UserUpdateOneWithoutActivitiesInput
+  activities: TaskActivityUpdateManyWithoutUserActivityInput
+}
+
+input UserActivityUpdateWithoutUserDataInput {
+  activities: TaskActivityUpdateManyWithoutUserActivityInput
+  attaches: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+}
+
+input UserActivityUpdateWithWhereUniqueWithoutAttachesInput {
+  where: UserActivityWhereUniqueInput!
+  data: UserActivityUpdateWithoutAttachesDataInput!
+}
+
+input UserActivityUpdateWithWhereUniqueWithoutUserInput {
+  where: UserActivityWhereUniqueInput!
+  data: UserActivityUpdateWithoutUserDataInput!
+}
+
+input UserActivityUpsertWithoutActivitiesInput {
+  update: UserActivityUpdateWithoutActivitiesDataInput!
+  create: UserActivityCreateWithoutActivitiesInput!
+}
+
+input UserActivityUpsertWithWhereUniqueWithoutAttachesInput {
+  where: UserActivityWhereUniqueInput!
+  update: UserActivityUpdateWithoutAttachesDataInput!
+  create: UserActivityCreateWithoutAttachesInput!
+}
+
+input UserActivityUpsertWithWhereUniqueWithoutUserInput {
+  where: UserActivityWhereUniqueInput!
+  update: UserActivityUpdateWithoutUserDataInput!
+  create: UserActivityCreateWithoutUserInput!
+}
+
+input UserActivityWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserActivityWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserActivityWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserActivityWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+  activities_every: TaskActivityWhereInput
+  activities_some: TaskActivityWhereInput
+  activities_none: TaskActivityWhereInput
+  attaches_every: WeeklyReportWhereInput
+  attaches_some: WeeklyReportWhereInput
+  attaches_none: WeeklyReportWhereInput
+}
+
+input UserActivityWhereUniqueInput {
+  id: ID
 }
 
 """A connection to a list of items."""
@@ -2897,13 +3653,8 @@ input UserCreateInput {
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   projects: ProjectCreateManyWithoutMembersInput
   tasks: TaskCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  activities: UserActivityCreateManyWithoutUserInput
   team: TeamCreateOneWithoutUsersInput
-}
-
-input UserCreateManyWithoutMembersActivitiesInput {
-  create: [UserCreateWithoutMembersActivitiesInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateManyWithoutProjectsInput {
@@ -2931,6 +3682,11 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutActivitiesInput {
+  create: UserCreateWithoutActivitiesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutDailyReportsInput {
   create: UserCreateWithoutDailyReportsInput
   connect: UserWhereUniqueInput
@@ -2939,6 +3695,22 @@ input UserCreateOneWithoutDailyReportsInput {
 input UserCreateOneWithoutWeeklyReportsInput {
   create: UserCreateWithoutWeeklyReportsInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutActivitiesInput {
+  name: String!
+  address: String
+  phone: String
+  email: String!
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: RoleCreateManyWithoutUsersInput
+  dailyReports: DailyReportCreateManyWithoutAuthorInput
+  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
+  projects: ProjectCreateManyWithoutMembersInput
+  tasks: TaskCreateManyWithoutMembersInput
+  team: TeamCreateOneWithoutUsersInput
 }
 
 input UserCreateWithoutDailyReportsInput {
@@ -2953,23 +3725,7 @@ input UserCreateWithoutDailyReportsInput {
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   projects: ProjectCreateManyWithoutMembersInput
   tasks: TaskCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
-  team: TeamCreateOneWithoutUsersInput
-}
-
-input UserCreateWithoutMembersActivitiesInput {
-  name: String!
-  address: String
-  phone: String
-  email: String!
-  avatar: String
-  googleId: String
-  completed: Boolean
-  roles: RoleCreateManyWithoutUsersInput
-  dailyReports: DailyReportCreateManyWithoutAuthorInput
-  weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
-  projects: ProjectCreateManyWithoutMembersInput
-  tasks: TaskCreateManyWithoutMembersInput
+  activities: UserActivityCreateManyWithoutUserInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -2985,7 +3741,7 @@ input UserCreateWithoutProjectsInput {
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   tasks: TaskCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  activities: UserActivityCreateManyWithoutUserInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -3001,7 +3757,7 @@ input UserCreateWithoutRolesInput {
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   projects: ProjectCreateManyWithoutMembersInput
   tasks: TaskCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  activities: UserActivityCreateManyWithoutUserInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -3017,7 +3773,7 @@ input UserCreateWithoutTasksInput {
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   projects: ProjectCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  activities: UserActivityCreateManyWithoutUserInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -3034,7 +3790,7 @@ input UserCreateWithoutTeamInput {
   weeklyReports: WeeklyReportCreateManyWithoutAuthorInput
   projects: ProjectCreateManyWithoutMembersInput
   tasks: TaskCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  activities: UserActivityCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutWeeklyReportsInput {
@@ -3049,7 +3805,7 @@ input UserCreateWithoutWeeklyReportsInput {
   dailyReports: DailyReportCreateManyWithoutAuthorInput
   projects: ProjectCreateManyWithoutMembersInput
   tasks: TaskCreateManyWithoutMembersInput
-  membersActivities: WeeklyReportCreateManyWithoutMembersActivitiesInput
+  activities: UserActivityCreateManyWithoutUserInput
   team: TeamCreateOneWithoutUsersInput
 }
 
@@ -3150,7 +3906,7 @@ input UserUpdateDataInput {
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
   tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
@@ -3167,17 +3923,18 @@ input UserUpdateInput {
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
   tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
-input UserUpdateManyWithoutMembersActivitiesInput {
-  create: [UserCreateWithoutMembersActivitiesInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutMembersActivitiesInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutMembersActivitiesInput!]
+input UserUpdateManyMutationInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
 }
 
 input UserUpdateManyWithoutProjectsInput {
@@ -3239,23 +3996,16 @@ input UserUpdateOneRequiredWithoutWeeklyReportsInput {
   upsert: UserUpsertWithoutWeeklyReportsInput
 }
 
-input UserUpdateWithoutDailyReportsDataInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  completed: Boolean
-  roles: RoleUpdateManyWithoutUsersInput
-  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
-  projects: ProjectUpdateManyWithoutMembersInput
-  tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
-  team: TeamUpdateOneWithoutUsersInput
+input UserUpdateOneWithoutActivitiesInput {
+  create: UserCreateWithoutActivitiesInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutActivitiesDataInput
+  upsert: UserUpsertWithoutActivitiesInput
 }
 
-input UserUpdateWithoutMembersActivitiesDataInput {
+input UserUpdateWithoutActivitiesDataInput {
   name: String
   address: String
   phone: String
@@ -3268,6 +4018,22 @@ input UserUpdateWithoutMembersActivitiesDataInput {
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
   tasks: TaskUpdateManyWithoutMembersInput
+  team: TeamUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithoutDailyReportsDataInput {
+  name: String
+  address: String
+  phone: String
+  email: String
+  avatar: String
+  googleId: String
+  completed: Boolean
+  roles: RoleUpdateManyWithoutUsersInput
+  weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
@@ -3283,7 +4049,7 @@ input UserUpdateWithoutProjectsDataInput {
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
@@ -3299,7 +4065,7 @@ input UserUpdateWithoutRolesDataInput {
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
   tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
@@ -3315,7 +4081,7 @@ input UserUpdateWithoutTasksDataInput {
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
 }
 
@@ -3332,7 +4098,7 @@ input UserUpdateWithoutTeamDataInput {
   weeklyReports: WeeklyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
   tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutWeeklyReportsDataInput {
@@ -3347,13 +4113,8 @@ input UserUpdateWithoutWeeklyReportsDataInput {
   dailyReports: DailyReportUpdateManyWithoutAuthorInput
   projects: ProjectUpdateManyWithoutMembersInput
   tasks: TaskUpdateManyWithoutMembersInput
-  membersActivities: WeeklyReportUpdateManyWithoutMembersActivitiesInput
+  activities: UserActivityUpdateManyWithoutUserInput
   team: TeamUpdateOneWithoutUsersInput
-}
-
-input UserUpdateWithWhereUniqueWithoutMembersActivitiesInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutMembersActivitiesDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutProjectsInput {
@@ -3381,6 +4142,11 @@ input UserUpsertNestedInput {
   create: UserCreateInput!
 }
 
+input UserUpsertWithoutActivitiesInput {
+  update: UserUpdateWithoutActivitiesDataInput!
+  create: UserCreateWithoutActivitiesInput!
+}
+
 input UserUpsertWithoutDailyReportsInput {
   update: UserUpdateWithoutDailyReportsDataInput!
   create: UserCreateWithoutDailyReportsInput!
@@ -3389,12 +4155,6 @@ input UserUpsertWithoutDailyReportsInput {
 input UserUpsertWithoutWeeklyReportsInput {
   update: UserUpdateWithoutWeeklyReportsDataInput!
   create: UserCreateWithoutWeeklyReportsInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutMembersActivitiesInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutMembersActivitiesDataInput!
-  create: UserCreateWithoutMembersActivitiesInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutProjectsInput {
@@ -3773,9 +4533,9 @@ input UserWhereInput {
   tasks_every: TaskWhereInput
   tasks_some: TaskWhereInput
   tasks_none: TaskWhereInput
-  membersActivities_every: WeeklyReportWhereInput
-  membersActivities_some: WeeklyReportWhereInput
-  membersActivities_none: WeeklyReportWhereInput
+  activities_every: UserActivityWhereInput
+  activities_some: UserActivityWhereInput
+  activities_none: UserActivityWhereInput
   team: TeamWhereInput
 }
 
@@ -3791,7 +4551,7 @@ type WeeklyReport implements Node {
   solution: String!
   description: String
   summary: String!
-  membersActivities(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  membersActivities(where: UserActivityWhereInput, orderBy: UserActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActivity!]
   author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -3812,7 +4572,7 @@ input WeeklyReportCreateInput {
   solution: String!
   description: String
   summary: String!
-  membersActivities: UserCreateManyWithoutMembersActivitiesInput
+  membersActivities: UserActivityCreateManyWithoutAttachesInput
   author: UserCreateOneWithoutWeeklyReportsInput!
 }
 
@@ -3831,7 +4591,7 @@ input WeeklyReportCreateWithoutAuthorInput {
   solution: String!
   description: String
   summary: String!
-  membersActivities: UserCreateManyWithoutMembersActivitiesInput
+  membersActivities: UserActivityCreateManyWithoutAttachesInput
 }
 
 input WeeklyReportCreateWithoutMembersActivitiesInput {
@@ -3922,8 +4682,15 @@ input WeeklyReportUpdateInput {
   solution: String
   description: String
   summary: String
-  membersActivities: UserUpdateManyWithoutMembersActivitiesInput
+  membersActivities: UserActivityUpdateManyWithoutAttachesInput
   author: UserUpdateOneRequiredWithoutWeeklyReportsInput
+}
+
+input WeeklyReportUpdateManyMutationInput {
+  issue: String
+  solution: String
+  description: String
+  summary: String
 }
 
 input WeeklyReportUpdateManyWithoutAuthorInput {
@@ -3949,7 +4716,7 @@ input WeeklyReportUpdateWithoutAuthorDataInput {
   solution: String
   description: String
   summary: String
-  membersActivities: UserUpdateManyWithoutMembersActivitiesInput
+  membersActivities: UserActivityUpdateManyWithoutAttachesInput
 }
 
 input WeeklyReportUpdateWithoutMembersActivitiesDataInput {
@@ -4235,9 +5002,9 @@ input WeeklyReportWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  membersActivities_every: UserWhereInput
-  membersActivities_some: UserWhereInput
-  membersActivities_none: UserWhereInput
+  membersActivities_every: UserActivityWhereInput
+  membersActivities_some: UserActivityWhereInput
+  membersActivities_none: UserActivityWhereInput
   author: UserWhereInput
 }
 
