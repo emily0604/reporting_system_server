@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Dec 05 2018 14:52:30 GMT+0700 (Indochina Time)
+# timestamp: Wed Dec 05 2018 16:52:32 GMT+0700 (+07)
 
 type AggregateDailyReport {
   count: Int!
@@ -208,13 +208,6 @@ input DailyReportUpdateInput {
   projects: ProjectUpdateManyWithoutAttachesInput
   tasks: TaskUpdateManyWithoutAttachesInput
   author: UserUpdateOneRequiredWithoutDailyReportsInput
-}
-
-input DailyReportUpdateManyMutationInput {
-  emotion: String
-  title: String
-  plan: String
-  comment: String
 }
 
 input DailyReportUpdateManyWithoutAuthorInput {
@@ -682,11 +675,6 @@ input DivisionUpdateInput {
   groups: GroupUpdateManyWithoutDivisionInput
 }
 
-input DivisionUpdateManyMutationInput {
-  name: String
-  description: String
-}
-
 input DivisionUpdateOneWithoutGroupsInput {
   create: DivisionCreateWithoutGroupsInput
   connect: DivisionWhereUniqueInput
@@ -1013,11 +1001,6 @@ input GroupUpdateInput {
   division: DivisionUpdateOneWithoutGroupsInput
 }
 
-input GroupUpdateManyMutationInput {
-  name: String
-  description: String
-}
-
 input GroupUpdateManyWithoutDivisionInput {
   create: [GroupCreateWithoutDivisionInput!]
   connect: [GroupWhereUniqueInput!]
@@ -1247,6 +1230,9 @@ input GroupWhereUniqueInput {
   id: ID
 }
 
+"""Raw JSON value"""
+scalar Json
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -1298,16 +1284,17 @@ type Mutation {
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
-  updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
-  updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
-  updateManyDailyReports(data: DailyReportUpdateManyMutationInput!, where: DailyReportWhereInput): BatchPayload!
-  updateManyWeeklyReports(data: WeeklyReportUpdateManyMutationInput!, where: WeeklyReportWhereInput): BatchPayload!
-  updateManyTaskActivities(data: TaskActivityUpdateManyMutationInput!, where: TaskActivityWhereInput): BatchPayload!
-  updateManyDivisions(data: DivisionUpdateManyMutationInput!, where: DivisionWhereInput): BatchPayload!
-  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
-  updateManyTeams(data: TeamUpdateManyMutationInput!, where: TeamWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyRoles(data: RoleUpdateInput!, where: RoleWhereInput): BatchPayload!
+  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
+  updateManyProjects(data: ProjectUpdateInput!, where: ProjectWhereInput): BatchPayload!
+  updateManyDailyReports(data: DailyReportUpdateInput!, where: DailyReportWhereInput): BatchPayload!
+  updateManyWeeklyReports(data: WeeklyReportUpdateInput!, where: WeeklyReportWhereInput): BatchPayload!
+  updateManyUserActivities(data: UserActivityUpdateInput!, where: UserActivityWhereInput): BatchPayload!
+  updateManyTaskActivities(data: TaskActivityUpdateInput!, where: TaskActivityWhereInput): BatchPayload!
+  updateManyDivisions(data: DivisionUpdateInput!, where: DivisionWhereInput): BatchPayload!
+  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
+  updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyRoles(where: RoleWhereInput): BatchPayload!
   deleteManyTasks(where: TaskWhereInput): BatchPayload!
   deleteManyProjects(where: ProjectWhereInput): BatchPayload!
@@ -1319,6 +1306,7 @@ type Mutation {
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
@@ -1346,6 +1334,10 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: String
+}
+
+enum PrismaDatabase {
+  default
 }
 
 type Project implements Node {
@@ -1494,11 +1486,6 @@ input ProjectUpdateInput {
   tasks: TaskUpdateManyWithoutProjectInput
   attaches: DailyReportUpdateManyWithoutProjectsInput
   teamLeader: UserUpdateOneInput
-}
-
-input ProjectUpdateManyMutationInput {
-  title: String
-  description: String
 }
 
 input ProjectUpdateManyWithoutAttachesInput {
@@ -1909,10 +1896,6 @@ input RoleUpdateInput {
   users: UserUpdateManyWithoutRolesInput
 }
 
-input RoleUpdateManyMutationInput {
-  name: String
-}
-
 input RoleUpdateManyWithoutUsersInput {
   create: [RoleCreateWithoutUsersInput!]
   connect: [RoleWhereUniqueInput!]
@@ -2185,13 +2168,6 @@ input TaskActivityUpdateInput {
   logtime: Int
   description: String
   userActivity: UserActivityUpdateOneWithoutActivitiesInput
-}
-
-input TaskActivityUpdateManyMutationInput {
-  title: String
-  url: String
-  logtime: Int
-  description: String
 }
 
 input TaskActivityUpdateManyWithoutUserActivityInput {
@@ -2608,13 +2584,6 @@ input TaskUpdateInput {
   members: UserUpdateManyWithoutTasksInput
   attaches: DailyReportUpdateManyWithoutTasksInput
   project: ProjectUpdateOneWithoutTasksInput
-}
-
-input TaskUpdateManyMutationInput {
-  title: String
-  url: String
-  logtime: Int
-  description: String
 }
 
 input TaskUpdateManyWithoutAttachesInput {
@@ -3075,11 +3044,6 @@ input TeamUpdateInput {
   description: String
   users: UserUpdateManyWithoutTeamInput
   group: GroupUpdateOneWithoutTeamsInput
-}
-
-input TeamUpdateManyMutationInput {
-  name: String
-  description: String
 }
 
 input TeamUpdateManyWithoutGroupInput {
@@ -3927,16 +3891,6 @@ input UserUpdateInput {
   team: TeamUpdateOneWithoutUsersInput
 }
 
-input UserUpdateManyMutationInput {
-  name: String
-  address: String
-  phone: String
-  email: String
-  avatar: String
-  googleId: String
-  completed: Boolean
-}
-
 input UserUpdateManyWithoutProjectsInput {
   create: [UserCreateWithoutProjectsInput!]
   connect: [UserWhereUniqueInput!]
@@ -4684,13 +4638,6 @@ input WeeklyReportUpdateInput {
   summary: String
   membersActivities: UserActivityUpdateManyWithoutAttachesInput
   author: UserUpdateOneRequiredWithoutWeeklyReportsInput
-}
-
-input WeeklyReportUpdateManyMutationInput {
-  issue: String
-  solution: String
-  description: String
-  summary: String
 }
 
 input WeeklyReportUpdateManyWithoutAuthorInput {
