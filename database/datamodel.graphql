@@ -64,10 +64,7 @@ type DailyReport {
 
 type WeeklyReport {
   id: ID! @unique
-  issue: String!
-  solution: String!
-  description: String
-  summary: String!
+  comment: String!
   membersActivities: [UserActivity!]! @relation(name: "WeeklyReportUserActivity", onDelete: SET_NULL)
   author: User! @relation(name: "WeeklyReportsByUser", onDelete: SET_NULL) # A weekly report was created by the author (Team Leader)
   createdAt: DateTime!
