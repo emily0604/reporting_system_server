@@ -9,16 +9,16 @@ const project = {
       id
     }));
 
+    // connect to teamLeader / members if args is given
+    const teamLeader = args.teamLeader ? { connect: { id: args.teamLeader } } : null;
+    const members = args.members ? { connect: membersId } : null;
+
     return ctx.db.mutation.createProject(
       {
         data: {
           ...args,
-          teamLeader: {
-            connect: { id: args.teamLeader }
-          },
-          members: {
-            connect: membersId
-          }
+          teamLeader,
+          members
         }
       },
       info
@@ -37,27 +37,29 @@ const project = {
       {
         where: { id }
       },
-      `{id members { id }}`
+      `{id members { id } teamLeader { id }}`
     );
+
+    // connect to teamLeader if args is given
+    const teamLeader = args.teamLeader ? { connect: { id: args.teamLeader } } : null;
+    const members = { connect: membersId };
+
+    // if project.teamLeader is null, then keep it null
+    // else if project.leader has value, then disconnect
+    const disconectTeamLeaderSelector = project.teamLeader === null ? null : { disconnect: true };
 
     const disconnectUpdates = {
       ...args,
       members: {
         disconnect: project.members
       },
-      teamLeader: {
-        connect: { id: args.teamLeader }
-      }
+      teamLeader: disconectTeamLeaderSelector
     };
 
     const connectUpdates = {
       ...args,
-      members: {
-        connect: membersId
-      },
-      teamLeader: {
-        connect: { id: args.teamLeader }
-      }
+      members,
+      teamLeader
     };
 
     delete disconnectUpdates.id;
