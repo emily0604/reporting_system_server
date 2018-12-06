@@ -124,10 +124,7 @@ type Mutation {
 
   #  WeeklyReport CRUD
   createWeeklyReport(
-    issue: String!
-    solution: String!
-    description: String
-    summary: String!
+    comment: String!
     membersActivities: [UserActivityInput!]
   ): WeeklyReport!
 
