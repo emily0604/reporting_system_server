@@ -5,6 +5,7 @@ const dailyReport = {
     const userId = getUserId(ctx);
 
     const taskArgs = args.tasks.map(task => ({
+      title: task.title,
       url: task.url,
       logtime: task.logtime,
       project: { connect: { id: task.projectId } },
@@ -70,6 +71,7 @@ const dailyReport = {
     // Update 2: Create new tasks
     // Get all tasks from client.
     const taskArgs = args.tasks.map(task => ({
+      title: task.title,
       url: task.url,
       logtime: task.logtime,
 
